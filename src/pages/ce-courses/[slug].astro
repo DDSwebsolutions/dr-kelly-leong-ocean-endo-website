@@ -1,0 +1,74 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import { site } from '@data/site';
+import { ceCourses, type CeCourse } from '@data/ceCourses';
+import { webPageSchema } from '@lib/schemas';
+
+export const getStaticPaths = (() =>
+  ceCourses.map((course) => ({ params: { slug: course.slug }, props: { course } }))) satisfies GetStaticPaths;
+
+interface Props { course: CeCourse }
+const { course } = Astro.props;
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'For Doctors', path: '/for-doctors' },
+  { name: 'CE Courses', path: '/ce-courses' },
+  { name: course.title, path: `/ce-courses/${course.slug}` },
+];
+const description = `${course.title}: a continuing education course from Ocean Endodontics, a PACE-approved provider in San Francisco. ${course.topic}`;
+const others = ceCourses.filter((c) => c.slug !== course.slug);
+const schema = [webPageSchema({ path: `/ce-courses/${course.slug}`, title: course.title, description, crumbs })];
+---
+<BaseLayout title={course.title} seoTitle={`${course.title} — Dental CE | Ocean Endodontics`} description={description} schema={schema}>
+  <section class="bg-surface-subtle border-b border-line">
+    <div class="mx-auto max-w-wide px-6 py-10 lg:py-12">
+      <Breadcrumbs crumbs={crumbs} class="mb-4" />
+      <p class="text-sm font-semibold uppercase tracking-wide text-accent-strong">Continuing education</p>
+      <h1 class="mt-2 text-3xl lg:text-4xl font-semibold tracking-tight text-ink">{course.title}</h1>
+      <p class="mt-3 max-w-2xl text-lg text-ink-soft">{course.topic}</p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-wide px-6 py-12 lg:py-16">
+    <div class="grid gap-10 lg:grid-cols-[1fr_20rem] items-start">
+      <div class="mx-auto w-full max-w-2xl overflow-hidden rounded-3xl ring-1 ring-line shadow-md bg-white" data-reveal>
+        <Image src={course.flyer} alt={`${course.title} course flyer with learning objectives and details`} widths={[560, 840, 1120]} sizes="(max-width: 1024px) 100vw, 40rem" quality={88} loading="eager" class="w-full h-auto object-contain" />
+      </div>
+
+      <aside class="lg:sticky lg:top-28 h-max flex flex-col gap-5">
+        <div class="rounded-2xl bg-ink text-white p-6">
+          <p class="font-semibold text-lg">RSVP or ask about dates</p>
+          <p class="mt-2 text-sm text-primary-100">Seating is limited. Contact our office for the current schedule and to reserve a seat.</p>
+          <div class="mt-4 flex flex-col gap-2">
+            <Button href={site.phone.href} variant="white" class="w-full">Call {site.phone.display}</Button>
+            <Button href={site.email.href} variant="navy" class="w-full ring-1 ring-white/20">Email us</Button>
+          </div>
+        </div>
+        <div class="rounded-2xl bg-white ring-1 ring-line p-6 text-sm text-ink-soft">
+          <p class="font-semibold text-ink">PACE approved</p>
+          <p class="mt-2">Ocean Endodontics is a locally approved PACE Program Provider for FAGD/MAGD credit. Approval does not imply acceptance by any regulatory authority or AGD endorsement.</p>
+        </div>
+        <a href="/ce-courses" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong no-underline">← All CE courses</a>
+      </aside>
+    </div>
+  </div>
+
+  <section class="pb-16">
+    <div class="mx-auto max-w-content px-6">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-muted mb-4">More CE courses</h2>
+      <ul class="flex flex-wrap gap-2">
+        {others.map((c) => (
+          <li><a href={`/ce-courses/${c.slug}`} class="inline-flex rounded-full bg-white ring-1 ring-line px-4 py-2 text-sm font-medium text-ink no-underline hover:ring-line-strong hover:text-accent-strong">{c.title}</a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand title="Refer a patient" text="Ready to refer? Use our secure portal or send us the referral form." showCall={true} />
+</BaseLayout>

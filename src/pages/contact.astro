@@ -7,6 +7,7 @@ import Button from '@components/ui/Button.astro';
 import { site } from '@data/site';
 import { generalFaqs } from '@data/reviews';
 import { webPageSchema } from '@lib/schemas';
+import victorians from '@assets/images/sf/victorians.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -28,6 +29,8 @@ const contactCards = [
     title="We’re here to help"
     lead="Scheduling a root canal, have a question about treatment, or need urgent care? Reach out by phone, email, or our online request form. We look forward to caring for you."
     crumbs={crumbs}
+    image={victorians}
+    imageAlt="Classic San Francisco Victorian houses"
   >
     <div class="flex flex-wrap gap-3">
       <Button href={site.cta.book.href}>Request an appointment</Button>

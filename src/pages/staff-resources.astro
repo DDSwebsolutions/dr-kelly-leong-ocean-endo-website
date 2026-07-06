@@ -1,0 +1,68 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/sections/PageHero.astro';
+import { site } from '@data/site';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'For Doctors', path: '/for-doctors' },
+  { name: 'Staff Resources', path: '/staff-resources' },
+];
+const description = 'Internal staff resources and required workplace notices for the Ocean Endodontics team.';
+
+const groups = [
+  {
+    heading: 'Practice manuals',
+    items: [
+      { label: 'Employee Manual', href: '/files/staff/employee-manual.pdf' },
+      { label: 'Safety & Emergency Protocol Manual', href: '/files/staff/safety-emergency-protocol.pdf' },
+      { label: 'Emergency Fire Exit Plan', href: '/files/staff/emergency-fire-exit.pdf' },
+    ],
+  },
+  {
+    heading: 'California required notices',
+    items: [
+      { label: 'Sexual Harassment Prevention Pamphlet (DFEH)', href: '/files/staff/sexual-harassment-pamphlet.pdf' },
+      { label: 'Sexual Harassment Notice (DFEH-185)', href: '/files/staff/dfeh-185-sexual-harassment.pdf' },
+      { label: 'Discrimination Notice (DFEH-151)', href: '/files/staff/dfeh-151-discrimination.pdf' },
+      { label: 'State Disability Insurance (DE 2515)', href: '/files/staff/de2515-disability-insurance.pdf' },
+      { label: 'Paid Family Leave (DE 2511)', href: '/files/staff/de2511-paid-family-leave.pdf' },
+      { label: 'Victims of Domestic Violence Leave Notice', href: '/files/staff/domestic-violence-leave-notice.pdf' },
+      { label: 'Paid Sick Leave Poster', href: '/files/staff/paid-sick-leave-poster.pdf' },
+    ],
+  },
+];
+---
+<BaseLayout title="Staff Resources" description={description} noindex={true}>
+  <PageHero
+    eyebrow="Team"
+    title="Staff resources"
+    lead="Internal documents and required workplace notices for the Ocean Endodontics team. Questions? Reach the office manager at the number below."
+    crumbs={crumbs}
+  />
+
+  <section class="py-14 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <div class="grid gap-8 lg:grid-cols-2">
+        {
+          groups.map((g) => (
+            <div class="rounded-3xl bg-white ring-1 ring-line p-7" data-reveal>
+              <h2 class="text-lg font-semibold text-ink">{g.heading}</h2>
+              <ul class="mt-4 divide-y divide-line">
+                {g.items.map((it) => (
+                  <li>
+                    <a href={it.href} target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 py-3 text-ink-soft no-underline hover:text-accent-strong">
+                      <span>{it.label}</span>
+                      <svg class="w-5 h-5 shrink-0 text-accent-strong" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-8 text-sm text-ink-muted">Need something that isn’t here? Call the office at <a href={site.phone.href} class="text-accent-strong font-semibold">{site.phone.display}</a>.</p>
+    </div>
+  </section>
+</BaseLayout>

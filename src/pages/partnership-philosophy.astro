@@ -1,0 +1,84 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/sections/PageHero.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+import { webPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'For Doctors', path: '/for-doctors' },
+  { name: 'Partnership Philosophy', path: '/partnership-philosophy' },
+];
+const description =
+  'Ocean Endodontics partners with referring dentists in San Francisco through clear communication, timely access, and meticulous documentation, returning patients ready for restorative care.';
+const schema = [webPageSchema({ path: '/partnership-philosophy', title: 'Partnership Philosophy', description, crumbs })];
+---
+<BaseLayout title="Partnership Philosophy" seoTitle="Partnership Philosophy for Referring Dentists | Ocean Endodontics" description={description} schema={schema}>
+  <PageHero
+    eyebrow="For referring doctors"
+    title="Our partnership philosophy"
+    lead="Successful patient care depends on strong collaboration between specialists and restorative providers. We build every referral relationship on clear communication, timely access, and meticulous documentation."
+    crumbs={crumbs}
+  >
+    <div class="flex flex-wrap gap-3">
+      <Button href={site.portals.referringDoctor} external>Refer online (portal)</Button>
+      <Button href="/files/ocean-endo-referral-form.pdf" external variant="secondary">Referral form (PDF)</Button>
+    </div>
+  </PageHero>
+
+  <section class="py-14 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <div class="prose-content">
+        <p>
+          At Ocean Endodontics, we know that successful patient care depends on strong collaboration between specialists and restorative providers. Board-certified endodontist Dr. Kelly Kimiko Leong has built her practice on clear communication, timely access, and meticulous documentation. Our mission is to support you, the referring doctor, by providing endodontic treatment that integrates seamlessly with your restorative plans and enhances patient confidence in your care.
+        </p>
+
+        <h2>Commitment to communication</h2>
+        <p>We prioritize open and efficient communication with every referral. You can expect:</p>
+        <ul>
+          <li>Prompt confirmation when your patient has been scheduled</li>
+          <li>Detailed treatment notes and high-quality images after each procedure</li>
+          <li>Quick follow-up phone calls when a case requires discussion</li>
+          <li>Secure email and portal options for sharing radiographs and records</li>
+        </ul>
+
+        <h2>Respect for your patient relationship</h2>
+        <p>
+          We value the trust patients place in their general dentists. Our role is to provide specialized endodontic care and return patients to you for ongoing treatment. We reinforce your role as the primary provider and ensure patients understand the importance of completing their restorative care under your guidance.
+        </p>
+
+        <h2>Advanced technology for predictable results</h2>
+        <p>
+          Our practice is equipped with an operating microscope, cone beam 3D imaging, and modern irrigation and obturation systems. These tools allow us to handle complex anatomy, retreatments, and microsurgical cases with precision. Advanced technology supports better outcomes and fewer surprises, giving both you and your patients confidence in long-term success.
+        </p>
+
+        <h2>Availability for urgent cases</h2>
+        <p>
+          Dental emergencies often arise unexpectedly. We reserve time in our schedule each day to accommodate patients with urgent endodontic needs. This helps relieve pain quickly and protects teeth while respecting your schedule and treatment planning.
+        </p>
+
+        <h2>Continuing education and collaboration</h2>
+        <p>
+          Ocean Endodontics believes in fostering a community of learning and support. Dr. Leong offers <a href="/ce-courses">continuing education opportunities</a> and case-collaboration sessions for referring dentists in San Francisco. Together, we can stay at the forefront of endodontics and restorative dentistry for the benefit of our patients.
+        </p>
+
+        <h2>Why partner with Ocean Endodontics?</h2>
+        <ul>
+          <li>Board-certified endodontist trusted by San Francisco dentists</li>
+          <li>Seamless coordination and patient return for restorative care</li>
+          <li>Microscope-guided treatment and 3D imaging for complex cases</li>
+          <li>Same-day emergency access when possible</li>
+          <li>Educational support through continuing education courses</li>
+        </ul>
+
+        <p>
+          We welcome your referrals and look forward to building lasting professional relationships. To refer a patient, use our <a href={site.portals.referringDoctor}>secure referral portal</a> or contact our office directly at <a href={site.phone.href}>{site.phone.display}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Let’s take great care of your patients" text="Refer online, download our referral form, or call to discuss a case." showCall={true} />
+</BaseLayout>

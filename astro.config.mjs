@@ -18,7 +18,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) =>
-        !/(\/thank-you\/?$|\/404\/?$|\/do-not-sell-my-personal-information\/?$)/.test(page),
+        !/(\/thank-you\/?$|\/404\/?$|\/do-not-sell-my-personal-information\/?$|\/staff-resources\/?$)/.test(page),
       serialize(item) {
         const url = item.url;
         let priority = 0.6;

@@ -99,7 +99,7 @@ export const services: Service[] = [
     navTitle: 'Root Canal Retreatment',
     category: 'endodontic',
     icon: 'refresh',
-    heroImage: 'operatory-1',
+    heroImage: 'detail-wide',
     heroEyebrow: 'A second chance to save the tooth',
     shortDescription:
       'When a previously treated tooth develops new symptoms, retreatment reopens, disinfects, and reseals the canals to give the tooth another chance to heal.',
@@ -276,7 +276,7 @@ export const services: Service[] = [
     navTitle: 'Emergency Endodontics',
     category: 'emergency',
     icon: 'bolt',
-    heroImage: 'welcome-hall',
+    heroImage: 'operatory-2',
     heroEyebrow: 'Relief when you need it',
     shortDescription:
       'Severe tooth pain and swelling should not wait. We reserve time each day for urgent visits and aim to see patients in significant pain the same day whenever possible.',
@@ -319,7 +319,7 @@ export const services: Service[] = [
     navTitle: 'Dental Trauma Management',
     category: 'trauma',
     icon: 'shield',
-    heroImage: 'detail-wide',
+    heroImage: 'microscope',
     heroEyebrow: 'Urgent care for injured teeth',
     shortDescription:
       'A chipped, displaced, or knocked-out tooth needs prompt, expert care. We provide urgent evaluation and evidence-based treatment to protect the tooth and its future.',
@@ -404,7 +404,7 @@ export const services: Service[] = [
     navTitle: 'Oral Conscious Sedation',
     category: 'sedation',
     icon: 'moon',
-    heroImage: 'detail-chair',
+    heroImage: 'welcome-hall',
     heroEyebrow: 'Deeper comfort for anxious visits',
     shortDescription:
       'For appropriate patients, gentle oral sedation offers a deeper level of relaxation during treatment. We review your health history to confirm it is a safe fit.',

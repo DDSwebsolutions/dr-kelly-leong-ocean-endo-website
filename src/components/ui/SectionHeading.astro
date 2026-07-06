@@ -27,6 +27,6 @@ const alignCls = align === 'center' ? 'text-center mx-auto items-center' : 'item
 ---
 <div class:list={['flex flex-col gap-4', alignCls, className]}>
   {eyebrow && <Eyebrow tone={tone === 'light' ? 'light' : 'accent'}>{eyebrow}</Eyebrow>}
-  <Tag class:list={[titleColor, 'text-3xl md:text-4xl font-bold']}>{title}</Tag>
-  {lead && <p class:list={[leadColor, 'text-lg', maxLead, align === 'center' ? 'mx-auto' : '']}>{lead}</p>}
+  <Tag class:list={[titleColor, 'text-3xl md:text-4xl lg:text-[2.75rem] font-semibold tracking-tight']}>{title}</Tag>
+  {lead && <p class:list={[leadColor, 'text-lg lg:text-xl', maxLead, align === 'center' ? 'mx-auto' : '']}>{lead}</p>}
 </div>

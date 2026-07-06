@@ -20,6 +20,7 @@ import BlueBand from '@components/sections/BlueBand.astro';
 import StreamEmbed from '@components/sections/StreamEmbed.astro';
 import microscope from '@assets/images/photos/microscope.jpg';
 import drImg from '@assets/images/dr-leong.jpg';
+import goldenGateFog from '@assets/images/sf/golden-gate-fog.jpg';
 
 const description = site.shortDescription;
 const schema = [
@@ -61,12 +62,14 @@ const schema = [
   </FeatureRow>
 
   <BlueBand
-    eyebrow="Our promise"
-    title="Endodontic care that protects your natural teeth"
-    lead="You deserve clear answers and a calm experience. We combine microscope-guided technique with modern imaging to make treatment efficient and comfortable."
+    image={goldenGateFog}
+    imageAlt="The Golden Gate Bridge emerging from San Francisco fog"
+    eyebrow="Rooted in San Francisco"
+    title="Specialist care, close to home"
+    lead="From our Ocean Avenue office near Lake Merced and City College, we help San Franciscans get out of pain and keep the natural teeth they were born with."
   >
     <Button href={site.cta.book.href} size="lg" variant="white">Book an appointment</Button>
-    <Button href="/services" size="lg" variant="navy" class="ring-1 ring-white/25">Explore services</Button>
+    <Button href="/areas-we-serve" size="lg" variant="navy" class="ring-1 ring-white/25">Areas we serve</Button>
   </BlueBand>
 
   <ServiceGrid
@@ -126,7 +129,7 @@ const schema = [
       <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-center">
         <div class="relative" data-reveal>
           <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line max-w-sm">
-            <Image src={drImg} alt={`${site.doctor.name}, board-certified endodontist`} widths={[360, 560]} sizes="(max-width: 1024px) 80vw, 24rem" class="w-full h-full object-cover aspect-[4/5]" />
+            <Image src={drImg} alt={`${site.doctor.name}, board-certified endodontist`} widths={[400, 640, 900]} sizes="(max-width: 1024px) 80vw, 24rem" quality={82} class="w-full h-full object-cover aspect-[4/5]" />
           </div>
         </div>
         <div class="flex flex-col gap-5" data-reveal>

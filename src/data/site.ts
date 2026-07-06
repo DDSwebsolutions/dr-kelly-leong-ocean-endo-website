@@ -181,6 +181,10 @@ export const primaryNav: NavItem[] = [
     children: [
       { label: 'Partnership & Referrals', href: '/for-doctors' },
       { label: 'Refer Online (Portal)', href: 'https://securesite1473.tdo4endo.com/RefDocsLogin.aspx', external: true },
+      { label: 'Referral Form (PDF)', href: '/files/ocean-endo-referral-form.pdf', external: true },
+      { label: 'CE Courses', href: '/ce-courses' },
+      { label: 'Partnership Philosophy', href: '/partnership-philosophy' },
+      { label: 'Staff Resources', href: '/staff-resources' },
     ],
   },
   { label: 'Contact', href: '/contact' },

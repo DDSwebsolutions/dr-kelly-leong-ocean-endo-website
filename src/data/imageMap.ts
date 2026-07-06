@@ -20,6 +20,19 @@ import detailTools from '@assets/images/photos/detail-tools.jpg';
 import officeHall from '@assets/images/photos/office-hall.jpg';
 import officeRoom from '@assets/images/photos/office-room.jpg';
 
+// Per-service illustrations/photos, matched to the live site (source of truth).
+import svcRootCanal from '@assets/images/services/root-canal-therapy.jpg';
+import svcRetreatment from '@assets/images/services/retreatment-root-canal-therapy.jpg';
+import svcApicoectomy from '@assets/images/services/apicoectomy-endodontic-microsurgery.jpg';
+import svcDiagnosis from '@assets/images/services/diagnosis-pain-management.jpg';
+import svcCracked from '@assets/images/services/cracked-tooth-treatment.jpg';
+import svcEmergency from '@assets/images/services/emergency-endodontic-treatment.jpg';
+import svcTrauma from '@assets/images/services/dental-trauma-management.jpg';
+import svcNitrous from '@assets/images/services/nitrous-oxide-sedation.jpg';
+import svcOral from '@assets/images/services/oral-conscious-sedation-dentistry.jpg';
+import svcBleaching from '@assets/images/services/internal-bleaching.jpg';
+import svcBotox from '@assets/images/services/botox-for-bruxism.jpg';
+
 export const photos: Record<string, ImageMetadata> = {
   'reception-logo': receptionLogo,
   microscope,
@@ -38,3 +51,21 @@ export const photos: Record<string, ImageMetadata> = {
 };
 
 export const resolvePhoto = (key: string): ImageMetadata => photos[key] ?? receptionLogo;
+
+// Service-specific imagery keyed by service slug (matches the live site).
+export const serviceIllustration: Record<string, ImageMetadata> = {
+  'root-canal-therapy': svcRootCanal,
+  'retreatment-root-canal-therapy': svcRetreatment,
+  'apicoectomy-endodontic-microsurgery': svcApicoectomy,
+  'diagnosis-pain-management': svcDiagnosis,
+  'cracked-tooth-treatment': svcCracked,
+  'emergency-endodontic-treatment': svcEmergency,
+  'dental-trauma-management': svcTrauma,
+  'nitrous-oxide-sedation': svcNitrous,
+  'oral-conscious-sedation-dentistry': svcOral,
+  'internal-bleaching': svcBleaching,
+  'botox-for-bruxism': svcBotox,
+};
+
+export const resolveServiceImage = (slug: string): ImageMetadata =>
+  serviceIllustration[slug] ?? receptionLogo;

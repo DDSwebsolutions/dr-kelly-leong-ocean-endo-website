@@ -7,9 +7,8 @@ import Button from '@components/ui/Button.astro';
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const isActive = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(href + '/'));
 
-// Desktop nav is intentionally lean: the logo is Home, and For Doctors lives in
-// the utility bar (distinct audience). Mobile menu keeps the full list.
-const desktopNav = primaryNav.filter((i) => i.href !== '/' && i.href !== '/for-doctors');
+// Desktop nav drops only Home (the logo is Home). Mobile menu keeps the full list.
+const desktopNav = primaryNav.filter((i) => i.href !== '/');
 ---
 
 <header class="relative z-40" data-site-header>
@@ -25,7 +24,6 @@ const desktopNav = primaryNav.filter((i) => i.href !== '/' && i.href !== '/for-d
         <span class="text-primary-100/90">{site.hoursSummary}</span>
       </div>
       <div class="flex items-center gap-4">
-        <a href="/for-doctors" class="text-primary-100 hover:text-white no-underline">For Doctors</a>
         <a href={site.portals.patient} target="_blank" rel="noopener noreferrer" class="text-primary-100 hover:text-white no-underline">Patient Portal</a>
         <span class="text-primary-300/60" aria-hidden="true">|</span>
         <div class="flex items-center gap-3">
@@ -44,7 +42,7 @@ const desktopNav = primaryNav.filter((i) => i.href !== '/' && i.href !== '/for-d
     <div class="mx-auto max-w-wide px-4 sm:px-6">
       <div class="flex items-center justify-between gap-4 h-16 lg:h-20">
         <a href="/" class="shrink-0" aria-label="Ocean Endodontics — home">
-          <Image src={logo} alt="Ocean Endodontics, The Dental Group of Dr. Kelly Kimiko Leong" width={188} loading="eager" class="h-9 lg:h-11 w-auto" />
+          <Image src={logo} alt="Ocean Endodontics, The Dental Group of Dr. Kelly Kimiko Leong" width={200} densities={[1, 2, 3]} quality={92} loading="eager" class="h-9 lg:h-11 w-auto" />
         </a>
 
         <!-- Desktop nav -->
@@ -137,7 +135,7 @@ const desktopNav = primaryNav.filter((i) => i.href !== '/' && i.href !== '/for-d
       aria-label="Site menu"
     >
       <div class="flex items-center justify-between px-5 h-16 border-b border-line">
-        <Image src={logo} alt="Ocean Endodontics" width={150} class="h-8 w-auto" />
+        <Image src={logo} alt="Ocean Endodontics" width={160} densities={[1, 2, 3]} quality={92} class="h-8 w-auto" />
         <button type="button" class="inline-flex items-center justify-center w-11 h-11 rounded-full ring-1 ring-line text-ink" aria-label="Close menu" data-menu-close>
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
         </button>

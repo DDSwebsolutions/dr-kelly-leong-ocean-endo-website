@@ -12,8 +12,9 @@ const { images, class: className = '' } = Astro.props;
         <Image
           src={shot.src}
           alt={shot.alt}
-          widths={[360, 640]}
+          widths={[400, 720, 960]}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 24rem"
+          quality={80}
           loading={i < 3 ? 'eager' : 'lazy'}
           class="w-full h-auto object-cover"
         />

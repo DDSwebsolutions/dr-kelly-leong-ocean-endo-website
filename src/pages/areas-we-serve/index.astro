@@ -8,6 +8,7 @@ import SectionHeading from '@components/ui/SectionHeading.astro';
 import { cities } from '@data/cities';
 import { site } from '@data/site';
 import { webPageSchema } from '@lib/schemas';
+import skyline from '@assets/images/sf/skyline.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -23,6 +24,8 @@ const schema = [webPageSchema({ path: '/areas-we-serve', title: 'Areas We Serve'
     title="Your endodontist on San Francisco’s west side"
     lead="From our office on Ocean Avenue near City College and Lake Merced, we care for patients across the west side of San Francisco and northern Daly City."
     crumbs={crumbs}
+    image={skyline}
+    imageAlt="The San Francisco skyline at dusk"
   >
     <div class="flex flex-wrap gap-3">
       <Button href={site.cta.book.href}>Book an appointment</Button>

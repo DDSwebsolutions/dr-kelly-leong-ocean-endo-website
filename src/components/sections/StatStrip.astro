@@ -5,8 +5,7 @@ const {
   stats = [
     { value: '24+', label: 'Years in the dental field' },
     { value: '11+', label: 'Years focused on endodontics' },
-    { value: '2017', label: 'Board-certified by the ABE' },
-    { value: '100%', label: 'Procedures under a microscope' },
+    { value: '2017', label: 'Board-certified, American Board of Endodontics' },
   ],
   tone = 'default',
 } = Astro.props;
@@ -16,7 +15,7 @@ const dark = tone === 'navy';
   <div class="mx-auto max-w-content px-6">
     <dl
       class:list={[
-        'grid grid-cols-2 lg:grid-cols-4 gap-px rounded-3xl overflow-hidden ring-1',
+        'grid grid-cols-1 sm:grid-cols-3 gap-px rounded-3xl overflow-hidden ring-1',
         dark ? 'bg-line-inverse ring-line-inverse' : 'bg-line ring-line',
       ]}
       data-reveal

@@ -51,28 +51,25 @@
 /endodontist-near-st-francis-wood-precision-root-canal-emergency-care/  /areas-we-serve/st-francis-wood    301
 /endodontist-near-st-francis-wood-precision-root-canal-emergency-care   /areas-we-serve/st-francis-wood    301
 
-# ---- For Doctors / CE / staff ----
-/partnership-philosophy/       /for-doctors                 301
-/partnership-philosophy        /for-doctors                 301
-/staff-resources/              /for-doctors                 301
-/staff-resources               /for-doctors                 301
-/ce-botox-use-in-the-dental-setting/            /for-doctors    301
-/ce-botox-use-in-the-dental-setting             /for-doctors    301
-/ce-surviving-as-a-new-grad/                    /for-doctors    301
-/ce-surviving-as-a-new-grad                     /for-doctors    301
-/ce-ohi-for-the-endurance-athlete/              /for-doctors    301
-/ce-ohi-for-the-endurance-athlete               /for-doctors    301
-/ce-resorption-current-treatment-techniques/    /for-doctors    301
-/ce-resorption-current-treatment-techniques     /for-doctors    301
-/ce-managing-procedural-accidents-in-endodontics/  /for-doctors 301
-/ce-managing-procedural-accidents-in-endodontics   /for-doctors 301
+# ---- For Doctors / CE ----
+# partnership-philosophy and staff-resources are real pages now (no redirect).
+/ce-botox-use-in-the-dental-setting/               /ce-courses/botox-use-in-the-dental-setting                301
+/ce-botox-use-in-the-dental-setting                /ce-courses/botox-use-in-the-dental-setting                301
+/ce-surviving-as-a-new-grad/                       /ce-courses/surviving-as-a-new-grad                        301
+/ce-surviving-as-a-new-grad                        /ce-courses/surviving-as-a-new-grad                        301
+/ce-ohi-for-the-endurance-athlete/                 /ce-courses/ohi-for-the-endurance-athlete                  301
+/ce-ohi-for-the-endurance-athlete                  /ce-courses/ohi-for-the-endurance-athlete                  301
+/ce-resorption-current-treatment-techniques/       /ce-courses/resorption-current-treatment-techniques       301
+/ce-resorption-current-treatment-techniques        /ce-courses/resorption-current-treatment-techniques       301
+/ce-managing-procedural-accidents-in-endodontics/  /ce-courses/managing-procedural-accidents-in-endodontics  301
+/ce-managing-procedural-accidents-in-endodontics   /ce-courses/managing-procedural-accidents-in-endodontics  301
 
 # ---- Patients ----
 /for-patients/                 /new-patient                 301
 /for-patients                  /new-patient                 301
 
 # ---- Legacy media / referral PDF (file no longer hosted here) ----
-/wp-content/uploads/2026/04/Updated-Referral.pdf   /for-doctors   301
+/wp-content/uploads/2026/04/Updated-Referral.pdf   /files/ocean-endo-referral-form.pdf   301
 
 # ---- WordPress cruft ----
 /wp-login.php                  /                            301

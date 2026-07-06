@@ -74,6 +74,33 @@ const schema = [webPageSchema({ path: '/for-doctors', title: 'For Referring Doct
     </div>
   </section>
 
+  <!-- Resources -->
+  <section class="pb-16 lg:pb-20">
+    <div class="mx-auto max-w-content px-6">
+      <h2 class="text-2xl font-bold text-ink mb-8">Resources for referring doctors</h2>
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {[
+          { title: 'Refer online', text: 'Submit a secure digital referral through our referring-doctor portal.', href: site.portals.referringDoctor, external: true, cta: 'Open portal' },
+          { title: 'Referral form (PDF)', text: 'Download and complete our printable referral form.', href: '/files/ocean-endo-referral-form.pdf', external: true, cta: 'Download PDF' },
+          { title: 'CE courses', text: 'Continuing education and case-collaboration sessions for dentists.', href: '/ce-courses', external: false, cta: 'View courses' },
+          { title: 'Partnership philosophy', text: 'How we collaborate with referring dentists and return patients ready for restorative care.', href: '/partnership-philosophy', external: false, cta: 'Read more' },
+          { title: 'Staff resources', text: 'Internal documents and required notices for the Ocean Endodontics team.', href: '/staff-resources', external: false, cta: 'Open' },
+          { title: 'Call our team', text: 'Discuss a complex case or get set up to refer.', href: site.phone.href, external: false, cta: site.phone.display },
+        ].map((r) => (
+          <li data-reveal>
+            <a href={r.href} target={r.external ? '_blank' : undefined} rel={r.external ? 'noopener noreferrer' : undefined} class="group flex h-full flex-col rounded-2xl bg-white ring-1 ring-line p-6 no-underline transition-all hover:-translate-y-1 hover:shadow-md hover:ring-line-strong">
+              <h3 class="text-lg font-semibold text-ink group-hover:text-accent-strong">{r.title}</h3>
+              <p class="mt-2 text-[0.95rem] text-ink-soft flex-1">{r.text}</p>
+              <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong">{r.cta}
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
   <CtaBand
     title="Let’s take great care of your patients"
     text="Questions about a case or getting set up to refer? Book a patient online, or call and we’ll take it from there."

@@ -12,7 +12,7 @@ import CtaBand from '@components/sections/CtaBand.astro';
 
 import { services, serviceCategoryLabels, type Service } from '@data/services';
 import { site } from '@data/site';
-import { resolvePhoto } from '@data/imageMap';
+import { resolvePhoto, resolveServiceImage } from '@data/imageMap';
 import { renderInline, stripLinks } from '@lib/utils';
 import { webPageSchema, serviceSchema, faqPageSchema } from '@lib/schemas';
 
@@ -22,8 +22,12 @@ export const getStaticPaths = (() =>
 interface Props { service: Service }
 const { service } = Astro.props;
 
-const img = resolvePhoto(service.heroImage);
-const imgAlt = `${service.title} at Ocean Endodontics in San Francisco`;
+// Hero uses the practice's own per-service image (matched to the live site);
+// the body shows a real clinical photo from the office for authenticity.
+const heroImg = resolveServiceImage(service.slug);
+const imgAlt = `${service.title} — Ocean Endodontics, San Francisco`;
+const bodyImg = resolvePhoto(service.heroImage);
+const bodyImgAlt = `Ocean Endodontics, ${service.title.toLowerCase()} in San Francisco`;
 const crumbs = [
   { name: 'Home', path: '/' },
   { name: 'Services', path: '/services' },
@@ -87,8 +91,8 @@ const schema = [
           </ul>
         </div>
         <div class="relative" data-reveal>
-          <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line">
-            <Image src={img} alt={imgAlt} widths={[480, 768, 1024]} sizes="(max-width: 1024px) 100vw, 40rem" loading="eager" class="w-full h-full object-cover aspect-[4/3]" />
+          <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line bg-surface-subtle">
+            <Image src={heroImg} alt={imgAlt} widths={[520, 760, 1024]} sizes="(max-width: 1024px) 100vw, 34rem" quality={86} loading="eager" class="w-full h-full object-cover aspect-square" />
           </div>
         </div>
       </div>
@@ -200,6 +204,14 @@ const schema = [
       </aside>
     </div>
   </div>
+
+  <section class="pb-2">
+    <div class="mx-auto max-w-content px-6">
+      <figure class="overflow-hidden rounded-3xl ring-1 ring-line shadow-md" data-reveal>
+        <Image src={bodyImg} alt={bodyImgAlt} widths={[900, 1400, 1900]} sizes="(max-width: 1024px) 100vw, 72rem" quality={82} class="w-full h-auto object-cover aspect-[16/7]" />
+      </figure>
+    </div>
+  </section>
 
   {service.faqs?.length && <FAQ faqs={service.faqs} title={`${service.title}: common questions`} />}
 
