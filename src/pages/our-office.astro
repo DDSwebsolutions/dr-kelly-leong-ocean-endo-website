@@ -1,0 +1,132 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/sections/PageHero.astro';
+import FeatureRow from '@components/sections/FeatureRow.astro';
+import Gallery from '@components/sections/Gallery.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import MapLeaflet from '@components/sections/MapLeaflet.astro';
+import Reviews from '@components/sections/Reviews.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import StreamEmbed from '@components/sections/StreamEmbed.astro';
+import { site } from '@data/site';
+import { generalFaqs } from '@data/reviews';
+import { webPageSchema } from '@lib/schemas';
+
+import receptionLogo from '@assets/images/photos/reception-logo.jpg';
+import receptionWide from '@assets/images/photos/reception-wide.jpg';
+import parkingMap from '@assets/images/parking-map.png';
+import g40 from '@assets/images/photos/gallery-40.jpg';
+import g42 from '@assets/images/photos/gallery-42.jpg';
+import g44 from '@assets/images/photos/gallery-44.jpg';
+import g46 from '@assets/images/photos/gallery-46.jpg';
+import g48 from '@assets/images/photos/gallery-48.jpg';
+import op1 from '@assets/images/photos/operatory-1.jpg';
+import op2 from '@assets/images/photos/operatory-2.jpg';
+import detailWide from '@assets/images/photos/detail-wide.jpg';
+import receptionDesk from '@assets/images/photos/reception-desk.jpg';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Our Office', path: '/our-office' },
+];
+const description =
+  'Tour Ocean Endodontics on Ocean Avenue in San Francisco: a calm, modern, patient-centered office with advanced technology, strict sterilization, and free parking.';
+const gallery = [
+  { src: receptionWide, alt: 'Ocean Endodontics reception and waiting area' },
+  { src: op1, alt: 'Modern operatory with chairside monitor' },
+  { src: g40, alt: 'Ocean Endodontics interior detail' },
+  { src: detailWide, alt: 'Treatment room at Ocean Endodontics' },
+  { src: g42, alt: 'Ocean Endodontics interior' },
+  { src: op2, alt: 'Operatory equipped with an operating microscope' },
+  { src: g44, alt: 'Comfortable, light-filled office space' },
+  { src: receptionDesk, alt: 'Welcoming front desk' },
+  { src: g46, alt: 'Ocean Endodontics office detail' },
+  { src: g48, alt: 'Modern, clean clinical space' },
+];
+const schema = [webPageSchema({ path: '/our-office', title: 'Our Office', description, primaryImage: `${site.url}/images/office.jpg`, crumbs })];
+---
+<BaseLayout title="Our Office" seoTitle="Our Office — Modern Endodontist in San Francisco | Ocean Endodontics" description={description} schema={schema}>
+  <PageHero
+    eyebrow="Our office"
+    title="A modern office designed for comfort"
+    lead="From the reception area to our operatories, every detail was chosen to feel calm and welcoming while supporting the highest level of safety and precision."
+    crumbs={crumbs}
+    image={receptionLogo}
+    imageAlt="Ocean Endodontics reception with the practice logo on glass"
+  />
+
+  <FeatureRow
+    eyebrow="Welcome"
+    title="Calm, clean, and genuinely welcoming"
+    image={receptionWide}
+    imageAlt="The bright reception and waiting area at Ocean Endodontics"
+    bullets={[
+      'A soothing reception area and short waits',
+      'Help with forms and insurance from a friendly team',
+      'Operatories with natural light and chairside monitors',
+      'Free parking lot through the breezeway plus street parking',
+    ]}
+  >
+    <p>
+      We know visiting a specialist can feel overwhelming, so our office was designed to put you at ease from the moment you arrive. Clean lines, natural light, and modern equipment help reduce anxiety and create a professional yet comfortable setting.
+    </p>
+  </FeatureRow>
+
+  <!-- Office tour film -->
+  <section class="py-8 lg:py-12">
+    <div class="mx-auto max-w-content px-6">
+      <div class="mx-auto max-w-4xl">
+        <p class="mb-5 text-center text-sm font-semibold uppercase tracking-wide text-accent-strong">Video tour</p>
+        <StreamEmbed id={site.video.officeTourId} title="Video tour of Ocean Endodontics" />
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-4">
+    <div class="mx-auto max-w-content px-6">
+      <SectionHeading eyebrow="A look inside" title="Take a tour" class="mb-8" />
+      <Gallery images={gallery} />
+    </div>
+  </section>
+
+  <!-- Safety + operatories -->
+  <section class="py-16 lg:py-20 bg-surface-subtle">
+    <div class="mx-auto max-w-content px-6 grid gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl bg-white ring-1 ring-line p-8" data-reveal>
+        <h2 class="text-2xl font-bold text-ink">Operatories & clinical space</h2>
+        <p class="mt-3 text-ink-soft leading-relaxed">
+          Each operatory is equipped with an operating microscope, advanced digital radiography, and ergonomic dental chairs. Monitors let us share X-rays and 3D images with you in real time, so you always understand your care.
+        </p>
+      </div>
+      <div class="rounded-3xl bg-white ring-1 ring-line p-8" data-reveal>
+        <h2 class="text-2xl font-bold text-ink">Safety & sterilization</h2>
+        <p class="mt-3 text-ink-soft leading-relaxed">
+          Safety comes first in everything we do. Our office follows strict infection-control protocols recommended by the CDC and the American Dental Association. Instruments are sterilized with state-of-the-art equipment and sealed before every procedure, and treatment rooms are thoroughly disinfected between patients.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parking + map -->
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <div class="grid gap-10 lg:grid-cols-2 items-center">
+        <div class="flex flex-col gap-5" data-reveal>
+          <SectionHeading eyebrow="Getting here" title="Free parking & easy transit" as="h2" />
+          <p class="text-lg text-ink-soft">{site.parkingNote}</p>
+          <div class="overflow-hidden rounded-2xl ring-1 ring-line bg-white">
+            <Image src={parkingMap} alt="Parking map showing the free lot through the breezeway at Ocean Endodontics" widths={[480, 768]} sizes="(max-width: 1024px) 100vw, 32rem" class="w-full h-auto" />
+          </div>
+        </div>
+        <div data-reveal><MapLeaflet height="460px" /></div>
+      </div>
+    </div>
+  </section>
+
+  <Reviews limit={3} tone="subtle" />
+  <FAQ faqs={generalFaqs} />
+  <CtaBand />
+</BaseLayout>

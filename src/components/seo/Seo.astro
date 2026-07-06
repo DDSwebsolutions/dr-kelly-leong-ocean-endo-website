@@ -1,0 +1,66 @@
+---
+/**
+ * Seo.astro — every head meta tag in one place.
+ * Called by BaseLayout on every page. Includes canonical, robots, Open Graph,
+ * Twitter, geo/local-intent meta, and icon/discovery links. Structured data is
+ * injected by BaseLayout (see schema graph), not here.
+ */
+import { site } from '@data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical: string;
+  image: string;
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  image,
+  noindex = false,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+} = Astro.props;
+
+const robots = noindex
+  ? 'noindex, nofollow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content={robots} />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_US" />
+{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+{modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+
+<!-- Local intent / geo -->
+<meta name="geo.region" content="US-CA" />
+<meta name="geo.placename" content="San Francisco" />
+<meta name="geo.position" content={`${site.geo.lat};${site.geo.lng}`} />
+<meta name="ICBM" content={`${site.geo.lat}, ${site.geo.lng}`} />
+<meta name="author" content={site.doctor.name} />

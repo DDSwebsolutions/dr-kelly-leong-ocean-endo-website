@@ -1,0 +1,82 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/sections/PageHero.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+import { webPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'For Doctors', path: '/for-doctors' },
+];
+const description =
+  'Refer a patient to Ocean Endodontics in San Francisco. Timely scheduling, attentive communication, and meticulous documentation for referring dentists, with digital referrals welcome.';
+const values = [
+  { title: 'Timely scheduling', body: 'We reserve time for urgent cases and get your patients seen promptly, then keep them moving toward restorative care with you.' },
+  { title: 'Attentive communication', body: 'We’re glad to discuss complex cases by phone or email before and after treatment, so we’re aligned on the plan.' },
+  { title: 'Meticulous documentation', body: 'Your patients return to you with detailed reports and images that support seamless ongoing restorative care.' },
+  { title: 'Microscope-guided technique', body: 'Every case is treated under the operating microscope, with cone beam 3D imaging when it adds diagnostic value.' },
+];
+const schema = [webPageSchema({ path: '/for-doctors', title: 'For Referring Doctors', description, crumbs })];
+---
+<BaseLayout title="For Referring Doctors" seoTitle="Refer a Patient | Ocean Endodontics, San Francisco" description={description} schema={schema}>
+  <PageHero
+    eyebrow="For referring doctors"
+    title="A partner you can count on"
+    lead="Ocean Endodontics supports your practice with timely scheduling, clear communication, and complete documentation, so your patients come back to you ready for excellent restorative care."
+    crumbs={crumbs}
+  >
+    <div class="flex flex-wrap gap-3">
+      <Button href={site.portals.referringDoctor} external>Refer online (portal)</Button>
+      <Button href={site.phone.href} variant="secondary">Call {site.phone.display}</Button>
+    </div>
+  </PageHero>
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <ul class="grid gap-5 sm:grid-cols-2">
+        {
+          values.map((v) => (
+            <li class="rounded-2xl bg-white ring-1 ring-line p-7" data-reveal>
+              <h2 class="text-xl font-semibold text-ink">{v.title}</h2>
+              <p class="mt-2 text-ink-soft leading-relaxed">{v.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- How to refer -->
+  <section class="pb-16 lg:pb-20">
+    <div class="mx-auto max-w-content px-6">
+      <div class="rounded-3xl bg-surface-subtle ring-1 ring-line p-8 lg:p-12" data-reveal>
+        <h2 class="text-2xl lg:text-3xl font-bold text-ink">How to refer a patient</h2>
+        <div class="mt-6 grid gap-6 md:grid-cols-3">
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-wide text-accent-strong">Online</p>
+            <p class="mt-2 text-ink-soft">Submit a secure digital referral through our referring-doctor portal. It’s the fastest way to get your patient scheduled.</p>
+            <a href={site.portals.referringDoctor} target="_blank" rel="noopener noreferrer" class="mt-2 inline-flex text-sm font-semibold text-accent-strong no-underline">Open referral portal →</a>
+          </div>
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-wide text-accent-strong">By phone</p>
+            <p class="mt-2 text-ink-soft">Call our team to refer a patient or discuss a case. We’re happy to talk through complex situations.</p>
+            <a href={site.phone.href} class="mt-2 inline-flex text-sm font-semibold text-accent-strong no-underline">{site.phone.display} →</a>
+          </div>
+          <div>
+            <p class="text-sm font-semibold uppercase tracking-wide text-accent-strong">By email</p>
+            <p class="mt-2 text-ink-soft">Send records or questions and we’ll follow up quickly to coordinate care.</p>
+            <a href={site.email.href} class="mt-2 inline-flex text-sm font-semibold text-accent-strong no-underline">{site.email.display} →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Let’s take great care of your patients"
+    text="Questions about a case or getting set up to refer? Book a patient online, or call and we’ll take it from there."
+    showCall={true}
+  />
+</BaseLayout>

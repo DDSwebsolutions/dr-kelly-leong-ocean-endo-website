@@ -1,0 +1,35 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+
+const popular = [
+  { label: 'Root Canal Therapy', href: '/services/root-canal-therapy' },
+  { label: 'Emergency Care', href: '/services/emergency-endodontic-treatment' },
+  { label: 'Meet Dr. Leong', href: '/meet-dr-kimiko-leong' },
+  { label: 'Book an Appointment', href: '/book-appointment' },
+  { label: 'Contact & Directions', href: '/contact' },
+];
+---
+<BaseLayout title="Page Not Found" description="The page you’re looking for can’t be found." noindex={true}>
+  <section class="py-20 lg:py-28">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <p class="text-6xl font-bold text-primary-200">404</p>
+      <h1 class="mt-4 text-3xl lg:text-4xl font-bold text-ink">We can’t find that page</h1>
+      <p class="mt-4 text-lg text-ink-soft">The page may have moved, or the link may be out of date. Here are some helpful places to go instead.</p>
+      <ul class="mt-8 flex flex-wrap justify-center gap-2">
+        {
+          popular.map((p) => (
+            <li>
+              <a href={p.href} class="inline-flex rounded-full bg-white ring-1 ring-line px-4 py-2 text-sm font-medium text-ink no-underline hover:ring-line-strong hover:text-accent-strong">{p.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href="/">Back to home</Button>
+        <Button href={site.phone.href} variant="secondary">Call {site.phone.display}</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

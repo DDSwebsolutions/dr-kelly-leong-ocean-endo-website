@@ -1,0 +1,106 @@
+---
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import Button from '@components/ui/Button.astro';
+import RichText from '@components/sections/RichText.astro';
+import ServiceGrid from '@components/sections/ServiceGrid.astro';
+import Reviews from '@components/sections/Reviews.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import MapLeaflet from '@components/sections/MapLeaflet.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+
+import { cities, type City } from '@data/cities';
+import { site } from '@data/site';
+import { generalFaqs } from '@data/reviews';
+import { resolvePhoto } from '@data/imageMap';
+import { Image } from 'astro:assets';
+import { webPageSchema } from '@lib/schemas';
+
+export const getStaticPaths = (() =>
+  cities.map((city) => ({ params: { slug: city.slug }, props: { city } }))) satisfies GetStaticPaths;
+
+interface Props { city: City }
+const { city } = Astro.props;
+
+const img = resolvePhoto(city.heroImage);
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Areas We Serve', path: '/areas-we-serve' },
+  { name: city.name, path: `/areas-we-serve/${city.slug}` },
+];
+const schema = [webPageSchema({ path: `/areas-we-serve/${city.slug}`, title: `Endodontist near ${city.name}`, description: city.seoDescription, crumbs })];
+---
+<BaseLayout title={`Endodontist near ${city.name}`} seoTitle={city.seoTitle} description={city.seoDescription} schema={schema}>
+  <section class="relative overflow-hidden bg-surface-subtle border-b border-line">
+    <div class="pointer-events-none absolute -top-24 -right-24 w-[34rem] h-[34rem] rounded-full bg-primary-100/50 blur-3xl" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-wide px-6 py-12 lg:py-16">
+      <div class="grid gap-10 lg:grid-cols-2 items-center">
+        <div class="flex flex-col gap-5" data-reveal>
+          <Breadcrumbs crumbs={crumbs} />
+          <p class="inline-flex items-center gap-2 self-start rounded-full bg-white ring-1 ring-line px-3.5 py-1.5 text-sm font-medium text-accent-strong">{city.badge}</p>
+          <h1 class="text-4xl lg:text-5xl font-bold text-ink">Endodontist near {city.name}</h1>
+          <p class="text-lg text-ink-soft max-w-xl">{city.proximityNote} Gentle, microscope-guided root canals and same-day emergency care with {site.doctor.name}.</p>
+          <div class="flex flex-wrap gap-3">
+            <Button href={site.cta.book.href} size="lg">Book an appointment</Button>
+            <Button href={site.phone.href} size="lg" variant="secondary">Call {site.phone.display}</Button>
+          </div>
+        </div>
+        <div class="relative" data-reveal>
+          <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line">
+            <Image src={img} alt={`Ocean Endodontics, serving ${city.name}`} widths={[480, 768, 1024]} sizes="(max-width: 1024px) 100vw, 40rem" loading="eager" class="w-full h-full object-cover aspect-[4/3]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-wide px-6 py-14 lg:py-20">
+    <div class="grid gap-12 lg:grid-cols-[1fr_20rem]">
+      <article class="max-w-3xl">
+        <RichText text={city.intro} />
+
+        <div class="mt-10 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl bg-surface-subtle ring-1 ring-line p-6">
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-muted">Nearby landmarks</h2>
+            <ul class="mt-3 space-y-2 text-ink-soft text-[0.95rem]">
+              {city.landmarks.map((l) => (
+                <li class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true"></span>{l}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="rounded-2xl bg-surface-subtle ring-1 ring-line p-6">
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-muted">Getting here</h2>
+            <p class="mt-3 text-ink-soft text-[0.95rem]"><span class="font-semibold text-ink">Transit:</span> {city.transitNote}</p>
+            <p class="mt-2 text-ink-soft text-[0.95rem]"><span class="font-semibold text-ink">By car:</span> {city.driveNote} {site.parkingNote}</p>
+          </div>
+        </div>
+      </article>
+
+      <aside class="lg:sticky lg:top-28 h-max flex flex-col gap-5">
+        <div class="rounded-2xl bg-white ring-1 ring-line p-5">
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-muted">Visit us</h2>
+          <p class="mt-3 text-sm text-ink-soft">{site.address.streetLine1}, {site.address.streetLine2}<br />{site.address.city}, {site.address.state} {site.address.zip}</p>
+          <p class="mt-3 text-sm text-ink-soft"><span class="font-semibold text-ink">Hours:</span><br />Mon, Tue, Wed & Fri · 8:30 AM – 5:00 PM</p>
+          <a href={site.directionsUrl} target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong no-underline">Get directions →</a>
+        </div>
+        <div class="rounded-2xl bg-ink text-white p-6">
+          <p class="font-semibold text-lg">In pain today?</p>
+          <p class="mt-2 text-sm text-primary-100">Call early and we’ll do our best to see you the same day.</p>
+          <div class="mt-4 flex flex-col gap-2">
+            <Button href={site.phone.href} variant="white" class="w-full">Call {site.phone.display}</Button>
+            <Button href={site.cta.book.href} variant="navy" class="w-full ring-1 ring-white/20">Book online</Button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <ServiceGrid eyebrow="Nearby care" title={`Endodontic services for ${city.name} patients`} limit={6} />
+  <Reviews limit={3} tone="subtle" />
+  <section class="py-6"><div class="mx-auto max-w-content px-6"><MapLeaflet height="420px" /></div></section>
+  <FAQ faqs={generalFaqs} />
+  <CtaBand />
+</BaseLayout>

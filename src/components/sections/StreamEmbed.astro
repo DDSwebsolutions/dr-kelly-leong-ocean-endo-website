@@ -1,0 +1,33 @@
+---
+import { site } from '@data/site';
+/**
+ * StreamEmbed — a Cloudflare Stream video (the practice's own account) in a
+ * responsive 16:9 frame. Lazy-loaded; poster shown until played. The Stream
+ * host is whitelisted in the CSP frame-src (public/_headers).
+ */
+interface Props {
+  id: string;
+  title: string;
+  class?: string;
+  rounded?: boolean;
+}
+const { id, title, class: className = '', rounded = true } = Astro.props;
+const src = `https://${site.video.streamCustomer}/${id}/iframe?preload=metadata&poster=https%3A%2F%2F${site.video.streamCustomer}%2F${id}%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D2s`;
+---
+<div
+  class:list={[
+    'relative w-full overflow-hidden bg-ink ring-1 ring-line-inverse shadow-lg',
+    rounded ? 'rounded-3xl' : '',
+    className,
+  ]}
+  style="aspect-ratio: 16 / 9;"
+>
+  <iframe
+    src={src}
+    title={title}
+    loading="lazy"
+    class="absolute inset-0 h-full w-full border-0"
+    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+    allowfullscreen
+  ></iframe>
+</div>

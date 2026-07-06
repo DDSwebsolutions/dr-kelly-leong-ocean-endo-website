@@ -1,0 +1,52 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import { site } from '@data/site';
+import { webPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Your Privacy Choices', path: '/do-not-sell-my-personal-information' },
+];
+const updated = 'July 5, 2026';
+const description = 'Your privacy choices at Ocean Endodontics. We do not sell or share personal information for cross-context behavioral advertising, and we honor Global Privacy Control.';
+const schema = [webPageSchema({ path: '/do-not-sell-my-personal-information', title: 'Your Privacy Choices', description, crumbs })];
+---
+<BaseLayout title="Your Privacy Choices" description={description} noindex={true} schema={schema}>
+  <section class="bg-surface-subtle border-b border-line">
+    <div class="mx-auto max-w-3xl px-6 py-12">
+      <Breadcrumbs crumbs={crumbs} class="mb-4" />
+      <h1 class="text-4xl font-bold text-ink">Your Privacy Choices</h1>
+      <p class="mt-3 text-ink-muted">Last updated {updated}</p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-3xl px-6 py-12">
+    <article class="prose-content">
+      <p>We designed this website to respect your privacy by default.</p>
+
+      <div class="not-prose rounded-2xl bg-surface-tint ring-1 ring-primary-100 p-6 my-2">
+        <p class="text-ink font-semibold">We do not sell your personal information, and we do not share it for cross-context behavioral advertising.</p>
+        <p class="mt-2 text-ink-soft text-[0.95rem]">This site runs no advertising trackers, no analytics pixels, and no remarketing tags. There is nothing to opt out of, because none of it is here.</p>
+      </div>
+
+      <h2>Global Privacy Control</h2>
+      <p>We honor the Global Privacy Control (GPC) signal. If your browser or a browser extension sends a GPC signal, we treat it as a valid request to opt out of any sale or sharing of personal information.</p>
+
+      <h2>Your rights under California law</h2>
+      <p>If you are a California resident, the CCPA/CPRA gives you the right to know what personal information we collect, to request access to or deletion of it, to correct inaccurate information, and to opt out of sale or sharing. Some information you provide as a patient is health information governed by HIPAA rather than the CCPA.</p>
+
+      <h2>How to submit a request</h2>
+      <p>To exercise any of these rights, contact us and let us know what you would like:</p>
+      <ul>
+        <li>Call <a href={site.phone.href}>{site.phone.display}</a></li>
+        <li>Email <a href={site.email.href}>{site.email.display}</a></li>
+        <li>Write to us at {site.address.full}</li>
+      </ul>
+      <p>To protect your privacy, we may need to verify your identity before fulfilling a request. You may use an authorized agent to submit a request on your behalf, subject to reasonable verification. We will not discriminate against you for exercising your privacy rights.</p>
+
+      <h2>Questions</h2>
+      <p>For more detail on how we handle information, see our <a href="/privacy-policy">Privacy Policy</a>.</p>
+    </article>
+  </div>
+</BaseLayout>

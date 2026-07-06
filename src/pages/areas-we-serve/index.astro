@@ -1,0 +1,66 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/sections/PageHero.astro';
+import MapLeaflet from '@components/sections/MapLeaflet.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import Button from '@components/ui/Button.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import { cities } from '@data/cities';
+import { site } from '@data/site';
+import { webPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Areas We Serve', path: '/areas-we-serve' },
+];
+const description =
+  'Ocean Endodontics serves San Francisco’s west side and nearby Daly City from our Ocean Avenue office, including Ingleside, West Portal, Lake Merced, Parkmerced, St. Francis Wood, and Balboa Terrace.';
+const schema = [webPageSchema({ path: '/areas-we-serve', title: 'Areas We Serve', description, crumbs })];
+---
+<BaseLayout title="Areas We Serve — San Francisco Westside & Daly City" description={description} schema={schema}>
+  <PageHero
+    eyebrow="Areas we serve"
+    title="Your endodontist on San Francisco’s west side"
+    lead="From our office on Ocean Avenue near City College and Lake Merced, we care for patients across the west side of San Francisco and northern Daly City."
+    crumbs={crumbs}
+  >
+    <div class="flex flex-wrap gap-3">
+      <Button href={site.cta.book.href}>Book an appointment</Button>
+      <Button href="/contact" variant="secondary">Directions & parking</Button>
+    </div>
+  </PageHero>
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <SectionHeading eyebrow="Neighborhoods" title="Find your neighborhood" lead="Tap your area for local details, directions, and the services we provide nearby." class="mb-10" />
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          cities.map((c) => (
+            <li data-reveal>
+              <a href={`/areas-we-serve/${c.slug}`} class="group flex h-full flex-col rounded-2xl bg-white ring-1 ring-line p-6 no-underline transition-all hover:-translate-y-1 hover:shadow-md hover:ring-line-strong">
+                <span class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-surface-tint text-accent-strong ring-1 ring-primary-100">
+                  <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-7-5.7-7-11a7 7 0 1 1 14 0c0 5.3-7 11-7 11Z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5"/></svg>
+                </span>
+                <h3 class="mt-4 text-lg font-semibold text-ink group-hover:text-accent-strong">{c.name}</h3>
+                <p class="mt-1 text-xs font-medium uppercase tracking-wide text-accent-strong">{c.badge}</p>
+                <p class="mt-2 text-[0.95rem] text-ink-soft flex-1">{c.proximityNote}</p>
+                <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong">
+                  View details
+                  <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="pb-16 lg:pb-20">
+    <div class="mx-auto max-w-content px-6">
+      <MapLeaflet height="460px" />
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

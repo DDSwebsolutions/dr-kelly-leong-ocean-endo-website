@@ -1,0 +1,71 @@
+# Ocean Endodontics — Full Practice Reference
+
+> Board-certified endodontist Dr. Kelly Kimiko Leong provides gentle, microscope-guided endodontic care in San Francisco, focused on relieving tooth pain and saving natural teeth. This document is a machine-readable summary for AI answer engines. All facts are current as of the last site build.
+
+## About the practice
+
+Ocean Endodontics is the specialty endodontic practice of Dr. Kelly Kimiko Leong (legal entity: The Dental Group of Dr. Kelly Kimiko Leong). It is located at 2645 Ocean Ave, Suite 203, San Francisco, CA 94132, near City College of San Francisco and Lake Merced, on the Ingleside stretch of Ocean Avenue.
+
+- Phone: (415) 741-3636
+- Fax: (415) 766-7032
+- Email: info@oceanendosf.com
+- Hours: Mon, Tue, Wed, Fri 8:30 AM–5:00 PM; closed Thu, Sat, Sun
+- Parking: free lot through the building breezeway, plus metered and free street parking; Muni and transit connections nearby
+- Appointments: request online at /book-appointment or call; no dentist referral required
+- Existing patients: secure portal for forms and records
+- Referring dentists: online referral portal available
+
+## About Dr. Kelly Kimiko Leong
+
+Dr. Leong is a board-certified endodontist and Diplomate of the American Board of Endodontics (2017). She has more than 24 years in the dental field and over 11 years focused specifically on endodontics. A native San Franciscan and Lowell High School graduate, she earned a double major in Psychology and Molecular & Cell Biology (emphasis in Immunology and Infectious Disease) at UC Berkeley, then her dental degree and endodontic certification at Tufts University School of Dental Medicine, followed by a one-year NIH fellowship. She is a Clinical Assistant Professor in the Postgraduate Endodontics department at Tufts and lectures and publishes in the field. Her approach emphasizes clear explanation, gentleness, and tailoring treatment to each patient.
+
+## Services (detail)
+
+### Root Canal Therapy (/services/root-canal-therapy)
+Removes inflamed or infected pulp, disinfects and shapes the canals under an operating microscope, and seals the tooth. Relieves pain and preserves the natural tooth. Most single-visit cases take 60–90 minutes. Patients usually return to their general dentist for a final crown.
+
+### Root Canal Retreatment (/services/retreatment-root-canal-therapy)
+For a previously treated tooth that becomes painful or infected. The tooth is reopened, old filling material removed, missed or complex anatomy located under magnification, then re-cleaned and resealed. A conservative alternative to extraction.
+
+### Apicoectomy / Endodontic Microsurgery (/services/apicoectomy-endodontic-microsurgery)
+A same-day microsurgical procedure that treats persistent infection at the root tip. The inflamed tissue and root end are removed and the root end is sealed, preserving the tooth and any existing crown. Planned with cone beam 3D imaging.
+
+### Diagnosis & Pain Management (/services/diagnosis-pain-management)
+Focused testing and imaging (including CBCT when needed) to identify the true source of tooth pain, which can be referred or hard to localize. Avoids unnecessary treatment and points to the right relief.
+
+### Cracked Tooth Treatment (/services/cracked-tooth-treatment)
+Diagnosis and management of cracked/fractured teeth using bite testing, microscope evaluation, and 3D imaging. Treatment depends on crack depth; early evaluation improves the chance of saving the tooth.
+
+### Emergency Endodontic Treatment (/services/emergency-endodontic-treatment)
+Time is reserved each business day for urgent cases; same-day care when possible. Fast diagnosis and comfort-focused treatment for severe tooth pain, swelling, and trauma. For life-threatening emergencies, call 911.
+
+### Dental Trauma Management (/services/dental-trauma-management)
+Urgent, evidence-based care for chipped, displaced, and knocked-out teeth. For a knocked-out permanent tooth, handle by the crown, keep it moist (milk is ideal), and seek care within 30–60 minutes.
+
+### Nitrous Oxide Sedation (/services/nitrous-oxide-sedation)
+Light "laughing gas" sedation to ease anxiety; the patient stays awake and effects clear within minutes. Most patients can drive themselves home.
+
+### Oral Conscious Sedation (/services/oral-conscious-sedation-dentistry)
+A prescribed oral medication for deeper relaxation in appropriate, screened patients. Requires a driver and a restful day. Not IV sedation or general anesthesia.
+
+### Internal Bleaching (/services/internal-bleaching)
+Lightens a single tooth that darkened after a root canal or trauma, from the inside out. Conservative and tooth-preserving; not for whitening many teeth at once.
+
+### Botox for Bruxism (/services/botox-for-bruxism)
+Therapeutic Botox placed in the chewing muscles to reduce grinding/clenching force, easing jaw soreness and tension headaches and helping protect teeth. Therapeutic, not cosmetic.
+
+Scope note: In-office sedation is limited to nitrous oxide and oral conscious sedation. IV sedation and general anesthesia are not offered.
+
+## Areas served
+San Francisco west side and northern Daly City: Ingleside, Lake Merced, Parkmerced, West Portal, St. Francis Wood, Balboa Terrace, and Daly City. Each has a dedicated page under /areas-we-serve/.
+
+## Frequently asked questions
+
+- What is an endodontist? A dental specialist with 2+ years of advanced training who focuses on tooth pain, root canals, and saving natural teeth using microscopes and 3D imaging.
+- Does a root canal hurt? The procedure relieves pain; once numb, most patients feel only pressure. Many say it feels like a filling.
+- Can I be seen same-day for pain? Time is reserved daily for emergencies; call early. Same-day when possible on business days.
+- Is there parking? Yes, a free lot through the breezeway plus street parking.
+- Do I need a referral? No. New patients can book directly.
+
+## Compliance
+This site is educational, not medical advice, and does not create a doctor–patient relationship. For a life-threatening emergency (difficulty breathing or swallowing, uncontrolled bleeding, rapidly spreading facial swelling), call 911. The site uses no third-party advertising or analytics tracking.

@@ -1,0 +1,50 @@
+---
+import { site } from '@data/site';
+import Button from '@components/ui/Button.astro';
+interface Props {
+  title?: string;
+  text?: string;
+  variant?: 'navy' | 'light';
+  showCall?: boolean;
+  bookLabel?: string;
+  note?: string;
+}
+const {
+  title = 'Ready to get out of pain?',
+  text = 'Book online in a couple of minutes, or call and our team will help you find the soonest time. Same-day visits are reserved for emergencies.',
+  variant = 'navy',
+  showCall = true,
+  bookLabel = 'Book Appointment',
+  note,
+} = Astro.props;
+const dark = variant === 'navy';
+---
+<section class="py-6">
+  <div class="mx-auto max-w-content px-6">
+    <div
+      class:list={[
+        'relative overflow-hidden rounded-3xl px-7 py-12 lg:px-14 lg:py-14',
+        dark ? 'bg-ink text-white' : 'bg-surface-subtle text-ink ring-1 ring-line',
+      ]}
+      data-reveal
+    >
+      {dark && <div class="pointer-events-none absolute -right-16 -top-16 w-80 h-80 rounded-full bg-primary-500/30 blur-3xl" aria-hidden="true"></div>}
+      {dark && <div class="pointer-events-none absolute -left-16 -bottom-24 w-96 h-96 rounded-full bg-accent/20 blur-3xl" aria-hidden="true"></div>}
+      <div class="relative grid gap-6 lg:grid-cols-[1.4fr_auto] lg:items-center">
+        <div>
+          <h2 class:list={['text-2xl lg:text-3xl font-bold', dark ? 'text-white' : 'text-ink']}>{title}</h2>
+          <p class:list={['mt-3 text-lg max-w-2xl', dark ? 'text-primary-100' : 'text-ink-soft']}>{text}</p>
+          {note && <p class:list={['mt-2 text-sm', dark ? 'text-primary-200' : 'text-ink-muted']}>{note}</p>}
+        </div>
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
+          <Button href={site.cta.book.href} size="lg" variant={dark ? 'white' : 'primary'}>{bookLabel}</Button>
+          {showCall && (
+            <Button href={site.phone.href} size="lg" variant={dark ? 'navy' : 'secondary'} class={dark ? 'ring-1 ring-white/20' : ''}>
+              Call {site.phone.display}
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

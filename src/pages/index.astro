@@ -1,0 +1,185 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Hero from '@components/sections/Hero.astro';
+import StatStrip from '@components/sections/StatStrip.astro';
+import FeatureRow from '@components/sections/FeatureRow.astro';
+import ServiceGrid from '@components/sections/ServiceGrid.astro';
+import Reviews from '@components/sections/Reviews.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Button from '@components/ui/Button.astro';
+import MapLeaflet from '@components/sections/MapLeaflet.astro';
+
+import { site } from '@data/site';
+import { whyChoose, generalFaqs } from '@data/reviews';
+import { webPageSchema, faqPageSchema } from '@lib/schemas';
+
+import BlueBand from '@components/sections/BlueBand.astro';
+import StreamEmbed from '@components/sections/StreamEmbed.astro';
+import microscope from '@assets/images/photos/microscope.jpg';
+import drImg from '@assets/images/dr-leong.jpg';
+
+const description = site.shortDescription;
+const schema = [
+  webPageSchema({
+    path: '/',
+    title: 'Ocean Endodontics — Endodontist in San Francisco',
+    description,
+    primaryImage: `${site.url}/images/office.jpg`,
+  }),
+  faqPageSchema(generalFaqs),
+];
+---
+<BaseLayout
+  title="Endodontist in San Francisco"
+  seoTitle="Ocean Endodontics | Endodontist & Root Canal Specialist in San Francisco, CA"
+  description={description}
+  schema={schema}
+>
+  <Hero />
+
+  <StatStrip />
+
+  <FeatureRow
+    eyebrow="Why an endodontist"
+    title="Care focused entirely on saving your natural teeth"
+    image={microscope}
+    imageAlt="An Ocean Endodontics clinician using a Zeiss operating microscope during treatment"
+    bullets={[
+      'Every procedure performed under an operating microscope',
+      'Cone beam 3D imaging for accurate, targeted diagnosis',
+      'Gentle anesthesia and sedation options for anxious patients',
+      'Clear explanations at every step, so nothing is a surprise',
+    ]}
+  >
+    <p>
+      You deserve clear answers and a calm experience. As a specialty practice, Ocean Endodontics combines microscope-guided technique with modern imaging to make treatment efficient and comfortable. Most patients are surprised by how straightforward endodontic care can be when the details are handled with care.
+    </p>
+    <Button slot="cta" href="/meet-dr-kimiko-leong" variant="secondary">Meet Dr. Leong</Button>
+  </FeatureRow>
+
+  <BlueBand
+    eyebrow="Our promise"
+    title="Endodontic care that protects your natural teeth"
+    lead="You deserve clear answers and a calm experience. We combine microscope-guided technique with modern imaging to make treatment efficient and comfortable."
+  >
+    <Button href={site.cta.book.href} size="lg" variant="white">Book an appointment</Button>
+    <Button href="/services" size="lg" variant="navy" class="ring-1 ring-white/25">Explore services</Button>
+  </BlueBand>
+
+  <ServiceGrid
+    eyebrow="Our services"
+    title="Endodontic treatments we provide"
+    lead="From routine root canals to microsurgery and same-day emergencies, every visit is built around preserving your natural tooth."
+  />
+
+  <!-- Why choose -->
+  <section class="py-16 lg:py-20 bg-surface-subtle">
+    <div class="mx-auto max-w-content px-6">
+      <SectionHeading
+        eyebrow="Why Ocean Endodontics"
+        title="A specialist experience, start to finish"
+        lead="The things our patients and referring dentists tell us set us apart."
+        class="mb-10"
+      />
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          whyChoose.map((w) => (
+            <li class="rounded-2xl bg-white ring-1 ring-line p-6" data-reveal>
+              <span class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-accent/10 text-accent-strong">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <h3 class="mt-4 text-lg font-semibold text-ink">{w.title}</h3>
+              <p class="mt-2 text-[0.95rem] text-ink-soft leading-relaxed">{w.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Practice film -->
+  <section class="py-16 lg:py-24 bg-ink">
+    <div class="mx-auto max-w-content px-6">
+      <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div data-reveal>
+          <p class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-primary-200"><span class="h-px w-6 bg-current opacity-60"></span>A look inside</p>
+          <h2 class="mt-4 text-3xl lg:text-4xl font-semibold tracking-tight text-white">See Ocean Endodontics</h2>
+          <p class="mt-4 max-w-md text-lg text-primary-100">Step inside our Ocean Avenue practice and meet the team that makes specialist care feel calm and personal.</p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <Button href="/our-office" variant="white">Tour the office</Button>
+            <Button href={site.cta.book.href} variant="navy" class="ring-1 ring-white/25">Book a visit</Button>
+          </div>
+        </div>
+        <div data-reveal>
+          <StreamEmbed id={site.video.commercialId} title="Ocean Endodontics practice film" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet the doctor teaser -->
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <div class="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] items-center">
+        <div class="relative" data-reveal>
+          <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line max-w-sm">
+            <Image src={drImg} alt={`${site.doctor.name}, board-certified endodontist`} widths={[360, 560]} sizes="(max-width: 1024px) 80vw, 24rem" class="w-full h-full object-cover aspect-[4/5]" />
+          </div>
+        </div>
+        <div class="flex flex-col gap-5" data-reveal>
+          <SectionHeading eyebrow="Meet your endodontist" title="Dr. Kelly Kimiko Leong" as="h2" />
+          <p class="text-lg text-ink-soft">
+            A proud native San Franciscan and board-certified endodontist, Dr. Leong has spent more than 24 years in dentistry and over 11 years focused on endodontics. She earned board certification from the American Board of Endodontics in 2017 and teaches in the postgraduate endodontics program at Tufts.
+          </p>
+          <blockquote class="border-l-4 border-accent pl-5 text-ink italic">
+            “My goal is to ease every patient’s worries by making treatment as gentle, clear, and stress-free as possible. When you understand what’s happening and feel comfortable, healing begins before the procedure even starts.”
+          </blockquote>
+          <div class="flex flex-wrap gap-3">
+            <Button href="/meet-dr-kimiko-leong">Read Dr. Leong’s story</Button>
+            <Button href="/technology" variant="secondary">Our technology</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Reviews limit={3} />
+
+  <CtaBand
+    title="Tooth pain shouldn’t wait"
+    text="Book online in a couple of minutes, or call and our team will help you find the soonest time. We reserve space each day for urgent visits."
+    note="For a life-threatening emergency, call 911. See our emergency care page for what to do right now."
+  />
+
+  <!-- Location -->
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <div class="grid gap-10 lg:grid-cols-2 items-center">
+        <div class="flex flex-col gap-5" data-reveal>
+          <SectionHeading eyebrow="Visit us" title="Convenient care on Ocean Avenue" as="h2" />
+          <p class="text-lg text-ink-soft">{site.neighborhoodNote} {site.parkingNote}</p>
+          <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+            <div class="rounded-xl bg-surface-subtle ring-1 ring-line p-4">
+              <dt class="font-semibold text-ink">Address</dt>
+              <dd class="mt-1 text-ink-soft">{site.address.streetLine1}, {site.address.streetLine2}<br />{site.address.city}, {site.address.state} {site.address.zip}</dd>
+            </div>
+            <div class="rounded-xl bg-surface-subtle ring-1 ring-line p-4">
+              <dt class="font-semibold text-ink">Hours</dt>
+              <dd class="mt-1 text-ink-soft">Mon, Tue, Wed & Fri<br />8:30 AM – 5:00 PM</dd>
+            </div>
+          </dl>
+          <div class="flex flex-wrap gap-3">
+            <Button href="/contact">Contact & directions</Button>
+            <Button href={site.phone.href} variant="secondary">Call {site.phone.display}</Button>
+          </div>
+        </div>
+        <div data-reveal><MapLeaflet /></div>
+      </div>
+    </div>
+  </section>
+
+  <FAQ faqs={generalFaqs} lead="Answers to the questions we hear most. Have another? Call us any time we’re open." />
+</BaseLayout>

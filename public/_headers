@@ -1,0 +1,31 @@
+# ============================================================================
+# Ocean Endodontics — security headers + caching (Cloudflare Pages)
+# CSP whitelists the Jotform embed AND submit hosts (*.jotform.com / *.jotfor.ms)
+# plus OpenStreetMap tiles. Fonts are self-hosted; there are no analytics or
+# advertising hosts because the site ships no third-party tracking.
+# ============================================================================
+
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; script-src 'self' 'unsafe-inline' https://*.jotform.com https://*.jotfor.ms; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://tile.openstreetmap.org https://*.tile.openstreetmap.org https://*.jotform.com https://*.jotfor.ms; font-src 'self' data:; connect-src 'self' https://*.jotform.com https://*.jotfor.ms; frame-src https://*.jotform.com https://*.jotfor.ms https://*.cloudflarestream.com; media-src 'self' blob: https://*.cloudflarestream.com; form-action 'self' https://*.jotform.com; worker-src 'self' blob:; manifest-src 'self'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: accelerometer=(), autoplay=(self), browsing-topics=(), camera=(self "https://form.jotform.com"), display-capture=(), geolocation=(self "https://form.jotform.com"), gyroscope=(), microphone=(self "https://form.jotform.com"), payment=(self "https://form.jotform.com"), usb=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Hashed, immutable build assets (JS, CSS, fonts, optimized images)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Static images served from /public/images
+/images/*
+  Cache-Control: public, max-age=2592000
+
+# Icons / manifest
+/favicon.svg
+  Cache-Control: public, max-age=604800
+/mark.png
+  Cache-Control: public, max-age=604800
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800

@@ -1,0 +1,14 @@
+{
+  "name": "Ocean Endodontics",
+  "short_name": "Ocean Endo",
+  "description": "Board-certified endodontist Dr. Kelly Kimiko Leong — gentle root canals and emergency care in San Francisco.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#101a33",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/mark.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

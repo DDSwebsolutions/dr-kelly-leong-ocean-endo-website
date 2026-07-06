@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import { site } from '@data/site';
+import { webPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Accessibility Statement', path: '/accessibility-statement' },
+];
+const updated = 'July 5, 2026';
+const description = 'Our commitment to digital accessibility at Ocean Endodontics, including the standards we target, the tools we provide, and how to reach us if you encounter a barrier.';
+const schema = [webPageSchema({ path: '/accessibility-statement', title: 'Accessibility Statement', description, crumbs })];
+---
+<BaseLayout title="Accessibility Statement" description={description} schema={schema}>
+  <section class="bg-surface-subtle border-b border-line">
+    <div class="mx-auto max-w-3xl px-6 py-12">
+      <Breadcrumbs crumbs={crumbs} class="mb-4" />
+      <h1 class="text-4xl font-bold text-ink">Accessibility Statement</h1>
+      <p class="mt-3 text-ink-muted">Last updated {updated}</p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-3xl px-6 py-12">
+    <article class="prose-content">
+      <p>{site.name} is committed to making our website usable for as many people as possible, including people with disabilities. We believe everyone deserves clear information and an easy way to reach care.</p>
+
+      <h2>Standards we work toward</h2>
+      <p>We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 at Level AA. We build with semantic HTML, keyboard-accessible navigation, visible focus indicators, sufficient color contrast, descriptive alternative text for meaningful images, and support for reduced-motion preferences. Accessibility is an ongoing effort, and we continue to test and improve.</p>
+
+      <h2>Built-in accessibility tools</h2>
+      <p>This site includes an accessibility toolbar, reachable from the floating button in the lower-right corner of every page. It lets you:</p>
+      <ul>
+        <li>Increase text size and line or letter spacing</li>
+        <li>Turn on a higher-contrast color mode</li>
+        <li>Switch to a more readable font</li>
+        <li>Highlight links, enlarge the cursor, and show a reading guide</li>
+        <li>Reduce motion and strengthen focus outlines</li>
+      </ul>
+      <p>Your choices are saved on your device so they persist as you browse. The site also respects your operating system’s reduced-motion setting automatically.</p>
+
+      <h2>Ongoing work</h2>
+      <p>While we strive to meet WCAG 2.1 AA, some content may not yet fully conform, and we do not claim complete conformance. We regularly review the site and address issues as we find them.</p>
+
+      <h2>Need help, or found a barrier?</h2>
+      <p>If you have trouble accessing any part of this website, or you need information in an alternative format, please tell us so we can help and improve. We also welcome accommodation requests for your visit.</p>
+      <ul>
+        <li>Phone: <a href={site.phone.href}>{site.phone.display}</a></li>
+        <li>Email: <a href={site.email.href}>{site.email.display}</a></li>
+        <li>Address: {site.address.full}</li>
+      </ul>
+      <p>We aim to respond to accessibility feedback promptly and to resolve issues as quickly as we reasonably can.</p>
+    </article>
+  </div>
+</BaseLayout>

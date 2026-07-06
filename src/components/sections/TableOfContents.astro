@@ -1,0 +1,51 @@
+---
+interface Item { id: string; label: string }
+interface Props { items: Item[]; title?: string }
+const { items, title = 'On this page' } = Astro.props;
+---
+<nav aria-label="On this page" class="toc rounded-2xl bg-surface-subtle ring-1 ring-line p-5">
+  <p class="text-xs font-semibold uppercase tracking-wide text-ink-muted mb-3">{title}</p>
+  <ul class="flex flex-col gap-1 text-sm">
+    {
+      items.map((it) => (
+        <li>
+          <a href={`#${it.id}`} data-toc-link={it.id} class="block rounded-lg px-3 py-1.5 text-ink-soft no-underline hover:bg-white hover:text-accent-strong transition-colors">
+            {it.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  (() => {
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]'));
+    if (!links.length || !('IntersectionObserver' in window)) return;
+    const map = new Map(links.map((l) => [l.dataset.tocLink!, l]));
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            links.forEach((l) => l.removeAttribute('data-active'));
+            map.get(e.target.id)?.setAttribute('data-active', 'true');
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px' }
+    );
+    links.forEach((l) => {
+      const sec = document.getElementById(l.dataset.tocLink!);
+      if (sec) io.observe(sec);
+    });
+  })();
+</script>
+
+<style>
+  .toc a[data-active='true'] {
+    background: #fff;
+    color: var(--color-accent-strong);
+    font-weight: 600;
+    box-shadow: inset 3px 0 0 var(--color-accent);
+  }
+</style>

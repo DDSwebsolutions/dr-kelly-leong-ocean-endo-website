@@ -1,0 +1,90 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+import { blogPostingSchema, webPageSchema } from '@lib/schemas';
+
+import microscope from '@assets/images/photos/microscope.jpg';
+import welcomeHall from '@assets/images/photos/welcome-hall.jpg';
+import receptionWide from '@assets/images/photos/reception-wide.jpg';
+import operatory from '@assets/images/photos/operatory-1.jpg';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('education', ({ data }) => !data.draft);
+  return posts.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const heroByCategory: Record<string, any> = {
+  'Root Canals': microscope,
+  Emergencies: welcomeHall,
+  'Patient Guides': receptionWide,
+  Procedures: operatory,
+  Technology: microscope,
+};
+const hero = heroByCategory[d.category] ?? microscope;
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Education', path: '/education' },
+  { name: d.title, path: `/education/${entry.id}` },
+];
+const fmt = (dt: Date) => dt.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const schema = [
+  webPageSchema({ path: `/education/${entry.id}`, title: d.title, description: d.description, crumbs }),
+  blogPostingSchema({
+    path: `/education/${entry.id}`,
+    title: d.title,
+    description: d.description,
+    datePublished: d.publishDate.toISOString(),
+    dateModified: d.updatedDate?.toISOString(),
+    author: d.author,
+  }),
+];
+---
+<BaseLayout
+  title={d.title}
+  seoTitle={`${d.title} | Ocean Endodontics`}
+  description={d.description}
+  type="article"
+  publishedTime={d.publishDate.toISOString()}
+  modifiedTime={d.updatedDate?.toISOString()}
+  schema={schema}
+>
+  <section class="bg-surface-subtle border-b border-line">
+    <div class="mx-auto max-w-3xl px-6 py-12 lg:py-14">
+      <Breadcrumbs crumbs={crumbs} class="mb-5" />
+      <span class="rounded-full bg-white ring-1 ring-line text-accent-strong px-3 py-1 text-xs font-semibold">{d.category}</span>
+      <h1 class="mt-4 text-3xl lg:text-4xl font-bold text-ink">{d.title}</h1>
+      <p class="mt-4 text-lg text-ink-soft">{d.description}</p>
+      <p class="mt-4 text-sm text-ink-muted">By {d.author} · {fmt(d.publishDate)}{d.readingTime ? ` · ${d.readingTime}` : ''}</p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-3xl px-6">
+    <div class="overflow-hidden rounded-3xl ring-1 ring-line shadow-soft -mt-0 mb-10 mt-10">
+      <Image src={hero} alt="" widths={[640, 960]} sizes="(max-width: 768px) 100vw, 48rem" class="w-full h-auto object-cover aspect-[16/9]" />
+    </div>
+    <article class="prose-content pb-8">
+      <Content />
+    </article>
+
+    <div class="border-t border-line pt-8 pb-16 flex flex-wrap items-center justify-between gap-4">
+      <a href="/education" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong no-underline">← All articles</a>
+      <div class="flex gap-3">
+        <Button href={site.cta.book.href}>Book an appointment</Button>
+        <Button href={site.phone.href} variant="secondary">Call us</Button>
+      </div>
+    </div>
+  </div>
+
+  <CtaBand />
+</BaseLayout>

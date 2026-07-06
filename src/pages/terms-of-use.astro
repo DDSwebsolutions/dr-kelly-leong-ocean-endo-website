@@ -1,0 +1,62 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import { site } from '@data/site';
+import { webPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Terms of Use', path: '/terms-of-use' },
+];
+const updated = 'July 5, 2026';
+const description = 'Terms of use for the Ocean Endodontics website, including the medical disclaimer and limitations on the information provided here.';
+const schema = [webPageSchema({ path: '/terms-of-use', title: 'Terms of Use', description, crumbs })];
+---
+<BaseLayout title="Terms of Use" description={description} schema={schema}>
+  <section class="bg-surface-subtle border-b border-line">
+    <div class="mx-auto max-w-3xl px-6 py-12">
+      <Breadcrumbs crumbs={crumbs} class="mb-4" />
+      <h1 class="text-4xl font-bold text-ink">Terms of Use</h1>
+      <p class="mt-3 text-ink-muted">Last updated {updated}</p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-3xl px-6 py-12">
+    <article class="prose-content">
+      <p>Welcome to the website of {site.name} ({site.legalName}). By accessing or using <strong>oceanendosf.com</strong>, you agree to these Terms of Use. If you do not agree, please do not use the site.</p>
+
+      <h2>Not medical advice</h2>
+      <p>{site.disclaimers.medicalFull}</p>
+
+      <h2>In an emergency</h2>
+      <p>{site.disclaimers.emergency}</p>
+
+      <h2>Scope of practice</h2>
+      <p>{site.disclaimers.specialty} {site.disclaimers.sedation}</p>
+
+      <h2>Use of the website</h2>
+      <p>You may use this website for lawful, personal, non-commercial purposes. You agree not to misuse the site, interfere with its operation, attempt to gain unauthorized access, or use it in any way that could harm the site or other users.</p>
+
+      <h2>Intellectual property</h2>
+      <p>The content on this website, including text, graphics, logos, and images, is the property of {site.legalName} or its licensors and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works without our written permission.</p>
+
+      <h2>Third-party links and services</h2>
+      <p>This site links to third-party services, such as our patient and referral portals and our online appointment form. We are not responsible for the content, privacy practices, or availability of third-party sites and services. Your use of them is governed by their own terms and policies.</p>
+
+      <h2>Disclaimer of warranties</h2>
+      <p>This website is provided on an “as is” and “as available” basis without warranties of any kind, whether express or implied, including but not limited to accuracy, completeness, or fitness for a particular purpose. We do not warrant that the site will be uninterrupted or error-free.</p>
+
+      <h2>Limitation of liability</h2>
+      <p>To the fullest extent permitted by law, {site.legalName} and its personnel will not be liable for any indirect, incidental, or consequential damages arising from your use of, or inability to use, this website or the information it contains.</p>
+
+      <h2>Governing law</h2>
+      <p>These Terms are governed by the laws of the State of California, without regard to its conflict-of-laws principles. Any dispute relating to these Terms or the website will be subject to the jurisdiction of the state and federal courts located in San Francisco, California.</p>
+
+      <h2>Changes to these terms</h2>
+      <p>We may update these Terms from time to time. Changes take effect when posted here, and continued use of the site constitutes acceptance of the updated Terms.</p>
+
+      <h2>Contact us</h2>
+      <p>Questions about these Terms? Call <a href={site.phone.href}>{site.phone.display}</a> or email <a href={site.email.href}>{site.email.display}</a>.</p>
+    </article>
+  </div>
+</BaseLayout>

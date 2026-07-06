@@ -1,0 +1,14 @@
+---
+/** Eyebrow — small uppercase label above a heading. */
+interface Props { class?: string; tone?: 'accent' | 'muted' | 'light' }
+const { class: className = '', tone = 'accent' } = Astro.props;
+const tones: Record<string, string> = {
+  accent: 'text-accent-strong',
+  muted: 'text-ink-muted',
+  light: 'text-primary-200',
+};
+---
+<p class:list={['inline-flex items-center gap-2 text-sm font-semibold tracking-wide uppercase', tones[tone], className]}>
+  <span class="h-px w-6 bg-current opacity-50" aria-hidden="true"></span>
+  <slot />
+</p>

@@ -1,0 +1,33 @@
+{
+  "name": "dr-kelly-leong-ocean-endo-website",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Ocean Endodontics — Dr. Kelly Kimiko Leong, San Francisco. Astro 5 static site for Cloudflare Pages.",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "check": "astro check",
+    "preview": "astro preview",
+    "check": "astro check",
+    "deploy": "astro build && wrangler pages deploy dist --project-name=dr-kelly-leong-ocean-endo"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource-variable/inter": "^5.1.1",
+    "astro": "^5.1.1",
+    "leaflet": "^1.9.4",
+    "sharp": "^0.33.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/leaflet": "^1.9.15",
+    "lightningcss": "^1.29.1",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.99.0"
+  }
+}

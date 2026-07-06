@@ -1,0 +1,35 @@
+---
+interface Stat { value: string; label: string }
+interface Props { stats?: Stat[]; tone?: 'default' | 'navy' }
+const {
+  stats = [
+    { value: '24+', label: 'Years in the dental field' },
+    { value: '11+', label: 'Years focused on endodontics' },
+    { value: '2017', label: 'Board-certified by the ABE' },
+    { value: '100%', label: 'Procedures under a microscope' },
+  ],
+  tone = 'default',
+} = Astro.props;
+const dark = tone === 'navy';
+---
+<section class:list={['py-4', dark ? '' : '']}>
+  <div class="mx-auto max-w-content px-6">
+    <dl
+      class:list={[
+        'grid grid-cols-2 lg:grid-cols-4 gap-px rounded-3xl overflow-hidden ring-1',
+        dark ? 'bg-line-inverse ring-line-inverse' : 'bg-line ring-line',
+      ]}
+      data-reveal
+    >
+      {
+        stats.map((s) => (
+          <div class:list={['flex flex-col items-center text-center gap-1 px-4 py-8', dark ? 'bg-ink' : 'bg-white']}>
+            <dt class="sr-only">{s.label}</dt>
+            <dd class:list={['text-3xl lg:text-4xl font-bold tracking-tight', dark ? 'text-white' : 'text-ink']}>{s.value}</dd>
+            <p class:list={['text-sm', dark ? 'text-primary-100' : 'text-ink-muted']}>{s.label}</p>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>

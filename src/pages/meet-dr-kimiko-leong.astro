@@ -1,0 +1,107 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import Button from '@components/ui/Button.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Reviews from '@components/sections/Reviews.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import { site } from '@data/site';
+import { generalFaqs } from '@data/reviews';
+import { webPageSchema } from '@lib/schemas';
+import drImg from '@assets/images/dr-leong.jpg';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Meet Dr. Leong', path: '/meet-dr-kimiko-leong' },
+];
+const description =
+  'Meet Dr. Kelly Kimiko Leong, a board-certified endodontist and native San Franciscan. Diplomate of the American Board of Endodontics, Tufts-trained, with 24+ years in dentistry.';
+const credentials = [
+  'Diplomate, American Board of Endodontics (2017)',
+  'DMD & Certificate in Endodontics, Tufts University School of Dental Medicine',
+  'One-year NIH postdoctoral research fellowship',
+  'BA, Psychology and Molecular & Cell Biology (Immunology & Infectious Disease), UC Berkeley',
+  'Clinical Assistant Professor, Postgraduate Endodontics, Tufts',
+  'Native San Franciscan · Lowell High School',
+];
+const schema = [webPageSchema({ path: '/meet-dr-kimiko-leong', title: 'Meet Dr. Kelly Kimiko Leong', description, primaryImage: `${site.url}/images/dr-leong.jpg`, crumbs })];
+---
+<BaseLayout title="Meet Dr. Kelly Kimiko Leong" seoTitle="Meet Dr. Kelly Kimiko Leong, Board-Certified Endodontist | San Francisco" description={description} schema={schema}>
+  <section class="relative overflow-hidden bg-surface-subtle border-b border-line">
+    <div class="pointer-events-none absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full bg-primary-100/50 blur-3xl" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-wide px-6 py-12 lg:py-16">
+      <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] items-center">
+        <div class="relative order-2 lg:order-1" data-reveal>
+          <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line max-w-md">
+            <Image src={drImg} alt={`${site.doctor.name}, board-certified endodontist in San Francisco`} widths={[420, 640, 840]} sizes="(max-width: 1024px) 90vw, 30rem" loading="eager" fetchpriority="high" class="w-full h-full object-cover aspect-[4/5]" />
+          </div>
+        </div>
+        <div class="order-1 lg:order-2 flex flex-col gap-5" data-reveal>
+          <Breadcrumbs crumbs={crumbs} />
+          <p class="inline-flex items-center gap-2 self-start rounded-full bg-white ring-1 ring-line px-3.5 py-1.5 text-sm font-medium text-accent-strong">Board-Certified Endodontist</p>
+          <h1 class="text-4xl lg:text-5xl font-bold text-ink">Dr. Kelly Kimiko Leong</h1>
+          <blockquote class="text-xl text-ink italic leading-relaxed border-l-4 border-accent pl-5">
+            “My goal is to ease every patient’s worries by making treatment as gentle, clear, and stress-free as possible. When you understand what’s happening and feel comfortable, healing begins before the procedure even starts.”
+          </blockquote>
+          <div class="flex flex-wrap gap-3">
+            <Button href={site.cta.book.href} size="lg">Book with Dr. Leong</Button>
+            <Button href={site.phone.href} size="lg" variant="secondary">Call {site.phone.display}</Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-14 lg:py-20">
+    <div class="mx-auto max-w-wide px-6">
+      <div class="grid gap-12 lg:grid-cols-[1fr_20rem]">
+        <div class="prose-content max-w-3xl">
+          <p>
+            Dr. Kelly Kimiko Leong is a board-certified endodontist dedicated to gentle, compassionate care at Ocean Endodontics. She has worked in the dental field for more than 24 years, beginning as a dental assistant, serving as an administrative assistant at UCSF’s Faculty Group Practice, conducting dental research at UCSF and Tufts University School of Dental Medicine, and practicing with over 11 years of experience specific to endodontics. She earned board certification from the American Board of Endodontics in 2017.
+          </p>
+          <p>
+            A proud native San Franciscan, Dr. Leong graduated from Lowell High School before earning a double major in Psychology and Molecular and Cell Biology, with an emphasis in Immunology and Infectious Disease, from UC Berkeley. She earned her dental degree and endodontic certification from Tufts University School of Dental Medicine and completed a prestigious one-year NIH fellowship.
+          </p>
+          <p>
+            Dr. Leong believes in easing her patients’ anxieties by clearly explaining each procedure, what to expect, why it is necessary, and by tailoring treatment to each patient’s specific pathology. Her top priority is making sure every patient feels comfortable and informed. Her practice philosophy blends advanced technology with a compassionate touch to create an exceptional experience.
+          </p>
+          <p>
+            In addition to her clinical practice, Dr. Leong is actively involved in dental education. She holds a faculty position as a Clinical Assistant Professor in the Postgraduate Endodontics department at Tufts, has been published in professional scientific journals, and delivers lectures and continuing education courses. Committed to lifelong learning, she regularly attends conferences and synthesizes new research and techniques with tried-and-true standards, always working to improve for both her patients and colleagues.
+          </p>
+          <p>
+            When time allows, Dr. Leong enjoys relaxing with a good book or TV series. Outside of clinic hours, her number one joy is spending time with her husband, two children, and dog, Nori. She looks forward to welcoming you to Ocean Endodontics.
+          </p>
+        </div>
+
+        <aside class="lg:sticky lg:top-28 h-max flex flex-col gap-5">
+          <div class="rounded-2xl bg-surface-subtle ring-1 ring-line p-6">
+            <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-muted">Credentials & training</h2>
+            <ul class="mt-4 space-y-3">
+              {credentials.map((c) => (
+                <li class="flex items-start gap-2.5 text-[0.95rem] text-ink-soft">
+                  <svg class="w-5 h-5 mt-0.5 shrink-0 text-accent-strong" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5L12 16l-5 2.7 1-5.5-4-3.9 5.5-.8L12 3Z" stroke-linejoin="round"/></svg>
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="rounded-2xl bg-ink text-white p-6">
+            <p class="font-semibold text-lg">Schedule with Dr. Leong</p>
+            <p class="mt-2 text-sm text-primary-100">New patients are always welcome. No dentist referral is required.</p>
+            <div class="mt-4 flex flex-col gap-2">
+              <Button href={site.cta.book.href} variant="white" class="w-full">Book online</Button>
+              <Button href={site.phone.href} variant="navy" class="w-full ring-1 ring-white/20">Call {site.phone.display}</Button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <Reviews limit={3} />
+  <FAQ faqs={generalFaqs} />
+  <CtaBand />
+</BaseLayout>

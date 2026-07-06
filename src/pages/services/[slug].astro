@@ -1,0 +1,211 @@
+---
+import { Image } from 'astro:assets';
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import Button from '@components/ui/Button.astro';
+import RichText from '@components/sections/RichText.astro';
+import TableOfContents from '@components/sections/TableOfContents.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import ServiceGrid from '@components/sections/ServiceGrid.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+
+import { services, serviceCategoryLabels, type Service } from '@data/services';
+import { site } from '@data/site';
+import { resolvePhoto } from '@data/imageMap';
+import { renderInline, stripLinks } from '@lib/utils';
+import { webPageSchema, serviceSchema, faqPageSchema } from '@lib/schemas';
+
+export const getStaticPaths = (() =>
+  services.map((service) => ({ params: { slug: service.slug }, props: { service } }))) satisfies GetStaticPaths;
+
+interface Props { service: Service }
+const { service } = Astro.props;
+
+const img = resolvePhoto(service.heroImage);
+const imgAlt = `${service.title} at Ocean Endodontics in San Francisco`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+  { name: service.title, path: `/services/${service.slug}` },
+];
+
+// Build TOC + section flags
+const toc: { id: string; label: string }[] = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'benefits', label: 'Benefits' },
+];
+if (service.process?.length) toc.push({ id: 'process', label: 'What happens' });
+if (service.whatToExpect) toc.push({ id: 'what-to-expect', label: 'What to expect' });
+if (service.idealCandidate) toc.push({ id: 'candidates', label: 'Is it right for you?' });
+if (service.whyChoose) toc.push({ id: 'why-choose', label: 'Why Ocean Endodontics' });
+if (service.aftercare) toc.push({ id: 'aftercare', label: 'Recovery & aftercare' });
+if (service.considerations) toc.push({ id: 'considerations', label: 'Cost & insurance' });
+if (service.faqs?.length) toc.push({ id: 'faq', label: 'FAQs' });
+
+const related = (service.related ?? [])
+  .map((s) => services.find((x) => x.slug === s))
+  .filter(Boolean) as Service[];
+
+const schema = [
+  webPageSchema({
+    path: `/services/${service.slug}`,
+    title: service.title,
+    description: service.shortDescription,
+    crumbs,
+  }),
+  serviceSchema(service),
+  ...(service.faqs?.length ? [faqPageSchema(service.faqs)] : []),
+];
+---
+<BaseLayout
+  title={service.title}
+  seoTitle={service.seoTitle}
+  description={service.seoDescription}
+  schema={schema}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-surface-subtle border-b border-line">
+    <div class="pointer-events-none absolute -top-24 -right-24 w-[34rem] h-[34rem] rounded-full bg-primary-100/50 blur-3xl" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-wide px-6 py-12 lg:py-16">
+      <div class="grid gap-10 lg:grid-cols-2 items-center">
+        <div class="flex flex-col gap-5" data-reveal>
+          <Breadcrumbs crumbs={crumbs} />
+          <p class="inline-flex items-center gap-2 self-start rounded-full bg-white ring-1 ring-line px-3.5 py-1.5 text-sm font-medium text-accent-strong">
+            {service.heroEyebrow}
+          </p>
+          <h1 class="text-4xl lg:text-5xl font-bold text-ink">{service.title}</h1>
+          <p class="text-lg text-ink-soft max-w-xl">{service.shortDescription}</p>
+          <div class="flex flex-wrap gap-3">
+            <Button href={site.cta.book.href} size="lg">Book an appointment</Button>
+            <Button href={site.phone.href} size="lg" variant="secondary">Call {site.phone.display}</Button>
+          </div>
+          <ul class="mt-1 flex flex-wrap gap-2">
+            <li class="rounded-full bg-white ring-1 ring-line px-3 py-1 text-xs font-medium text-ink-soft">{serviceCategoryLabels[service.category]}</li>
+            {service.deliveredInHouse && <li class="rounded-full bg-white ring-1 ring-line px-3 py-1 text-xs font-medium text-ink-soft">Performed in our office</li>}
+            {service.sameDay && <li class="rounded-full bg-accent/10 text-accent-strong px-3 py-1 text-xs font-semibold">Same-day when possible</li>}
+          </ul>
+        </div>
+        <div class="relative" data-reveal>
+          <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line">
+            <Image src={img} alt={imgAlt} widths={[480, 768, 1024]} sizes="(max-width: 1024px) 100vw, 40rem" loading="eager" class="w-full h-full object-cover aspect-[4/3]" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Body -->
+  <div class="mx-auto max-w-wide px-6 py-14 lg:py-20">
+    <div class="grid gap-12 lg:grid-cols-[1fr_20rem]">
+      <article class="max-w-3xl">
+        <section id="overview" class="scroll-mt-28">
+          <RichText text={service.longDescription} />
+          <p class="mt-6 text-sm text-ink-muted border-l-2 border-line pl-4">
+            This page is for general education and is not a substitute for an in-person examination. {service.category === 'sedation' ? site.disclaimers.sedation : `An evaluation confirms whether ${service.title.toLowerCase()} is right for your situation.`}
+          </p>
+        </section>
+
+        <section id="benefits" class="mt-14 scroll-mt-28">
+          <h2 class="text-2xl font-bold text-ink">Benefits</h2>
+          <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+            {service.benefits.map((b) => (
+              <li class="flex items-start gap-3 rounded-2xl bg-surface-subtle ring-1 ring-line p-4">
+                <span class="mt-0.5 inline-flex w-5 h-5 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent-strong">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <span class="text-[0.95rem] text-ink-soft">{b}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        {service.process?.length && (
+          <section id="process" class="mt-14 scroll-mt-28">
+            <h2 class="text-2xl font-bold text-ink">What happens during treatment</h2>
+            <ol class="mt-6 space-y-4">
+              {service.process.map((step, i) => (
+                <li class="flex gap-4">
+                  <span class="shrink-0 inline-flex w-9 h-9 items-center justify-center rounded-full bg-accent text-white font-semibold" aria-hidden="true">{i + 1}</span>
+                  <div>
+                    <h3 class="font-semibold text-ink">{step.title}</h3>
+                    <p class="mt-1 text-ink-soft" set:html={renderInline(step.body)} />
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        )}
+
+        {service.whatToExpect && (
+          <section id="what-to-expect" class="mt-14 scroll-mt-28">
+            <h2 class="text-2xl font-bold text-ink">What to expect at your visit</h2>
+            <p class="mt-4 text-ink-soft leading-relaxed" set:html={renderInline(service.whatToExpect)} />
+          </section>
+        )}
+
+        {service.idealCandidate && (
+          <section id="candidates" class="mt-14 scroll-mt-28">
+            <div class="rounded-3xl bg-surface-tint ring-1 ring-primary-100 p-7">
+              <h2 class="text-2xl font-bold text-ink">Is this right for you?</h2>
+              <p class="mt-4 text-ink-soft leading-relaxed" set:html={renderInline(service.idealCandidate)} />
+            </div>
+          </section>
+        )}
+
+        {service.whyChoose && (
+          <section id="why-choose" class="mt-14 scroll-mt-28">
+            <h2 class="text-2xl font-bold text-ink">Why patients choose Ocean Endodontics</h2>
+            <p class="mt-4 text-ink-soft leading-relaxed" set:html={renderInline(service.whyChoose)} />
+          </section>
+        )}
+
+        {service.aftercare && (
+          <section id="aftercare" class="mt-14 scroll-mt-28">
+            <h2 class="text-2xl font-bold text-ink">Recovery & aftercare</h2>
+            <p class="mt-4 text-ink-soft leading-relaxed" set:html={renderInline(service.aftercare)} />
+          </section>
+        )}
+
+        {service.considerations && (
+          <section id="considerations" class="mt-14 scroll-mt-28">
+            <h2 class="text-2xl font-bold text-ink">Cost & insurance</h2>
+            <p class="mt-4 text-ink-soft leading-relaxed" set:html={renderInline(service.considerations)} />
+          </section>
+        )}
+      </article>
+
+      <!-- Aside -->
+      <aside class="lg:sticky lg:top-28 h-max flex flex-col gap-5">
+        <div class="rounded-2xl bg-white ring-1 ring-line p-5">
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-ink-muted">Quick facts</h2>
+          <dl class="mt-3 space-y-2.5 text-sm">
+            <div class="flex justify-between gap-4"><dt class="text-ink-muted">Type</dt><dd class="font-medium text-ink text-right">{serviceCategoryLabels[service.category]}</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-ink-muted">Setting</dt><dd class="font-medium text-ink text-right">In-office</dd></div>
+            {service.sameDay && <div class="flex justify-between gap-4"><dt class="text-ink-muted">Urgent care</dt><dd class="font-medium text-accent-strong text-right">Same-day when possible</dd></div>}
+            <div class="flex justify-between gap-4"><dt class="text-ink-muted">Comfort</dt><dd class="font-medium text-ink text-right">Sedation available</dd></div>
+          </dl>
+        </div>
+
+        <TableOfContents items={toc} />
+
+        <div class="rounded-2xl bg-ink text-white p-6">
+          <p class="font-semibold text-lg">Ready to schedule?</p>
+          <p class="mt-2 text-sm text-primary-100">We’ll verify your insurance and answer any questions before you come in.</p>
+          <div class="mt-4 flex flex-col gap-2">
+            <Button href={site.cta.book.href} variant="white" class="w-full">Book online</Button>
+            <Button href={site.phone.href} variant="navy" class="w-full ring-1 ring-white/20">Call {site.phone.display}</Button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  {service.faqs?.length && <FAQ faqs={service.faqs} title={`${service.title}: common questions`} />}
+
+  {related.length > 0 && (
+    <ServiceGrid services={related} eyebrow="Related care" title="Related treatments" currentSlug={service.slug} compact />
+  )}
+
+  <CtaBand />
+</BaseLayout>

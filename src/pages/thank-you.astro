@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+
+const description = 'Thank you for contacting Ocean Endodontics. We have received your request and will be in touch soon.';
+---
+<BaseLayout title="Thank You" description={description} noindex={true}>
+  <section class="py-20 lg:py-28">
+    <div class="mx-auto max-w-2xl px-6 text-center">
+      <span class="inline-flex w-16 h-16 items-center justify-center rounded-full bg-accent/10 text-accent-strong" aria-hidden="true">
+        <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <h1 class="mt-6 text-4xl font-bold text-ink">Thank you, we’ve got it</h1>
+      <p class="mt-4 text-lg text-ink-soft">
+        Your request has been received. A member of the Ocean Endodontics team will reach out soon to confirm your appointment and answer any questions.
+      </p>
+      <div class="mt-6 rounded-2xl bg-surface-subtle ring-1 ring-line p-6 text-left">
+        <p class="font-semibold text-ink">Need to be seen sooner, or in pain now?</p>
+        <p class="mt-2 text-ink-soft text-[0.95rem]">Please call us directly at <a href={site.phone.href} class="font-semibold text-accent-strong">{site.phone.display}</a> and we’ll do our best to see you the same day. {site.disclaimers.emergency}</p>
+      </div>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <Button href="/">Back to home</Button>
+        <Button href="/services" variant="secondary">Explore services</Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

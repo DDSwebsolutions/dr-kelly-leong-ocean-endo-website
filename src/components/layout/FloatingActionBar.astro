@@ -1,0 +1,241 @@
+---
+import { site } from '@data/site';
+/**
+ * FloatingActionBar — a hovering action rail (Accessibility, Call, Email,
+ * Schedule, Back-to-top) plus the accessibility tools panel.
+ *
+ * Part-3 guardrail: the container is pointer-events-none; only the visible
+ * controls re-enable pointer events, so the collapsed rail never sits invisibly
+ * over the page and swallows taps on the mobile CTAs.
+ */
+---
+
+<!-- Action rail -->
+<div
+  class="fixed right-3 sm:right-4 bottom-24 lg:bottom-8 z-40 flex flex-col gap-2.5"
+  style="pointer-events:none"
+  aria-label="Quick actions"
+>
+  <button
+    type="button"
+    class="pointer-events-auto inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-white shadow-md ring-1 ring-white/20 hover:bg-accent-bg-hover transition-colors"
+    aria-label="Open accessibility tools"
+    aria-expanded="false"
+    aria-controls="a11y-panel"
+    data-a11y-open
+  >
+    <!-- Universal access glyph -->
+    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" /><circle cx="12" cy="7.2" r="1.1" fill="currentColor" stroke="none" />
+      <path d="M5.5 9.2c2 .9 4.2 1.3 6.5 1.3s4.5-.4 6.5-1.3M12 10.5V15m0 0-2.2 4.2M12 15l2.2 4.2" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+
+  <a
+    href={site.phone.href}
+    class="pointer-events-auto inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-ink shadow-md ring-1 ring-line hover:text-accent-strong hover:-translate-y-0.5 transition-all"
+    aria-label={`Call ${site.phone.display}`}
+  >
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 12l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke-linejoin="round"/></svg>
+  </a>
+
+  <a
+    href={site.email.href}
+    class="pointer-events-auto inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-ink shadow-md ring-1 ring-line hover:text-accent-strong hover:-translate-y-0.5 transition-all"
+    aria-label="Email Ocean Endodontics"
+  >
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+  </a>
+
+  <a
+    href={site.cta.book.href}
+    class="pointer-events-auto inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-ink shadow-md ring-1 ring-line hover:text-accent-strong hover:-translate-y-0.5 transition-all"
+    aria-label="Schedule an appointment"
+  >
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M8 3v3M16 3v3M3 9h18M8.5 13h2m3 0h2m-7 3.5h2m3 0h2"/></svg>
+  </a>
+
+  <button
+    type="button"
+    class="pointer-events-auto hidden inline-flex items-center justify-center w-12 h-12 rounded-full bg-ink text-white shadow-md hover:-translate-y-0.5 transition-all"
+    aria-label="Back to top"
+    data-back-to-top
+  >
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</div>
+
+<!-- Accessibility panel -->
+<div id="a11y-panel" class="fixed inset-0 z-50 hidden" data-a11y-panel>
+  <div class="absolute inset-0 bg-ink/30 backdrop-blur-sm" data-a11y-dismiss></div>
+  <div
+    class="absolute right-3 sm:right-5 bottom-3 top-3 sm:top-auto sm:bottom-5 w-[min(92vw,22rem)] max-h-[92vh] overflow-y-auto rounded-3xl bg-white shadow-lg ring-1 ring-line p-5"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="a11y-title"
+  >
+    <div class="flex items-center justify-between">
+      <h2 id="a11y-title" class="text-lg font-bold text-ink">Accessibility tools</h2>
+      <button type="button" class="inline-flex w-9 h-9 items-center justify-center rounded-full ring-1 ring-line text-ink hover:bg-surface-subtle" aria-label="Close accessibility tools" data-a11y-close>
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <p class="mt-1 text-sm text-ink-muted">Your choices are saved on this device.</p>
+
+    <!-- Text size -->
+    <div class="mt-5">
+      <p class="text-sm font-semibold text-ink mb-2">Text size</p>
+      <div class="grid grid-cols-3 gap-1.5" role="group" aria-label="Text size">
+        <button type="button" class="a11y-seg" data-a11y-seg="fontScale" data-value="1">Default</button>
+        <button type="button" class="a11y-seg" data-a11y-seg="fontScale" data-value="1.15">Large</button>
+        <button type="button" class="a11y-seg" data-a11y-seg="fontScale" data-value="1.3">X-Large</button>
+      </div>
+    </div>
+
+    <!-- Line spacing -->
+    <div class="mt-4">
+      <p class="text-sm font-semibold text-ink mb-2">Line spacing</p>
+      <div class="grid grid-cols-3 gap-1.5" role="group" aria-label="Line spacing">
+        <button type="button" class="a11y-seg" data-a11y-seg="line" data-value="normal">Normal</button>
+        <button type="button" class="a11y-seg" data-a11y-seg="line" data-value="relaxed">Relaxed</button>
+        <button type="button" class="a11y-seg" data-a11y-seg="line" data-value="loose">Loose</button>
+      </div>
+    </div>
+
+    <!-- Letter spacing -->
+    <div class="mt-4">
+      <p class="text-sm font-semibold text-ink mb-2">Letter spacing</p>
+      <div class="grid grid-cols-2 gap-1.5" role="group" aria-label="Letter spacing">
+        <button type="button" class="a11y-seg" data-a11y-seg="letter" data-value="normal">Normal</button>
+        <button type="button" class="a11y-seg" data-a11y-seg="letter" data-value="wide">Wide</button>
+      </div>
+    </div>
+
+    <!-- Toggles -->
+    <div class="mt-5 grid grid-cols-2 gap-1.5">
+      <button type="button" class="a11y-toggle" data-a11y-toggle="contrast">High contrast</button>
+      <button type="button" class="a11y-toggle" data-a11y-toggle="motion">Reduce motion</button>
+      <button type="button" class="a11y-toggle" data-a11y-toggle="font">Readable font</button>
+      <button type="button" class="a11y-toggle" data-a11y-toggle="links">Highlight links</button>
+      <button type="button" class="a11y-toggle" data-a11y-toggle="cursor">Big cursor</button>
+      <button type="button" class="a11y-toggle" data-a11y-toggle="focus">Focus outline</button>
+      <button type="button" class="a11y-toggle col-span-2" data-a11y-toggle="guide">Reading guide</button>
+    </div>
+
+    <button type="button" class="mt-5 w-full rounded-full bg-surface-subtle ring-1 ring-line py-2.5 text-sm font-semibold text-ink hover:bg-surface-muted" data-a11y-reset>
+      Reset all
+    </button>
+
+    <p class="mt-4 text-xs text-ink-muted leading-relaxed">
+      Need more help? Read our <a href="/accessibility-statement" class="text-accent-strong">Accessibility Statement</a> or call <a href={site.phone.href} class="text-accent-strong">{site.phone.display}</a>.
+    </p>
+  </div>
+</div>
+
+<style>
+  .a11y-seg,
+  .a11y-toggle {
+    border-radius: 0.75rem;
+    padding: 0.55rem 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-ink-soft);
+    background: var(--color-surface-subtle);
+    box-shadow: inset 0 0 0 1px var(--color-line);
+    transition: all 0.15s var(--ease-out-soft);
+    text-align: center;
+  }
+  .a11y-seg:hover,
+  .a11y-toggle:hover { background: var(--color-surface-muted); }
+  .a11y-seg[aria-pressed='true'],
+  .a11y-toggle[aria-pressed='true'] {
+    background: var(--color-accent);
+    color: #fff;
+    box-shadow: inset 0 0 0 1px var(--color-accent);
+  }
+</style>
+
+<script>
+  (() => {
+    const A = (window as any).__oeA11y;
+    const panel = document.querySelector<HTMLElement>('[data-a11y-panel]');
+    const openBtn = document.querySelector<HTMLButtonElement>('[data-a11y-open]');
+    if (!A || !panel || !openBtn) return;
+
+    const segs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-a11y-seg]'));
+    const toggles = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-a11y-toggle]'));
+
+    const syncUI = () => {
+      segs.forEach((b) => {
+        const key = b.dataset.a11ySeg!;
+        b.setAttribute('aria-pressed', String(String((A.state as any)[key]) === b.dataset.value));
+      });
+      toggles.forEach((b) => {
+        const key = b.dataset.a11yToggle!;
+        b.setAttribute('aria-pressed', String(Boolean((A.state as any)[key])));
+      });
+    };
+
+    segs.forEach((b) =>
+      b.addEventListener('click', () => {
+        const key = b.dataset.a11ySeg!;
+        const raw = b.dataset.value!;
+        (A.state as any)[key] = key === 'fontScale' ? Number(raw) : raw;
+        A.save();
+        syncUI();
+      })
+    );
+    toggles.forEach((b) =>
+      b.addEventListener('click', () => {
+        const key = b.dataset.a11yToggle!;
+        (A.state as any)[key] = !(A.state as any)[key];
+        A.save();
+        syncUI();
+      })
+    );
+
+    // Open / close
+    let lastFocus: HTMLElement | null = null;
+    const setOpen = (open: boolean) => {
+      panel.classList.toggle('hidden', !open);
+      openBtn.setAttribute('aria-expanded', String(open));
+      if (open) {
+        lastFocus = document.activeElement as HTMLElement;
+        syncUI();
+        panel.querySelector<HTMLElement>('[data-a11y-close]')?.focus();
+      } else {
+        lastFocus?.focus();
+      }
+    };
+    openBtn.addEventListener('click', () => setOpen(panel.classList.contains('hidden')));
+    document.querySelectorAll('[data-a11y-dismiss], [data-a11y-close]').forEach((el) =>
+      el.addEventListener('click', () => setOpen(false))
+    );
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.classList.contains('hidden')) setOpen(false);
+    });
+    document.querySelector('[data-a11y-reset]')?.addEventListener('click', () => {
+      A.reset();
+      syncUI();
+    });
+
+    // Reading guide follows the pointer
+    const onMove = (e: PointerEvent) => {
+      if (A.state.guide) document.documentElement.style.setProperty('--rg-y', e.clientY + 'px');
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+
+    // Back-to-top visibility
+    const topBtn = document.querySelector<HTMLButtonElement>('[data-back-to-top]');
+    if (topBtn) {
+      const onScroll = () => topBtn.classList.toggle('hidden', window.scrollY < 700);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      topBtn.addEventListener('click', () =>
+        window.scrollTo({ top: 0, behavior: A.state.motion ? 'auto' : 'smooth' })
+      );
+      onScroll();
+    }
+
+    syncUI();
+  })();
+</script>

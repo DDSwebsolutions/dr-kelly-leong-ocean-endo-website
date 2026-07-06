@@ -1,0 +1,86 @@
+# ============================================================================
+# Ocean Endodontics — 301 redirect map (WordPress -> Astro)
+# Both trailing-slash and non-slash forms are listed for every legacy URL.
+# Do NOT add a `/* /404 404` catch-all: Astro emits 404.html and Cloudflare
+# Pages serves it automatically; a catch-all would shadow real routes.
+# ============================================================================
+
+# ---- Appointment ----
+/appointment/                 /book-appointment            301
+/appointment                  /book-appointment            301
+
+# ---- Services (old top-level slugs -> /services/*) ----
+/root-canal-therapy/                       /services/root-canal-therapy                       301
+/root-canal-therapy                        /services/root-canal-therapy                       301
+/retreatment-root-canal-therapy/           /services/retreatment-root-canal-therapy           301
+/retreatment-root-canal-therapy            /services/retreatment-root-canal-therapy           301
+/apicoectomy-endodontic-microsurgery/      /services/apicoectomy-endodontic-microsurgery      301
+/apicoectomy-endodontic-microsurgery       /services/apicoectomy-endodontic-microsurgery      301
+/diagnosis-pain-management/                /services/diagnosis-pain-management                301
+/diagnosis-pain-management                 /services/diagnosis-pain-management                301
+/cracked-tooth-treatment/                  /services/cracked-tooth-treatment                  301
+/cracked-tooth-treatment                   /services/cracked-tooth-treatment                  301
+/emergency-endodontic-treatment/           /services/emergency-endodontic-treatment           301
+/emergency-endodontic-treatment            /services/emergency-endodontic-treatment           301
+/botox-for-bruxism/                        /services/botox-for-bruxism                        301
+/botox-for-bruxism                         /services/botox-for-bruxism                        301
+/dental-trauma-management/                 /services/dental-trauma-management                 301
+/dental-trauma-management                  /services/dental-trauma-management                 301
+/nitrous-oxide-sedation/                   /services/nitrous-oxide-sedation                   301
+/nitrous-oxide-sedation                    /services/nitrous-oxide-sedation                   301
+/oral-conscious-sedation-dentistry/        /services/oral-conscious-sedation-dentistry        301
+/oral-conscious-sedation-dentistry         /services/oral-conscious-sedation-dentistry        301
+/internal-bleaching/                       /services/internal-bleaching                       301
+/internal-bleaching                        /services/internal-bleaching                       301
+
+# ---- Areas We Serve (long WP slugs -> clean slugs) ----
+/endodontic-care-near-you-areas-we-serve-ocean-endo/                 /areas-we-serve                       301
+/endodontic-care-near-you-areas-we-serve-ocean-endo                  /areas-we-serve                       301
+/endodontist-near-daly-city-expert-root-canal-emergency-care/        /areas-we-serve/daly-city             301
+/endodontist-near-daly-city-expert-root-canal-emergency-care         /areas-we-serve/daly-city             301
+/endodontist-near-west-portal-precision-root-canal-microsurgery/     /areas-we-serve/west-portal           301
+/endodontist-near-west-portal-precision-root-canal-microsurgery      /areas-we-serve/west-portal           301
+/endodontist-near-lake-merced-gentle-root-canal-emergency-care/      /areas-we-serve/lake-merced           301
+/endodontist-near-lake-merced-gentle-root-canal-emergency-care       /areas-we-serve/lake-merced           301
+/endodontist-near-ingleside-advanced-root-canal-emergency-care/      /areas-we-serve/ingleside             301
+/endodontist-near-ingleside-advanced-root-canal-emergency-care       /areas-we-serve/ingleside             301
+/endodontist-near-balboa-terrace-advanced-root-canal-microsurgery/   /areas-we-serve/balboa-terrace        301
+/endodontist-near-balboa-terrace-advanced-root-canal-microsurgery    /areas-we-serve/balboa-terrace        301
+/endodontist-near-parkmerced-gentle-root-canal-emergency-care/       /areas-we-serve/parkmerced            301
+/endodontist-near-parkmerced-gentle-root-canal-emergency-care        /areas-we-serve/parkmerced            301
+/endodontist-near-st-francis-wood-precision-root-canal-emergency-care/  /areas-we-serve/st-francis-wood    301
+/endodontist-near-st-francis-wood-precision-root-canal-emergency-care   /areas-we-serve/st-francis-wood    301
+
+# ---- For Doctors / CE / staff ----
+/partnership-philosophy/       /for-doctors                 301
+/partnership-philosophy        /for-doctors                 301
+/staff-resources/              /for-doctors                 301
+/staff-resources               /for-doctors                 301
+/ce-botox-use-in-the-dental-setting/            /for-doctors    301
+/ce-botox-use-in-the-dental-setting             /for-doctors    301
+/ce-surviving-as-a-new-grad/                    /for-doctors    301
+/ce-surviving-as-a-new-grad                     /for-doctors    301
+/ce-ohi-for-the-endurance-athlete/              /for-doctors    301
+/ce-ohi-for-the-endurance-athlete               /for-doctors    301
+/ce-resorption-current-treatment-techniques/    /for-doctors    301
+/ce-resorption-current-treatment-techniques     /for-doctors    301
+/ce-managing-procedural-accidents-in-endodontics/  /for-doctors 301
+/ce-managing-procedural-accidents-in-endodontics   /for-doctors 301
+
+# ---- Patients ----
+/for-patients/                 /new-patient                 301
+/for-patients                  /new-patient                 301
+
+# ---- Legacy media / referral PDF (file no longer hosted here) ----
+/wp-content/uploads/2026/04/Updated-Referral.pdf   /for-doctors   301
+
+# ---- WordPress cruft ----
+/wp-login.php                  /                            301
+/wp-admin                      /                            301
+/wp-admin/*                    /                            301
+/feed/                         /rss.xml                     301
+/feed                          /rss.xml                     301
+/comments/feed/                /rss.xml                     301
+/category/*                    /education                   301
+/tag/*                         /education                   301
+/author/*                      /about                       301

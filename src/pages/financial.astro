@@ -1,0 +1,68 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/sections/PageHero.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+import { webPageSchema, faqPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Insurance & Financing', path: '/financial' },
+];
+const description =
+  'Insurance and payment at Ocean Endodontics in San Francisco. We verify your benefits in advance, review fees before care, and offer flexible payment options.';
+const points = [
+  { title: 'We verify your benefits in advance', body: 'Our team checks your dental insurance before your visit and helps you understand what to expect, so there are no surprises.' },
+  { title: 'Fees reviewed before care begins', body: 'You’ll always know the estimated cost of treatment and your expected responsibility before we proceed. Questions are welcome any time.' },
+  { title: 'Flexible payment options', body: 'We accept major payment methods and offer flexible options. Ask our team about the choices available for your treatment plan.' },
+  { title: 'Referral coordination', body: 'When your care is shared with your general dentist, we document everything clearly so billing and follow-up stay simple.' },
+];
+const faqs = [
+  { q: 'Do you take my insurance?', a: 'We work with many dental insurance plans and will verify your specific benefits before your visit. Call us with your plan details and our team will help you understand your coverage.' },
+  { q: 'What if I don’t have insurance?', a: 'You are still welcome here. We’ll review fees up front and discuss flexible payment options so you can make an informed decision about your care.' },
+  { q: 'Will you tell me the cost before treatment?', a: 'Yes. We review the estimated cost and your expected responsibility before treatment begins, so you are never caught off guard.' },
+];
+const schema = [
+  webPageSchema({ path: '/financial', title: 'Insurance & Financing', description, crumbs }),
+  faqPageSchema(faqs),
+];
+---
+<BaseLayout title="Insurance & Financing" seoTitle="Insurance & Financing | Ocean Endodontics, San Francisco" description={description} schema={schema}>
+  <PageHero
+    eyebrow="Insurance & financing"
+    title="Clear, honest, no surprises"
+    lead="Specialist care should be understandable. We verify your benefits, review fees before we begin, and help you find a comfortable way to move forward."
+    crumbs={crumbs}
+  >
+    <div class="flex flex-wrap gap-3">
+      <Button href={site.phone.href}>Ask about your coverage</Button>
+      <Button href={site.cta.book.href} variant="secondary">Book an appointment</Button>
+    </div>
+  </PageHero>
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <ul class="grid gap-5 sm:grid-cols-2">
+        {
+          points.map((p) => (
+            <li class="rounded-2xl bg-white ring-1 ring-line p-7" data-reveal>
+              <span class="inline-flex w-11 h-11 items-center justify-center rounded-xl bg-accent/10 text-accent-strong">
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12l5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <h2 class="mt-4 text-xl font-semibold text-ink">{p.title}</h2>
+              <p class="mt-2 text-ink-soft leading-relaxed">{p.body}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-8 text-sm text-ink-muted max-w-3xl">
+        Coverage varies by plan and treatment. The information here is general; your Ocean Endodontics team will confirm the specifics for your situation before care begins.
+      </p>
+    </div>
+  </section>
+
+  <FAQ faqs={faqs} title="Insurance & payment questions" />
+  <CtaBand />
+</BaseLayout>

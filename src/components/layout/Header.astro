@@ -1,0 +1,249 @@
+---
+import { Image } from 'astro:assets';
+import { site, primaryNav } from '@data/site';
+import logo from '@assets/images/brand/logo-horizontal.png';
+import Button from '@components/ui/Button.astro';
+
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const isActive = (href: string) => (href === '/' ? path === '/' : path === href || path.startsWith(href + '/'));
+
+// Desktop nav is intentionally lean: the logo is Home, and For Doctors lives in
+// the utility bar (distinct audience). Mobile menu keeps the full list.
+const desktopNav = primaryNav.filter((i) => i.href !== '/' && i.href !== '/for-doctors');
+---
+
+<header class="relative z-40" data-site-header>
+  <!-- Utility bar (scrolls away; only the main bar sticks) -->
+  <div class="hidden lg:block bg-ink text-primary-100 text-sm">
+    <div class="mx-auto max-w-wide px-6 flex items-center justify-between h-10">
+      <div class="flex items-center gap-5">
+        <a href={site.directionsUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-primary-100 hover:text-white no-underline">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 21s-7-5.7-7-11a7 7 0 1 1 14 0c0 5.3-7 11-7 11Z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.5"/></svg>
+          {site.address.full}
+        </a>
+        <span class="text-primary-300/60" aria-hidden="true">|</span>
+        <span class="text-primary-100/90">{site.hoursSummary}</span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="/for-doctors" class="text-primary-100 hover:text-white no-underline">For Doctors</a>
+        <a href={site.portals.patient} target="_blank" rel="noopener noreferrer" class="text-primary-100 hover:text-white no-underline">Patient Portal</a>
+        <span class="text-primary-300/60" aria-hidden="true">|</span>
+        <div class="flex items-center gap-3">
+          <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" class="text-primary-100 hover:text-white" aria-label="Ocean Endodontics on Instagram">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href={site.social.yelp} target="_blank" rel="noopener noreferrer" class="text-primary-100 hover:text-white no-underline text-xs font-semibold">Yelp</a>
+          <a href={site.social.google} target="_blank" rel="noopener noreferrer" class="text-primary-100 hover:text-white no-underline text-xs font-semibold">Google</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main bar -->
+  <div class="sticky top-0 z-40 bg-white/85 backdrop-blur-md border-b border-line" data-header-bar>
+    <div class="mx-auto max-w-wide px-4 sm:px-6">
+      <div class="flex items-center justify-between gap-4 h-16 lg:h-20">
+        <a href="/" class="shrink-0" aria-label="Ocean Endodontics — home">
+          <Image src={logo} alt="Ocean Endodontics, The Dental Group of Dr. Kelly Kimiko Leong" width={188} loading="eager" class="h-9 lg:h-11 w-auto" />
+        </a>
+
+        <!-- Desktop nav -->
+        <nav aria-label="Primary" class="hidden xl:block">
+          <ul class="flex items-center gap-1.5">
+            {
+              desktopNav.map((item) =>
+                item.children ? (
+                  <li class="relative">
+                    <details class="nav-dd group">
+                      <summary
+                        class:list={[
+                          'flex items-center gap-1 px-3 py-2 rounded-full text-[0.9rem] font-normal cursor-pointer select-none list-none transition-colors',
+                          isActive(item.href) ? 'text-accent-strong' : 'text-ink hover:text-accent-strong',
+                        ]}
+                      >
+                        {item.label}
+                        <svg class="w-4 h-4 opacity-60 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </summary>
+                      <div class="nav-panel absolute left-0 top-full pt-3 min-w-64">
+                        <ul class="rounded-2xl bg-white shadow-lg ring-1 ring-line p-2">
+                          <li>
+                            <a href={item.href} class="block rounded-xl px-3 py-2 text-sm font-semibold text-ink hover:bg-surface-subtle no-underline">
+                              {item.label} overview
+                            </a>
+                          </li>
+                          {item.children.map((c) => (
+                            <li>
+                              <a
+                                href={c.href}
+                                target={c.external ? '_blank' : undefined}
+                                rel={c.external ? 'noopener noreferrer' : undefined}
+                                class="block rounded-xl px-3 py-2 text-sm text-ink-soft hover:bg-surface-subtle hover:text-accent-strong no-underline"
+                              >
+                                {c.label}
+                                {c.external && <span class="sr-only"> (opens in a new tab)</span>}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </details>
+                  </li>
+                ) : (
+                  <li>
+                    <a
+                      href={item.href}
+                      class:list={[
+                        'px-3 py-2 rounded-full text-[0.9rem] font-normal no-underline transition-colors',
+                        isActive(item.href) ? 'text-accent-strong' : 'text-ink hover:text-accent-strong',
+                      ]}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                )
+              )
+            }
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <Button href={site.cta.book.href} size="md" class="hidden sm:inline-flex">Book Appointment</Button>
+
+          <!-- Mobile menu toggle -->
+          <button
+            type="button"
+            class="xl:hidden inline-flex items-center justify-center w-11 h-11 rounded-full ring-1 ring-line text-ink hover:bg-surface-subtle"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+            data-menu-toggle
+          >
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" data-menu-open-icon><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+            <svg class="w-6 h-6 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" data-menu-close-icon><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile off-canvas menu -->
+  <div id="mobile-menu" class="xl:hidden fixed inset-0 z-50 hidden" data-mobile-menu>
+    <div class="absolute inset-0 bg-ink/40 backdrop-blur-sm" data-menu-backdrop></div>
+    <div
+      class="absolute right-0 top-0 h-full w-[min(92vw,24rem)] bg-white shadow-lg flex flex-col"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
+    >
+      <div class="flex items-center justify-between px-5 h-16 border-b border-line">
+        <Image src={logo} alt="Ocean Endodontics" width={150} class="h-8 w-auto" />
+        <button type="button" class="inline-flex items-center justify-center w-11 h-11 rounded-full ring-1 ring-line text-ink" aria-label="Close menu" data-menu-close>
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <nav aria-label="Mobile" class="flex-1 overflow-y-auto px-4 py-4">
+        <ul class="flex flex-col gap-1">
+          {
+            primaryNav.map((item) =>
+              item.children ? (
+                <li>
+                  <details class="group rounded-xl">
+                    <summary class="flex items-center justify-between px-3 py-3 rounded-xl text-ink font-semibold cursor-pointer list-none select-none hover:bg-surface-subtle">
+                      {item.label}
+                      <svg class="w-5 h-5 opacity-60 transition-transform group-open:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </summary>
+                    <ul class="pl-3 pb-2 flex flex-col gap-0.5">
+                      <li>
+                        <a href={item.href} class="block px-3 py-2 rounded-lg text-sm font-medium text-accent-strong no-underline hover:bg-surface-subtle">All {item.label}</a>
+                      </li>
+                      {item.children.map((c) => (
+                        <li>
+                          <a
+                            href={c.href}
+                            target={c.external ? '_blank' : undefined}
+                            rel={c.external ? 'noopener noreferrer' : undefined}
+                            class="block px-3 py-2 rounded-lg text-sm text-ink-soft no-underline hover:bg-surface-subtle hover:text-accent-strong"
+                          >
+                            {c.label}{c.external && <span class="sr-only"> (opens in a new tab)</span>}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
+              ) : (
+                <li>
+                  <a href={item.href} class="block px-3 py-3 rounded-xl text-ink font-semibold no-underline hover:bg-surface-subtle">{item.label}</a>
+                </li>
+              )
+            )
+          }
+        </ul>
+      </nav>
+      <div class="border-t border-line p-4 flex flex-col gap-2">
+        <Button href={site.cta.book.href} size="lg" class="w-full">Book Appointment</Button>
+        <Button href={site.phone.href} variant="secondary" size="lg" class="w-full">Call {site.phone.display}</Button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu open/close + desktop dropdown hover/close behavior.
+  (() => {
+    const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const openIcon = document.querySelector<SVGElement>('[data-menu-open-icon]');
+    const closeIcon = document.querySelector<SVGElement>('[data-menu-close-icon]');
+    const closers = document.querySelectorAll('[data-menu-close], [data-menu-backdrop]');
+
+    const setOpen = (open: boolean) => {
+      if (!menu || !toggle) return;
+      menu.classList.toggle('hidden', !open);
+      toggle.setAttribute('aria-expanded', String(open));
+      openIcon?.classList.toggle('hidden', open);
+      closeIcon?.classList.toggle('hidden', !open);
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+      if (open) menu.querySelector<HTMLElement>('a, button')?.focus();
+    };
+
+    toggle?.addEventListener('click', () => setOpen(menu?.classList.contains('hidden') ?? true));
+    closers.forEach((c) => c.addEventListener('click', () => setOpen(false)));
+    menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        document.querySelectorAll<HTMLDetailsElement>('.nav-dd[open]').forEach((d) => (d.open = false));
+      }
+    });
+
+    // Desktop dropdowns: open on hover, close others, close on outside click.
+    const dds = Array.from(document.querySelectorAll<HTMLDetailsElement>('.nav-dd'));
+    dds.forEach((dd) => {
+      let t: number | undefined;
+      dd.addEventListener('mouseenter', () => {
+        window.clearTimeout(t);
+        dds.forEach((o) => o !== dd && (o.open = false));
+        dd.open = true;
+      });
+      dd.addEventListener('mouseleave', () => {
+        t = window.setTimeout(() => (dd.open = false), 120);
+      });
+    });
+    document.addEventListener('click', (e) => {
+      dds.forEach((dd) => {
+        if (dd.open && !dd.contains(e.target as Node)) dd.open = false;
+      });
+    });
+  })();
+</script>
+
+<style>
+  /* Hide default <summary> marker */
+  summary::-webkit-details-marker { display: none; }
+  summary { list-style: none; }
+  .nav-dd > summary { position: relative; }
+  /* keep desktop dropdown panel above content */
+  .nav-panel { z-index: 50; }
+</style>

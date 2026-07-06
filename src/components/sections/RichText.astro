@@ -1,0 +1,10 @@
+---
+import { renderParagraphs } from '@lib/utils';
+/** RichText — renders data prose with [label](/path) tokens into safe HTML. */
+interface Props { text: string; class?: string }
+const { text, class: className = '' } = Astro.props;
+const paras = renderParagraphs(text);
+---
+<div class:list={['prose-content', className]}>
+  {paras.map((html) => <p set:html={html} />)}
+</div>

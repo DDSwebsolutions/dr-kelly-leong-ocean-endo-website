@@ -1,0 +1,46 @@
+---
+import { site } from '@data/site';
+/**
+ * JotformEmbed — HIPAA-tier appointment request form.
+ * The container carries an accessible name so it doesn't collide with <main>.
+ * CSP (public/_headers) whitelists form.jotform.com + cdn.jotfor.ms across
+ * frame-src, script-src, connect-src and form-action, or submit silently fails.
+ */
+interface Props { title?: string; height?: number }
+const { title = 'Request an appointment', height = 640 } = Astro.props;
+const id = site.booking.jotformId;
+const src = site.booking.jotformSrc;
+---
+<section aria-label="Appointment request form" class="rounded-3xl bg-white ring-1 ring-line shadow-soft overflow-hidden">
+  <div class="border-b border-line px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
+    <h2 class="text-lg font-semibold text-ink">{title}</h2>
+    <p class="text-sm text-ink-muted">Prefer to talk? Call <a href={site.phone.href} class="text-accent-strong font-semibold">{site.phone.display}</a></p>
+  </div>
+  <div class="p-2 sm:p-4">
+    <iframe
+      id={`JotFormIFrame-${id}`}
+      title="Ocean Endodontics appointment request form"
+      onload="window.parent.scrollTo(0,0)"
+      allow="geolocation; microphone; camera; fullscreen; payment"
+      src={src}
+      loading="lazy"
+      style={`min-width:100%;max-width:100%;height:${height}px;border:none;`}
+      scrolling="no"
+    ></iframe>
+    <noscript>
+      <p class="p-6 text-ink-soft">
+        The appointment form requires JavaScript. Please call
+        <a href={site.phone.href} class="text-accent-strong font-semibold">{site.phone.display}</a>
+        or email <a href={site.email.href} class="text-accent-strong font-semibold">{site.email.display}</a> to request an appointment.
+      </p>
+    </noscript>
+  </div>
+</section>
+
+<script src="https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js" is:inline></script>
+<script define:vars={{ id }}>
+  // define:vars (no is:inline) so Astro injects `id` into this inline script.
+  if (window.jotformEmbedHandler) {
+    window.jotformEmbedHandler("iframe[id='JotFormIFrame-" + id + "']", 'https://form.jotform.com/');
+  }
+</script>

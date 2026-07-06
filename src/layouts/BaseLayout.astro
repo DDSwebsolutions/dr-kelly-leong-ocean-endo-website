@@ -1,0 +1,168 @@
+---
+import '@fontsource-variable/inter';
+import '@styles/global.css';
+
+import { site } from '@data/site';
+import { absoluteUrl } from '@lib/utils';
+import { organizationSchema, websiteSchema, physicianSchema, graph } from '@lib/schemas';
+
+import Seo from '@components/seo/Seo.astro';
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import FloatingActionBar from '@components/layout/FloatingActionBar.astro';
+import MobileActionBar from '@components/layout/MobileActionBar.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  seoTitle?: string;
+  image?: string; // site-root path OR absolute
+  noindex?: boolean;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  schema?: unknown[];
+  mainClass?: string;
+}
+
+const {
+  title,
+  description,
+  seoTitle,
+  image,
+  noindex = false,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  schema = [],
+  mainClass = '',
+} = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const canonical = absoluteUrl(pathname);
+const pageTitle = seoTitle ?? `${title} | ${site.name}`;
+const ogImage = image
+  ? image.startsWith('http')
+    ? image
+    : absoluteUrl(image)
+  : absoluteUrl('/og-default.jpg');
+
+const LOGO_URL = absoluteUrl('/mark.png');
+const OFFICE_IMG = absoluteUrl('/images/office.jpg');
+const DR_IMG = absoluteUrl('/images/dr-leong.jpg');
+
+// Global JSON-LD graph (org + website + physician) plus page-specific nodes.
+const jsonLd = graph([
+  organizationSchema(LOGO_URL, OFFICE_IMG),
+  websiteSchema(),
+  physicianSchema(DR_IMG),
+  ...schema,
+]);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Accessibility preferences bootstrap: applied BEFORE first paint so
+         there is no flash of unstyled/unsized content. Dependency-free. -->
+    <script is:inline>
+      (function () {
+        var DEFAULTS = {
+          fontScale: 1,
+          line: 'normal',
+          letter: 'normal',
+          contrast: false,
+          motion: false,
+          font: false,
+          links: false,
+          cursor: false,
+          focus: false,
+          guide: false,
+        };
+        var state = Object.assign({}, DEFAULTS);
+        try {
+          var saved = JSON.parse(localStorage.getItem('oe-a11y') || '{}');
+          state = Object.assign(state, saved);
+        } catch (e) {}
+        var root = document.documentElement;
+        function apply() {
+          root.style.setProperty('--a11y-font-scale', String(state.fontScale));
+          root.style.setProperty('--a11y-line', ({ normal: 1.65, relaxed: 1.9, loose: 2.2 })[state.line] || 1.65);
+          root.style.setProperty('--a11y-letter', state.letter === 'wide' ? '0.06em' : '0');
+          function attr(name, on, val) { if (on) root.setAttribute(name, val); else root.removeAttribute(name); }
+          attr('data-a11y-contrast', state.contrast, 'more');
+          attr('data-a11y-motion', state.motion, 'off');
+          attr('data-a11y-font', state.font, 'dyslexic');
+          attr('data-a11y-links', state.links, 'on');
+          attr('data-a11y-cursor', state.cursor, 'big');
+          attr('data-a11y-focus', state.focus, 'on');
+          attr('data-a11y-guide', state.guide, 'on');
+        }
+        window.__oeA11y = {
+          state: state,
+          save: function () { try { localStorage.setItem('oe-a11y', JSON.stringify(state)); } catch (e) {} apply(); },
+          reset: function () { for (var k in DEFAULTS) state[k] = DEFAULTS[k]; window.__oeA11y.save(); },
+        };
+        apply();
+      })();
+    </script>
+
+    <Seo
+      title={pageTitle}
+      description={description}
+      canonical={canonical}
+      image={ogImage}
+      noindex={noindex}
+      type={type}
+      publishedTime={publishedTime}
+      modifiedTime={modifiedTime}
+    />
+
+    <meta name="theme-color" content="#101a33" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/mark.png" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} — Education Center`} href="/rss.xml" />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  </head>
+
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <Header />
+    <main id="main" class={mainClass}>
+      <slot />
+    </main>
+    <Footer />
+    <MobileActionBar />
+    <FloatingActionBar />
+
+    <!-- Scroll reveal (progressive enhancement; CSS shows all if reduced motion) -->
+    <script>
+      (() => {
+        const els = document.querySelectorAll('[data-reveal]');
+        if (!('IntersectionObserver' in window) || !els.length) {
+          els.forEach((el) => el.classList.add('is-visible'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                (entry.target as HTMLElement).classList.add('is-visible');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+        els.forEach((el) => io.observe(el));
+      })();
+    </script>
+  </body>
+</html>

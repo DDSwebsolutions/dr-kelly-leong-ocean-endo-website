@@ -1,0 +1,66 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import { site } from '@data/site';
+import { webPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Privacy Policy', path: '/privacy-policy' },
+];
+const updated = 'July 5, 2026';
+const description = 'The Ocean Endodontics privacy policy: what information we collect, how we use it, and the privacy-respecting choices we make, including no advertising trackers.';
+const schema = [webPageSchema({ path: '/privacy-policy', title: 'Privacy Policy', description, crumbs })];
+---
+<BaseLayout title="Privacy Policy" description={description} noindex={false} schema={schema}>
+  <section class="bg-surface-subtle border-b border-line">
+    <div class="mx-auto max-w-3xl px-6 py-12">
+      <Breadcrumbs crumbs={crumbs} class="mb-4" />
+      <h1 class="text-4xl font-bold text-ink">Privacy Policy</h1>
+      <p class="mt-3 text-ink-muted">Last updated {updated}</p>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-3xl px-6 py-12">
+    <article class="prose-content">
+      <p>{site.name} ({site.legalName}) respects your privacy. This policy explains what information we collect through this website, how we use it, and the choices you have. It applies to <strong>oceanendosf.com</strong>. Health information you share as a patient is separately protected under our Notice of Privacy Practices, available at our office.</p>
+
+      <h2>Our privacy-first approach</h2>
+      <p>We deliberately keep this website free of surveillance advertising technology. We do <strong>not</strong> use Google Analytics, advertising pixels, remarketing tags, or third-party behavioral tracking on this site. We do not sell or share your personal information for cross-context behavioral advertising.</p>
+
+      <h2>Information we collect</h2>
+      <ul>
+        <li><strong>Appointment requests.</strong> When you use our online request form, you provide details such as your name, contact information, and the reason for your visit. Our form is hosted by our HIPAA-tier form provider (Jotform) and is transmitted securely to our office.</li>
+        <li><strong>Direct communications.</strong> If you call, email, or message us, we receive the information you choose to share.</li>
+        <li><strong>Accessibility preferences.</strong> If you use our on-page accessibility tools, your settings are stored locally in your browser (localStorage) on your own device. They are not transmitted to us or anyone else.</li>
+      </ul>
+
+      <h2>Maps and fonts</h2>
+      <p>Our maps use OpenStreetMap tiles through the Leaflet library. When a map loads, your browser requests map images from the tile provider, which may receive your IP address for the purpose of serving those images. Web fonts on this site are self-hosted, so your browser does not make third-party font requests.</p>
+
+      <h2>How we use information</h2>
+      <p>We use the information you provide to respond to your inquiry, schedule and coordinate your care, verify insurance benefits, and communicate with you about your appointment. We use it only for these legitimate business and treatment purposes.</p>
+
+      <h2>Text messaging</h2>
+      <p>{site.disclaimers.smsConsent}</p>
+
+      <h2>How we share information</h2>
+      <p>We do not sell your personal information. We share information only as needed to provide care and operate the practice, for example with your referring or general dentist, with service providers such as our form and scheduling vendors who are bound to protect it, or when required by law.</p>
+
+      <h2>Children’s privacy</h2>
+      <p>This website is intended for a general audience and is not directed to children under 13. We do not knowingly collect personal information from children through this site.</p>
+
+      <h2>Your California privacy rights</h2>
+      <p>If you are a California resident, you have rights under the California Consumer Privacy Act (CCPA/CPRA), including the right to know, delete, and correct personal information, and to opt out of sale or sharing. Because we do not sell or share personal information for cross-context behavioral advertising, there is nothing to opt out of, but we honor the Global Privacy Control browser signal. See <a href="/do-not-sell-my-personal-information">Your Privacy Choices</a> or contact us to exercise your rights. Certain patient health information is governed by HIPAA rather than the CCPA.</p>
+
+      <h2>Data security</h2>
+      <p>We use reasonable administrative, technical, and physical safeguards to protect the information we handle. No method of transmission over the internet is completely secure, so please avoid sending sensitive health details through unsecured email.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>We may update this policy from time to time. Changes take effect when posted here, and we will update the date above.</p>
+
+      <h2>Contact us</h2>
+      <p>Questions about this policy? Call us at <a href={site.phone.href}>{site.phone.display}</a>, email <a href={site.email.href}>{site.email.display}</a>, or write to us at {site.address.full}.</p>
+    </article>
+  </div>
+</BaseLayout>

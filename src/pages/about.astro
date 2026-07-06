@@ -1,0 +1,87 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/sections/PageHero.astro';
+import FeatureRow from '@components/sections/FeatureRow.astro';
+import StatStrip from '@components/sections/StatStrip.astro';
+import SectionHeading from '@components/ui/SectionHeading.astro';
+import Reviews from '@components/sections/Reviews.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+import { webPageSchema } from '@lib/schemas';
+import welcomeHall from '@assets/images/photos/welcome-hall.jpg';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+];
+const description =
+  'About Ocean Endodontics, the San Francisco specialty practice of board-certified endodontist Dr. Kelly Kimiko Leong. Learn what an endodontist does and why patients and dentists trust us.';
+const links = [
+  { title: 'Meet Dr. Leong', text: 'Board-certified endodontist and native San Franciscan.', href: '/meet-dr-kimiko-leong' },
+  { title: 'Our Office', text: 'A calm, modern office designed for comfort on Ocean Avenue.', href: '/our-office' },
+  { title: 'Technology', text: 'Operating microscope and 3D imaging on every case.', href: '/technology' },
+  { title: 'Patient Reviews', text: 'Hear what our patients say about their experience.', href: '/reviews' },
+];
+const schema = [webPageSchema({ path: '/about', title: 'About Ocean Endodontics', description, crumbs })];
+---
+<BaseLayout title="About Ocean Endodontics" description={description} schema={schema}>
+  <PageHero
+    eyebrow="About us"
+    title="A specialty practice built around your comfort"
+    lead="Ocean Endodontics is the San Francisco practice of board-certified endodontist Dr. Kelly Kimiko Leong, focused entirely on relieving pain and saving natural teeth."
+    crumbs={crumbs}
+  >
+    <div class="flex flex-wrap gap-3">
+      <Button href="/meet-dr-kimiko-leong">Meet Dr. Leong</Button>
+      <Button href="/our-office" variant="secondary">Tour our office</Button>
+    </div>
+  </PageHero>
+
+  <FeatureRow
+    eyebrow="What is an endodontist?"
+    title="Specialists in saving teeth"
+    image={welcomeHall}
+    imageAlt="The Welcome to Ocean Endodontics sign in the office hallway"
+    reverse
+    bullets={[
+      'Two or more years of advanced training after dental school',
+      'Focused on the inside of the tooth: pulp, canals, and roots',
+      'Operating microscope and 3D imaging for precision',
+      'Care coordinated with your general dentist',
+    ]}
+  >
+    <p>
+      An endodontist is a dental specialist who diagnoses tooth pain and treats the delicate tissue inside your teeth. Where a general dentist handles a broad range of care, an endodontist concentrates on procedures like root canal therapy, retreatment, and microsurgery, using magnification and imaging that make complex cases predictable.
+    </p>
+    <p>
+      That focus is why so much of our work comes from dentists referring their patients to us, and why we can often save teeth that might otherwise be lost.
+    </p>
+  </FeatureRow>
+
+  <StatStrip />
+
+  <section class="py-16 lg:py-20">
+    <div class="mx-auto max-w-content px-6">
+      <SectionHeading eyebrow="Explore" title="Get to know Ocean Endodontics" class="mb-10" />
+      <ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          links.map((l) => (
+            <li data-reveal>
+              <a href={l.href} class="group flex h-full flex-col rounded-2xl bg-white ring-1 ring-line p-6 no-underline transition-all hover:-translate-y-1 hover:shadow-md hover:ring-line-strong">
+                <h3 class="text-lg font-semibold text-ink group-hover:text-accent-strong">{l.title}</h3>
+                <p class="mt-2 text-[0.95rem] text-ink-soft flex-1">{l.text}</p>
+                <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong">Explore
+                  <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Reviews limit={3} />
+  <CtaBand />
+</BaseLayout>

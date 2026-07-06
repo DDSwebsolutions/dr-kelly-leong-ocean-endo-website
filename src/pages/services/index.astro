@@ -1,0 +1,55 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import PageHero from '@components/sections/PageHero.astro';
+import ServiceGrid from '@components/sections/ServiceGrid.astro';
+import CtaBand from '@components/sections/CtaBand.astro';
+import FAQ from '@components/sections/FAQ.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+import { generalFaqs } from '@data/reviews';
+import { webPageSchema } from '@lib/schemas';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+];
+const description =
+  'Endodontic services in San Francisco: root canal therapy, retreatment, apicoectomy microsurgery, cracked tooth and trauma care, emergency treatment, sedation, and internal bleaching with Dr. Kelly Kimiko Leong.';
+const schema = [webPageSchema({ path: '/services', title: 'Endodontic Services', description, crumbs })];
+---
+<BaseLayout title="Endodontic Services in San Francisco" description={description} schema={schema}>
+  <PageHero
+    eyebrow="Our services"
+    title="Endodontic services in San Francisco"
+    lead="Everything we do is aimed at one thing: relieving pain and saving your natural tooth. Explore our treatments, or call and we’ll help you find the right next step."
+    crumbs={crumbs}
+  >
+    <div class="flex flex-wrap gap-3">
+      <Button href={site.cta.book.href}>Book an appointment</Button>
+      <Button href="/services/emergency-endodontic-treatment" variant="secondary">Dental emergency?</Button>
+    </div>
+  </PageHero>
+
+  <ServiceGrid eyebrow="" title="" />
+
+  <!-- Referral coordination note -->
+  <section class="pb-4">
+    <div class="mx-auto max-w-content px-6">
+      <div class="rounded-3xl bg-surface-subtle ring-1 ring-line p-8 lg:p-10 grid gap-6 lg:grid-cols-[1.4fr_auto] lg:items-center" data-reveal>
+        <div>
+          <h2 class="text-2xl font-bold text-ink">Referred by your dentist?</h2>
+          <p class="mt-3 text-ink-soft text-lg max-w-2xl">
+            We work hand in hand with general and family dentists across the west side of San Francisco. Your dentist stays informed with detailed notes and images, and you return to them for the final restoration, so your care is seamless from start to finish.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-3">
+          <Button href="/for-doctors" variant="secondary">For referring doctors</Button>
+          <Button href="/new-patient">New patient guide</Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+  <FAQ faqs={generalFaqs} />
+</BaseLayout>

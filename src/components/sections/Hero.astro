@@ -1,0 +1,76 @@
+---
+import { site } from '@data/site';
+import Button from '@components/ui/Button.astro';
+---
+<section class="relative isolate flex min-h-[86svh] items-end overflow-hidden bg-ink">
+  <!-- Background video (self-hosted, muted loop). Poster paints instantly and
+       is the LCP; the video only plays when motion is allowed. -->
+  <video
+    class="absolute inset-0 -z-10 h-full w-full object-cover"
+    poster={site.video.heroPoster}
+    muted
+    loop
+    playsinline
+    preload="auto"
+    aria-hidden="true"
+    data-hero-video
+  >
+    <source src={site.video.heroSrc} type="video/mp4" />
+  </video>
+
+  <!-- Blue scrim for contrast + brand tint -->
+  <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/45 to-primary-900/40" aria-hidden="true"></div>
+  <div class="absolute inset-0 -z-10 bg-primary-900/20 mix-blend-multiply" aria-hidden="true"></div>
+
+  <div class="relative mx-auto w-full max-w-content px-6 pb-16 pt-28 lg:pb-24">
+    <div class="max-w-3xl">
+      <p class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white ring-1 ring-white/25 backdrop-blur">
+        <span class="inline-block h-2 w-2 rounded-full bg-white"></span>
+        Board-Certified Endodontist · San Francisco
+      </p>
+
+      <h1 class="mt-6 text-5xl font-semibold leading-[1.02] tracking-tight text-white sm:text-6xl xl:text-7xl [text-wrap:balance] drop-shadow-sm">
+        Comfort first.<br />Precision always.
+      </h1>
+
+      <p class="mt-6 max-w-xl text-lg text-white/90 sm:text-xl [text-shadow:0_1px_16px_rgba(16,26,51,0.5)]">
+        {site.doctor.name} relieves pain and saves natural teeth with modern, microscope-guided endodontic care, delivered with a genuinely gentle touch.
+      </p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <Button href={site.cta.book.href} size="lg" variant="white">Book an appointment</Button>
+        <a
+          href={site.phone.href}
+          data-btn
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-7 py-3.5 text-base font-semibold text-white ring-1 ring-white/40 backdrop-blur transition-all hover:bg-white/20 hover:-translate-y-0.5"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 12l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke-linejoin="round"/></svg>
+          {site.phone.display}
+        </a>
+      </div>
+
+      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/85">
+        {['Microscope-guided care', 'Same-day emergencies', 'Free parking lot'].map((f) => (
+          <li class="inline-flex items-center gap-2">
+            <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            {f}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Respect reduced motion / Save-Data: keep the poster still, don't autoplay.
+  (() => {
+    const v = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+    if (!v) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const saveData = (navigator as any).connection?.saveData;
+    if (reduce || saveData) return;
+    const play = () => v.play().catch(() => {});
+    if (v.readyState >= 2) play();
+    else v.addEventListener('canplay', play, { once: true });
+  })();
+</script>

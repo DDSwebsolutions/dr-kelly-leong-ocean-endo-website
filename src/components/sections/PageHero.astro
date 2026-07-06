@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+
+interface Crumb { name: string; path: string }
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lead?: string;
+  crumbs?: Crumb[];
+  image?: ImageMetadata;
+  imageAlt?: string;
+  align?: 'left' | 'center';
+}
+const { eyebrow, title, lead, crumbs, image, imageAlt = '', align = 'left' } = Astro.props;
+const hasImage = Boolean(image);
+---
+<section class="relative overflow-hidden bg-surface-subtle border-b border-line">
+  <div class="pointer-events-none absolute -top-24 -right-24 w-[36rem] h-[36rem] rounded-full bg-primary-100/50 blur-3xl" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-wide px-6 py-12 lg:py-16">
+    <div class:list={['grid gap-10 items-center', hasImage ? 'lg:grid-cols-2' : '']}>
+      <div class:list={[align === 'center' && !hasImage ? 'text-center max-w-3xl mx-auto' : '', 'flex flex-col gap-5']} data-reveal>
+        {crumbs && <Breadcrumbs crumbs={crumbs} class="mb-1" />}
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+        <h1 class="text-4xl lg:text-5xl font-bold text-ink">{title}</h1>
+        {lead && <p class="text-lg text-ink-soft max-w-xl">{lead}</p>}
+        <slot />
+      </div>
+      {
+        hasImage && (
+          <div class="relative" data-reveal>
+            <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line">
+              <Image src={image!} alt={imageAlt} widths={[480, 768, 1024]} sizes="(max-width: 1024px) 100vw, 40rem" class="w-full h-full object-cover aspect-[4/3]" />
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

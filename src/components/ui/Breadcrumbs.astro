@@ -1,0 +1,26 @@
+---
+/** Breadcrumbs — visible trail; the matching JSON-LD is built separately. */
+interface Crumb { name: string; path: string }
+interface Props { crumbs: Crumb[]; tone?: 'dark' | 'light'; class?: string }
+const { crumbs, tone = 'dark', class: className = '' } = Astro.props;
+const link = tone === 'light' ? 'text-primary-100 hover:text-white' : 'text-ink-muted hover:text-accent-strong';
+const current = tone === 'light' ? 'text-white' : 'text-ink';
+---
+<nav aria-label="Breadcrumb" class:list={['text-sm', className]}>
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+    {
+      crumbs.map((c, i) => (
+        <li class="flex items-center gap-2">
+          {i < crumbs.length - 1 ? (
+            <>
+              <a href={c.path} class:list={[link, 'no-underline']}>{c.name}</a>
+              <span aria-hidden="true" class="opacity-40">/</span>
+            </>
+          ) : (
+            <span class:list={[current, 'font-medium']} aria-current="page">{c.name}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
