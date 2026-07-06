@@ -5,8 +5,34 @@
  * templates. Every claim here must be verifiable (see the build standard).
  */
 
-export type NavChild = { label: string; href: string; external?: boolean; note?: string };
-export type NavItem = { label: string; href: string; children?: NavChild[]; external?: boolean };
+export type NavChild = {
+  label: string;
+  href: string;
+  external?: boolean;
+  note?: string;
+  desc?: string; // one-line description shown in the desktop mega menu
+  icon?: string; // key resolved to an inline SVG in NavIcon.astro
+};
+export type NavFeatured = {
+  eyebrow?: string;
+  title: string;
+  desc: string;
+  href: string;
+  cta: string;
+  external?: boolean;
+  icon?: string;
+  tone?: 'navy' | 'accent' | 'urgent' | 'default';
+};
+export type NavItem = {
+  label: string;
+  href: string;
+  children?: NavChild[];
+  external?: boolean;
+  megaEyebrow?: string; // small label above the mega-menu columns
+  columns?: number; // link columns in the mega panel (desktop)
+  align?: 'left' | 'right'; // which edge the wide panel anchors to
+  featured?: NavFeatured; // promo card on the panel's right
+};
 
 export type DayHours = { day: string; short: string; opens?: string; closes?: string; closed?: boolean };
 
@@ -139,53 +165,100 @@ export const primaryNav: NavItem[] = [
   {
     label: 'About',
     href: '/about',
+    megaEyebrow: 'The practice',
+    columns: 1,
+    align: 'left',
     children: [
-      { label: 'Meet Dr. Kelly Kimiko Leong', href: '/meet-dr-kimiko-leong' },
-      { label: 'Our Office', href: '/our-office' },
-      { label: 'Technology', href: '/technology' },
-      { label: 'Patient Reviews', href: '/reviews' },
+      { label: 'Meet Dr. Kelly Kimiko Leong', href: '/meet-dr-kimiko-leong', icon: 'user', desc: 'Your board-certified endodontist' },
+      { label: 'Our Office', href: '/our-office', icon: 'building', desc: 'A calm, modern space built for comfort' },
+      { label: 'Technology', href: '/technology', icon: 'microscope', desc: 'Microscope-guided, 3D-imaging care' },
+      { label: 'Patient Reviews', href: '/reviews', icon: 'star', desc: 'What patients say about their visit' },
     ],
+    featured: {
+      eyebrow: 'Get to know us',
+      title: 'Meet Dr. Leong',
+      desc: 'A gentle, precise specialist who treats every patient like family.',
+      href: '/meet-dr-kimiko-leong',
+      cta: 'Read her story',
+      icon: 'user',
+      tone: 'navy',
+    },
   },
   {
     label: 'Services',
     href: '/services',
+    megaEyebrow: 'Endodontic care',
+    columns: 2,
+    align: 'left',
     children: [
-      { label: 'Root Canal Therapy', href: '/services/root-canal-therapy' },
-      { label: 'Root Canal Retreatment', href: '/services/retreatment-root-canal-therapy' },
-      { label: 'Apicoectomy (Microsurgery)', href: '/services/apicoectomy-endodontic-microsurgery' },
-      { label: 'Diagnosis & Pain Management', href: '/services/diagnosis-pain-management' },
-      { label: 'Cracked Tooth Treatment', href: '/services/cracked-tooth-treatment' },
-      { label: 'Emergency Endodontics', href: '/services/emergency-endodontic-treatment' },
-      { label: 'Dental Trauma Management', href: '/services/dental-trauma-management' },
-      { label: 'Nitrous Oxide Sedation', href: '/services/nitrous-oxide-sedation' },
-      { label: 'Oral Conscious Sedation', href: '/services/oral-conscious-sedation-dentistry' },
-      { label: 'Internal Bleaching', href: '/services/internal-bleaching' },
-      { label: 'Botox for Bruxism', href: '/services/botox-for-bruxism' },
+      { label: 'Root Canal Therapy', href: '/services/root-canal-therapy', icon: 'tooth', desc: 'Save your natural tooth, comfortably' },
+      { label: 'Root Canal Retreatment', href: '/services/retreatment-root-canal-therapy', icon: 'refresh', desc: 'A second chance for a failing canal' },
+      { label: 'Apicoectomy / Microsurgery', href: '/services/apicoectomy-endodontic-microsurgery', icon: 'microscope', desc: 'Microsurgery when a canal is not enough' },
+      { label: 'Diagnosis & Pain Management', href: '/services/diagnosis-pain-management', icon: 'search', desc: 'Find the true source of tooth pain' },
+      { label: 'Cracked Tooth Treatment', href: '/services/cracked-tooth-treatment', icon: 'crack', desc: 'Diagnose and treat cracked teeth' },
+      { label: 'Emergency Endodontics', href: '/services/emergency-endodontic-treatment', icon: 'bolt', desc: 'Same-day relief when it hurts' },
+      { label: 'Dental Trauma Management', href: '/services/dental-trauma-management', icon: 'shield', desc: 'Urgent care for injured teeth' },
+      { label: 'Nitrous Oxide Sedation', href: '/services/nitrous-oxide-sedation', icon: 'leaf', desc: 'Gentle laughing-gas relaxation' },
+      { label: 'Oral Conscious Sedation', href: '/services/oral-conscious-sedation-dentistry', icon: 'moon', desc: 'Ease anxiety with oral sedation' },
+      { label: 'Internal Bleaching', href: '/services/internal-bleaching', icon: 'sparkle', desc: 'Brighten a darkened, treated tooth' },
+      { label: 'Botox for Bruxism', href: '/services/botox-for-bruxism', icon: 'wave', desc: 'Relief from clenching and grinding' },
     ],
+    featured: {
+      eyebrow: 'In pain right now?',
+      title: 'Same-day emergencies',
+      desc: 'Call early and we will do our best to see you today.',
+      href: '/services/emergency-endodontic-treatment',
+      cta: 'Emergency care',
+      icon: 'bolt',
+      tone: 'urgent',
+    },
   },
   { label: 'Areas We Serve', href: '/areas-we-serve' },
   {
     label: 'For Patients',
     href: '/new-patient',
+    megaEyebrow: 'Your visit',
+    columns: 1,
+    align: 'right',
     children: [
-      { label: 'New Patient Guide', href: '/new-patient' },
-      { label: 'Insurance & Financing', href: '/financial' },
-      { label: 'Education Center', href: '/education' },
-      { label: 'Book Appointment', href: '/book-appointment' },
-      { label: 'Patient Portal (Login)', href: 'https://securesite1473.tdo4endo.com/PatientsLogin.aspx', external: true },
+      { label: 'New Patient Guide', href: '/new-patient', icon: 'clipboard', desc: 'What to expect on your first visit' },
+      { label: 'Insurance & Financing', href: '/financial', icon: 'card', desc: 'Coverage, payment, and financing' },
+      { label: 'Education Center', href: '/education', icon: 'book', desc: 'Plain-language answers, no jargon' },
+      { label: 'Patient Portal', href: 'https://securesite1473.tdo4endo.com/PatientsLogin.aspx', external: true, icon: 'portal', desc: 'Access your account securely' },
     ],
+    featured: {
+      eyebrow: 'Ready when you are',
+      title: 'Book an appointment',
+      desc: 'Request a visit in about a minute. We confirm by phone.',
+      href: '/book-appointment',
+      cta: 'Book now',
+      icon: 'calendar',
+      tone: 'accent',
+    },
   },
   {
     label: 'For Doctors',
     href: '/for-doctors',
+    megaEyebrow: 'Referring partners',
+    columns: 1,
+    align: 'right',
     children: [
-      { label: 'Partnership & Referrals', href: '/for-doctors' },
-      { label: 'Refer Online (Portal)', href: 'https://securesite1473.tdo4endo.com/RefDocsLogin.aspx', external: true },
-      { label: 'Referral Form (PDF)', href: '/files/ocean-endo-referral-form.pdf', external: true },
-      { label: 'CE Courses', href: '/ce-courses' },
-      { label: 'Partnership Philosophy', href: '/partnership-philosophy' },
-      { label: 'Staff Resources', href: '/staff-resources' },
+      { label: 'Partnership & Referrals', href: '/for-doctors', icon: 'link', desc: 'How we support you and your patients' },
+      { label: 'Partnership Philosophy', href: '/partnership-philosophy', icon: 'compass', desc: 'Our approach to co-managing care' },
+      { label: 'CE Courses', href: '/ce-courses', icon: 'cap', desc: 'Hands-on endodontic education' },
+      { label: 'Referral Form (PDF)', href: '/files/ocean-endo-referral-form.pdf', external: true, icon: 'file', desc: 'Download and print our form' },
+      { label: 'Staff Resources', href: '/staff-resources', icon: 'lock', desc: 'Tools and info for our team' },
     ],
+    featured: {
+      eyebrow: 'Refer with confidence',
+      title: 'Refer a patient',
+      desc: 'Send a secure referral through our online doctor portal.',
+      href: 'https://securesite1473.tdo4endo.com/RefDocsLogin.aspx',
+      cta: 'Open referral portal',
+      external: true,
+      icon: 'handshake',
+      tone: 'navy',
+    },
   },
   { label: 'Contact', href: '/contact' },
 ];

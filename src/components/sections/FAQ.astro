@@ -16,7 +16,7 @@ const { faqs, eyebrow = 'Good to know', title = 'Frequently asked questions', le
     <SectionHeading eyebrow={eyebrow} title={title} lead={lead} class="mb-10" />
     <div class="grid gap-3 lg:max-w-4xl">
       {
-        faqs.map((f, i) => (
+        faqs.map((f) => (
           <details class="group rounded-2xl bg-white ring-1 ring-line hover:ring-line-strong transition-shadow open:shadow-soft" data-reveal>
             <summary class="flex items-center justify-between gap-4 cursor-pointer list-none select-none px-5 py-4 text-ink font-semibold">
               <span>{f.q}</span>

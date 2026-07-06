@@ -42,7 +42,9 @@ export default defineConfig({
     }),
   ],
   vite: {
-    plugins: [tailwind()],
+    // Cast keeps `astro check` happy: the Tailwind v4 Vite plugin's type and
+    // Vite's PluginOption drift across minor versions, but runtime is correct.
+    plugins: [/** @type {any} */ (tailwind())],
     build: { cssMinify: 'lightningcss' },
   },
 });

@@ -13,13 +13,12 @@ import CtaBand from '@components/sections/CtaBand.astro';
 import { services, serviceCategoryLabels, type Service } from '@data/services';
 import { site } from '@data/site';
 import { resolvePhoto, resolveServiceImage } from '@data/imageMap';
-import { renderInline, stripLinks } from '@lib/utils';
+import { renderInline } from '@lib/utils';
 import { webPageSchema, serviceSchema, faqPageSchema } from '@lib/schemas';
 
 export const getStaticPaths = (() =>
   services.map((service) => ({ params: { slug: service.slug }, props: { service } }))) satisfies GetStaticPaths;
 
-interface Props { service: Service }
 const { service } = Astro.props;
 
 // Hero uses the practice's own per-service image (matched to the live site);

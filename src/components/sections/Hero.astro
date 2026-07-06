@@ -18,14 +18,17 @@ import Button from '@components/ui/Button.astro';
     <source src={site.video.heroSrc} type="video/mp4" />
   </video>
 
-  <!-- Blue scrim for contrast + brand tint -->
-  <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/45 to-primary-900/40" aria-hidden="true"></div>
-  <div class="absolute inset-0 -z-10 bg-primary-900/20 mix-blend-multiply" aria-hidden="true"></div>
+  <!-- Layered scrim: vertical depth + left legibility gradient + brand tint +
+       bottom feather for a seamless hand-off into the page below. -->
+  <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink/92 via-ink/50 to-primary-900/35" aria-hidden="true"></div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/70 via-ink/20 to-transparent" aria-hidden="true"></div>
+  <div class="absolute inset-0 -z-10 bg-primary-900/15 mix-blend-multiply" aria-hidden="true"></div>
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-ink/55 to-transparent" aria-hidden="true"></div>
 
   <div class="relative mx-auto w-full max-w-content px-6 pb-16 pt-28 lg:pb-24">
     <div class="max-w-3xl">
-      <p class="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white ring-1 ring-white/25 backdrop-blur">
-        <span class="inline-block h-2 w-2 rounded-full bg-white"></span>
+      <p class="inline-flex items-center gap-2.5 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium tracking-[0.02em] text-white ring-1 ring-white/25 shadow-[0_2px_16px_rgba(16,26,51,0.25)] backdrop-blur-md">
+        <span class="inline-block h-2 w-2 rounded-full bg-white shadow-[0_0_10px_2px_rgba(255,255,255,0.6)]"></span>
         Board-Certified Endodontist · San Francisco
       </p>
 
