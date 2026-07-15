@@ -378,6 +378,13 @@ html[data-a11y-guide='on']::after {
     [data-header-bar][data-scrolled] .header-logo { height: 3rem; }
   }
 
+  /* Big-text mode (accessibility text-size setting above "Default"):
+     the horizontal nav would wrap and stack at laptop widths, so the header
+     falls back to the menu button at every width. */
+  html[data-a11y-zoom='on'] .nav-desktop { display: none !important; }
+  html[data-a11y-zoom='on'] [data-menu-toggle] { display: inline-flex !important; }
+  html[data-a11y-zoom='on'] #mobile-menu:not(.hidden) { display: block !important; }
+
   /* Mobile menu drawer: slides in from the right, backdrop fades. */
   [data-mobile-menu] .menu-drawer {
     transform: translateX(100%);

@@ -35,6 +35,11 @@ const featuredTone: Record<string, string> = {
         <span class="text-primary-100/90">{site.hoursSummary}</span>
       </div>
       <div class="flex items-center gap-4">
+        <a href={site.phone.href} class="inline-flex items-center gap-1.5 font-semibold text-white hover:text-primary-100 no-underline">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 12l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke-linejoin="round"/></svg>
+          {site.phone.display}
+        </a>
+        <span class="text-primary-300/60" aria-hidden="true">|</span>
         <a href={site.portals.patient} target="_blank" rel="noopener noreferrer" class="text-primary-100 hover:text-white no-underline">Patient Portal</a>
         <span class="text-primary-300/60" aria-hidden="true">|</span>
         <div class="flex items-center gap-3">
@@ -58,7 +63,7 @@ const featuredTone: Record<string, string> = {
         </a>
 
         <!-- Desktop nav -->
-        <nav aria-label="Primary" class="hidden xl:block">
+        <nav aria-label="Primary" class="nav-desktop hidden xl:block">
           <ul class="flex items-center gap-0.5">
             {
               desktopNav.map((item) =>
@@ -67,7 +72,7 @@ const featuredTone: Record<string, string> = {
                     <details class="nav-dd group">
                       <summary
                         class:list={[
-                          'nav-trigger flex items-center gap-1 px-3.5 py-2 rounded-full text-[0.9rem] font-medium cursor-pointer select-none list-none transition-colors',
+                          'nav-trigger flex items-center gap-1 whitespace-nowrap px-2.5 2xl:px-3.5 py-2 rounded-full text-[0.9rem] font-medium cursor-pointer select-none list-none transition-colors',
                           isActive(item.href) ? 'text-accent-strong' : 'text-ink hover:text-accent-strong',
                         ]}
                       >
@@ -163,7 +168,7 @@ const featuredTone: Record<string, string> = {
                     <a
                       href={item.href}
                       class:list={[
-                        'px-3.5 py-2 rounded-full text-[0.9rem] font-medium no-underline transition-colors hover:bg-surface-subtle',
+                        'block whitespace-nowrap px-2.5 2xl:px-3.5 py-2 rounded-full text-[0.9rem] font-medium no-underline transition-colors hover:bg-surface-subtle',
                         isActive(item.href) ? 'text-accent-strong' : 'text-ink hover:text-accent-strong',
                       ]}
                     >
@@ -176,13 +181,10 @@ const featuredTone: Record<string, string> = {
           </ul>
         </nav>
 
-        <!-- Actions -->
+        <!-- Actions (the phone number lives in the utility bar above, so the
+             main bar never has to squeeze it in) -->
         <div class="flex items-center gap-2 sm:gap-3">
-          <a href={site.phone.href} class="hidden 2xl:inline-flex items-center gap-2 text-[0.9rem] font-semibold text-ink hover:text-accent-strong no-underline">
-            <svg class="w-4 h-4 text-accent-strong" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 12l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke-linejoin="round"/></svg>
-            {site.phone.display}
-          </a>
-          <Button href={site.cta.book.href} size="md" class="hidden sm:inline-flex">Book Appointment</Button>
+          <Button href={site.cta.book.href} size="md" class="hidden sm:inline-flex whitespace-nowrap">Book Appointment</Button>
 
           <!-- Mobile menu toggle -->
           <button

@@ -114,3 +114,17 @@ imageMap gained gallery-46/47 with honest alt text.
 ## Caption removal — July 14, 2026
 
 Visible captions removed from the service-page office photos (they were reading the alt text aloud, e.g. "The operating microscope beside an orchid in the window light — inside our Ocean Avenue office"). Descriptive text now lives only in the alt attribute where it belongs for screen readers. Decorative photos site-wide carry no visible captions; the only figcaption remaining is the testimonial attribution block in Reviews, which is intentional.
+
+---
+
+## Header overflow fix — July 14, 2026
+
+Pete reported the desktop menu stacking on the deployed site. Reproduced: at 1280px the header had only 93px of slack (any browser zoom, OS font metrics, or scrollbar width tipped labels into wrapping), and with the accessibility text-size setting at Large/X-Large the nav stacked at every laptop width — that setting persists per device via localStorage, so it follows you between visits until Reset.
+
+Fixes:
+- **Phone number moved into the utility bar** (visible from 1024px up, white + icon, ahead of Patient Portal) and removed from the main bar entirely — the main bar now only carries logo, nav, and the Book button.
+- **whitespace-nowrap** on all nav labels — they can never wrap internally again.
+- Nav link padding tightens slightly at xl and relaxes at 2xl; slack at 1280px now 141px (was 93), 221px at 1440.
+- **Big-text mode safeguard:** when the accessibility text-size is above Default, the header switches to the menu button at every width (`data-a11y-zoom` attribute + CSS override) — verified the drawer opens correctly at desktop sizes.
+
+If the menu still looks stacked after redeploying: open the accessibility tools (blue button, bottom right) and hit "Reset all" — a saved Large/X-Large text setting from earlier testing persists on that device.

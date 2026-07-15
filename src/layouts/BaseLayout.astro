@@ -96,6 +96,9 @@ const jsonLd = graph([
           root.style.setProperty('--a11y-line', ({ normal: 1.65, relaxed: 1.9, loose: 2.2 })[state.line] || 1.65);
           root.style.setProperty('--a11y-letter', state.letter === 'wide' ? '0.06em' : '0');
           function attr(name, on, val) { if (on) root.setAttribute(name, val); else root.removeAttribute(name); }
+          // Big-text mode: the desktop nav can't fit reliably at enlarged
+          // sizes, so the header switches to the menu button (see global.css).
+          attr('data-a11y-zoom', Number(state.fontScale) > 1, 'on');
           attr('data-a11y-contrast', state.contrast, 'more');
           attr('data-a11y-motion', state.motion, 'off');
           attr('data-a11y-font', state.font, 'dyslexic');
