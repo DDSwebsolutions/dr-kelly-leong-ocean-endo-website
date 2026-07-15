@@ -6,8 +6,8 @@ import { site } from '@data/site';
  * Occupies real layout space via a spacer so it never covers footer content.
  */
 ---
-<div class="lg:hidden" aria-hidden="false">
-  <div class="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 backdrop-blur-md pb-[env(safe-area-inset-bottom)]">
+<div class="lg:hidden" aria-hidden="false" data-print-hide>
+  <div class="fixed inset-x-0 bottom-0 z-40 border-t border-line glass glass-strong pb-[env(safe-area-inset-bottom)]">
     <div class="grid grid-cols-2 gap-2 p-2.5">
       <a
         href={site.phone.href}

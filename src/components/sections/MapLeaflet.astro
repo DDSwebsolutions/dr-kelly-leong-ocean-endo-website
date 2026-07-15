@@ -31,12 +31,29 @@ const { height = '420px' } = Astro.props;
 </div>
 
 <script>
-  import L from 'leaflet';
-  import 'leaflet/dist/leaflet.css';
-
-  const el = document.getElementById('oe-map');
-  if (el && !el.dataset.init) {
+  /**
+   * Lazy map: Leaflet (~150 KB JS + CSS) and OpenStreetMap tiles now load only
+   * when the map scrolls near the viewport, so they never compete with the
+   * page's first paint — and never load at all for visitors who don't scroll
+   * this far. The address + directions link above are plain HTML regardless.
+   */
+  const init = async (el: HTMLElement) => {
+    if (el.dataset.init) return;
     el.dataset.init = '1';
+
+    // `?inline` gives us the CSS as a string inside the lazy JS chunk — no
+    // separate CSS file for the bundler to (mis)handle with inlined styles.
+    const [{ default: L }, { default: leafletCss }] = await Promise.all([
+      import('leaflet'),
+      import('leaflet/dist/leaflet.css?inline'),
+    ]);
+    if (!document.querySelector('style[data-leaflet-css]')) {
+      const style = document.createElement('style');
+      style.setAttribute('data-leaflet-css', '');
+      style.textContent = leafletCss;
+      document.head.appendChild(style);
+    }
+
     const lat = parseFloat(el.dataset.lat || '0');
     const lng = parseFloat(el.dataset.lng || '0');
     const label = el.dataset.label || '';
@@ -64,6 +81,26 @@ const { height = '420px' } = Astro.props;
 
     // keep map sized correctly after fonts/layout settle
     setTimeout(() => map.invalidateSize(), 200);
+  };
+
+  const el = document.getElementById('oe-map');
+  if (el) {
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              io.disconnect();
+              init(el);
+            }
+          });
+        },
+        { rootMargin: '600px 0px' }
+      );
+      io.observe(el);
+    } else {
+      init(el);
+    }
   }
 </script>
 

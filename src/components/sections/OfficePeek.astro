@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import { photos, photoAlts } from '@data/imageMap';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+
+/**
+ * OfficePeek — a compact three-photo strip of the office with a link to the
+ * full tour. Drop-in warmth for text-heavy pages. Pass any photo keys from
+ * imageMap (calm rooms/reception only on patient-facing pages).
+ */
+interface Props {
+  keys?: string[];
+  title?: string;
+  eyebrow?: string;
+}
+const {
+  keys = ['reception-wide', 'operatory-1', 'detail-orchid'],
+  title = 'A calm, modern office on Ocean Avenue',
+  eyebrow = 'Our office',
+} = Astro.props;
+const shots = keys.slice(0, 3).map((k) => ({ img: photos[k], alt: photoAlts[k] ?? 'Inside the Ocean Endodontics office' }));
+---
+<section class="py-10 lg:py-14">
+  <div class="mx-auto max-w-content px-6">
+    <div class="mb-6 flex flex-wrap items-end justify-between gap-4" data-reveal>
+      <div class="flex flex-col gap-2.5">
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h2 class="text-2xl lg:text-3xl font-semibold text-ink">{title}</h2>
+      </div>
+      <a href="/our-office" class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent-strong no-underline hover:text-accent-ink">
+        Tour the office
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <ul class="grid grid-cols-3 gap-3 sm:gap-5">
+      {
+        shots.map((s, i) => (
+          <li class:list={['zoom-media overflow-hidden rounded-2xl ring-1 ring-line shadow-xs', i === 1 ? 'sm:-translate-y-2' : '']} data-reveal>
+            <Image src={s.img} alt={s.alt} widths={[320, 480, 720]} sizes="(max-width: 640px) 33vw, 24rem" quality={80} class="h-full w-full object-cover aspect-[4/3]" />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

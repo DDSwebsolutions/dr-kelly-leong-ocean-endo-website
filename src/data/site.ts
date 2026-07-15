@@ -73,7 +73,7 @@ export const site = {
   geo: { lat: 37.72736, lng: -122.45852 },
 
   phone: { display: '(415) 741-3636', href: 'tel:+14157413636', raw: '+14157413636' },
-  fax: { display: '(415) 766-7032', href: 'tel:+14157667032' },
+  fax: { display: '(415) 766-7032', href: 'tel:+14157667032', raw: '+14157667032' },
   email: { display: 'info@oceanendosf.com', href: 'mailto:info@oceanendosf.com', raw: 'info@oceanendosf.com' },
 
   parkingNote:
@@ -111,7 +111,8 @@ export const site = {
   // own Cloudflare Stream account (embedded via iframe).
   video: {
     heroSrc: '/videos/hero.mp4',
-    heroPoster: '/videos/hero-poster.jpg',
+    // WebP poster is ~45% lighter than the JPG (the JPG stays for any legacy use).
+    heroPoster: '/videos/hero-poster.webp',
     streamCustomer: 'customer-zhfq6nnwhcqwgupq.cloudflarestream.com',
     officeTourId: '595cc2443e235e6a17defe97501472bc',
     commercialId: '9c6515833df50167691354ef758c1484',

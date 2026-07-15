@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { site } from '@data/site';
 import Button from '@components/ui/Button.astro';
+import mark from '@assets/images/brand/mark.png';
 interface Props {
   title?: string;
   text?: string;
@@ -19,7 +21,7 @@ const {
 } = Astro.props;
 const dark = variant === 'navy';
 ---
-<section class="py-6">
+<section class="py-6" data-print-hide>
   <div class="mx-auto max-w-content px-6">
     <div
       class:list={[
@@ -30,6 +32,11 @@ const dark = variant === 'navy';
     >
       {dark && <div class="pointer-events-none absolute -right-16 -top-16 w-80 h-80 rounded-full bg-primary-500/30 blur-3xl" aria-hidden="true"></div>}
       {dark && <div class="pointer-events-none absolute -left-16 -bottom-24 w-96 h-96 rounded-full bg-accent/20 blur-3xl" aria-hidden="true"></div>}
+      {dark && (
+        <div class="pointer-events-none absolute -bottom-14 -right-10 hidden opacity-[0.09] lg:block" aria-hidden="true">
+          <Image src={mark} alt="" width={280} quality={80} class="w-64 h-auto rotate-12" />
+        </div>
+      )}
       <div class="relative grid gap-6 lg:grid-cols-[1.4fr_auto] lg:items-center">
         <div>
           <h2 class:list={['text-2xl lg:text-3xl font-bold', dark ? 'text-white' : 'text-ink']}>{title}</h2>

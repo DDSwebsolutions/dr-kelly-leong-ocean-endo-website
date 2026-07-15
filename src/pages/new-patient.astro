@@ -4,9 +4,11 @@ import PageHero from '@components/sections/PageHero.astro';
 import CtaBand from '@components/sections/CtaBand.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import Button from '@components/ui/Button.astro';
+import OfficePeek from '@components/sections/OfficePeek.astro';
 import { site } from '@data/site';
 import { generalFaqs } from '@data/reviews';
 import { webPageSchema } from '@lib/schemas';
+import welcomeHall from '@assets/images/photos/welcome-hall.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -30,6 +32,8 @@ const schema = [webPageSchema({ path: '/new-patient', title: 'New Patient Guide'
     title="Your first visit, made simple"
     lead="We want your first visit to feel calm and clear. Here’s exactly what to expect, so there are no surprises. No dentist referral is required to see us."
     crumbs={crumbs}
+    image={welcomeHall}
+    imageAlt="The welcome board greeting patients in the Ocean Endodontics hallway"
   >
     <div class="flex flex-wrap gap-3">
       <Button href={site.cta.book.href}>Book your first visit</Button>
@@ -68,6 +72,7 @@ const schema = [webPageSchema({ path: '/new-patient', title: 'New Patient Guide'
     </div>
   </section>
 
+  <OfficePeek keys={['gallery-43', 'operatory-2', 'gallery-46']} title="The space you'll walk into" />
   <FAQ faqs={generalFaqs} />
   <CtaBand />
 </BaseLayout>

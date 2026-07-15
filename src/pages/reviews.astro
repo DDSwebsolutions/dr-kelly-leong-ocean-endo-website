@@ -2,10 +2,13 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/sections/PageHero.astro';
 import Reviews from '@components/sections/Reviews.astro';
+import BlueBand from '@components/sections/BlueBand.astro';
 import CtaBand from '@components/sections/CtaBand.astro';
 import Button from '@components/ui/Button.astro';
 import { site } from '@data/site';
 import { webPageSchema } from '@lib/schemas';
+import lounge from '@assets/images/photos/gallery-40.jpg';
+import lombard from '@assets/images/sf/lombard.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -22,6 +25,8 @@ const schema = [webPageSchema({ path: '/reviews', title: 'Patient Reviews', desc
     title="Kind words about our practice"
     lead="Nothing means more to us than a patient who arrives anxious and leaves relieved. Here is what a few of them have shared."
     crumbs={crumbs}
+    image={lounge}
+    imageAlt="The reception lounge with orchids at Ocean Endodontics"
   >
     <div class="flex flex-wrap gap-3">
       <Button href={site.social.google} external variant="secondary">Read on Google</Button>
@@ -30,6 +35,17 @@ const schema = [webPageSchema({ path: '/reviews', title: 'Patient Reviews', desc
   </PageHero>
 
   <Reviews tone="default" eyebrow="" title="" />
+
+  <BlueBand
+    image={lombard}
+    imageAlt="Lombard Street winding down Russian Hill in San Francisco"
+    eyebrow="Trusted across the city"
+    title="San Franciscans trust us with their smiles"
+    lead="From Ingleside to Daly City, patients and their dentists count on Ocean Endodontics for calm, precise care."
+  >
+    <Button href={site.cta.book.href} size="lg" variant="white">Book an appointment</Button>
+    <Button href="/areas-we-serve" size="lg" variant="navy" class="ring-1 ring-white/25">Areas we serve</Button>
+  </BlueBand>
 
   <CtaBand
     title="Experience the difference for yourself"

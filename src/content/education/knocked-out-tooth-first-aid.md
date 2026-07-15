@@ -33,7 +33,7 @@ Plain water is a last resort, because it is not ideal for the root cells.
 
 ## Call us immediately
 
-Call our office right away so we can see you as quickly as possible. The best outcomes happen when a tooth is reimplanted within about 30 to 60 minutes, so treat this like the emergency it is. If it is after hours, our [emergency care page](/services/emergency-endodontic-treatment) and voicemail will guide you.
+[Call our office](/contact) right away so we can see you as quickly as possible. The best outcomes happen when a tooth is reimplanted within about 30 to 60 minutes, so treat this like the emergency it is. If it is after hours, our [emergency care page](/services/emergency-endodontic-treatment) and voicemail will guide you.
 
 ## For chipped or loosened teeth
 

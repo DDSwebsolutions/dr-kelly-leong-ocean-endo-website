@@ -5,9 +5,11 @@ import ServiceGrid from '@components/sections/ServiceGrid.astro';
 import CtaBand from '@components/sections/CtaBand.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import Button from '@components/ui/Button.astro';
+import BlueBand from '@components/sections/BlueBand.astro';
 import { site } from '@data/site';
 import { generalFaqs } from '@data/reviews';
 import { webPageSchema } from '@lib/schemas';
+import goldenGateBeach from '@assets/images/sf/golden-gate-beach.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -49,6 +51,17 @@ const schema = [webPageSchema({ path: '/services', title: 'Endodontic Services',
       </div>
     </div>
   </section>
+
+  <BlueBand
+    image={goldenGateBeach}
+    imageAlt="The Golden Gate Bridge seen from a San Francisco beach"
+    eyebrow="Westside San Francisco"
+    title="Specialist care, minutes from home"
+    lead="Serving Ingleside, West Portal, Lake Merced, and neighbors across the west side and Daly City."
+  >
+    <Button href={site.cta.book.href} size="lg" variant="white">Book an appointment</Button>
+    <Button href="/areas-we-serve" size="lg" variant="navy" class="ring-1 ring-white/25">Areas we serve</Button>
+  </BlueBand>
 
   <CtaBand />
   <FAQ faqs={generalFaqs} />

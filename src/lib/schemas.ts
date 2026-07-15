@@ -58,8 +58,9 @@ export function organizationSchema(logoUrl: string, imageUrl: string) {
     name: site.name,
     legalName: site.legalName,
     url: `${site.url}/`,
-    telephone: site.phone.display,
-    faxNumber: site.fax.display,
+    // E.164 format per schema.org best practice (display format stays on-page).
+    telephone: site.phone.raw,
+    faxNumber: site.fax.raw,
     email: site.email.raw,
     image: imageUrl,
     logo: logoUrl,

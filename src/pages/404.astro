@@ -12,24 +12,42 @@ const popular = [
 ];
 ---
 <BaseLayout title="Page Not Found" description="The page you’re looking for can’t be found." noindex={true}>
-  <section class="py-20 lg:py-28">
+  <!-- Navy band echoes the home hero so even a dead end feels on-brand. -->
+  <section class="relative isolate overflow-hidden bg-ink">
+    <div class="pointer-events-none absolute -left-24 -top-24 -z-10 h-[30rem] w-[30rem] rounded-full bg-primary-500/25 blur-3xl" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-28 -right-16 -z-10 h-[34rem] w-[34rem] rounded-full bg-accent/20 blur-3xl" aria-hidden="true"></div>
+    <div class="mx-auto max-w-2xl px-6 pb-24 pt-20 text-center lg:pb-32 lg:pt-28">
+      <p class="hero-rise text-7xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-primary-200 to-primary-400 sm:text-8xl" style="--hero-delay: 60ms">404</p>
+      <h1 class="hero-rise mt-4 text-3xl font-semibold text-white lg:text-4xl" style="--hero-delay: 180ms">Looks like this page drifted out to sea</h1>
+      <p class="hero-rise mt-4 text-lg text-primary-100" style="--hero-delay: 300ms">
+        The page may have moved, or the link may be out of date. Here are some helpful places to go instead.
+      </p>
+      <div class="hero-rise mt-8 flex flex-wrap justify-center gap-3" style="--hero-delay: 420ms">
+        <Button href="/" variant="white">Back to home</Button>
+        <Button href={site.phone.href} variant="navy" class="ring-1 ring-white/25">Call {site.phone.display}</Button>
+      </div>
+    </div>
+    <!-- Same ocean-wave hand-off as the home hero -->
+    <svg class="pointer-events-none absolute inset-x-0 bottom-[-1px] h-10 w-full text-surface sm:h-14" viewBox="0 0 1440 64" preserveAspectRatio="none" aria-hidden="true">
+      <path fill="currentColor" d="M0 34 C 240 62, 420 8, 720 26 C 1020 44, 1220 14, 1440 34 L 1440 64 L 0 64 Z" />
+    </svg>
+  </section>
+
+  <section class="py-14 lg:py-16">
     <div class="mx-auto max-w-2xl px-6 text-center">
-      <p class="text-6xl font-bold text-primary-200">404</p>
-      <h1 class="mt-4 text-3xl lg:text-4xl font-bold text-ink">We can’t find that page</h1>
-      <p class="mt-4 text-lg text-ink-soft">The page may have moved, or the link may be out of date. Here are some helpful places to go instead.</p>
-      <ul class="mt-8 flex flex-wrap justify-center gap-2">
+      <p class="text-sm font-semibold uppercase tracking-[0.16em] text-ink-muted">Popular pages</p>
+      <ul class="mt-5 flex flex-wrap justify-center gap-2">
         {
           popular.map((p) => (
             <li>
-              <a href={p.href} class="inline-flex rounded-full bg-white ring-1 ring-line px-4 py-2 text-sm font-medium text-ink no-underline hover:ring-line-strong hover:text-accent-strong">{p.label}</a>
+              <a href={p.href} class="inline-flex rounded-full bg-white ring-1 ring-line px-4 py-2 text-sm font-medium text-ink no-underline transition-all hover:-translate-y-0.5 hover:ring-primary-200 hover:text-accent-strong hover:shadow-soft">{p.label}</a>
             </li>
           ))
         }
       </ul>
-      <div class="mt-8 flex flex-wrap justify-center gap-3">
-        <Button href="/">Back to home</Button>
-        <Button href={site.phone.href} variant="secondary">Call {site.phone.display}</Button>
-      </div>
+      <p class="mt-8 text-sm text-ink-muted">
+        Came from an old bookmark? The practice website was recently rebuilt; the link you used may predate it.
+      </p>
     </div>
   </section>
 </BaseLayout>

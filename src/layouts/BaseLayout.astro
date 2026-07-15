@@ -23,6 +23,8 @@ interface Props {
   modifiedTime?: string;
   schema?: unknown[];
   mainClass?: string;
+  /** Site-root path of the page's LCP image — preloaded from <head>. */
+  preloadImage?: string;
 }
 
 const {
@@ -36,6 +38,7 @@ const {
   modifiedTime,
   schema = [],
   mainClass = '',
+  preloadImage,
 } = Astro.props;
 
 const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
@@ -121,6 +124,8 @@ const jsonLd = graph([
       modifiedTime={modifiedTime}
     />
 
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
+
     <meta name="theme-color" content="#101a33" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/mark.png" sizes="any" />
@@ -152,10 +157,14 @@ const jsonLd = graph([
         }
         const io = new IntersectionObserver(
           (entries) => {
+            // Stagger elements that enter together so groups cascade in.
+            let i = 0;
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
-                (entry.target as HTMLElement).classList.add('is-visible');
-                io.unobserve(entry.target);
+                const el = entry.target as HTMLElement;
+                el.style.setProperty('--reveal-delay', `${Math.min(i++ * 70, 420)}ms`);
+                el.classList.add('is-visible');
+                io.unobserve(el);
               }
             });
           },

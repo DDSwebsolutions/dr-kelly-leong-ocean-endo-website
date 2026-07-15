@@ -23,7 +23,7 @@ export type Service = {
   navTitle: string;
   category: ServiceCategory;
   icon: string; // key resolved to an inline SVG in ServiceIcon.astro
-  heroImage: string; // key resolved to an imported asset
+  heroImage: string; // body-photo key (imageMap) — use calm room/reception shots, never instrument close-ups
   heroEyebrow: string;
   shortDescription: string; // card + meta
   longDescription: string; // 300-500 words, paragraphs split on blank lines
@@ -50,7 +50,7 @@ export const services: Service[] = [
     navTitle: 'Root Canal Therapy',
     category: 'endodontic',
     icon: 'tooth',
-    heroImage: 'microscope',
+    heroImage: 'operatory-1',
     heroEyebrow: 'Save your natural tooth',
     shortDescription:
       'Save a natural tooth by gently removing inflamed or infected pulp, cleaning and shaping the canals under high magnification, and sealing the space to protect its future.',
@@ -99,7 +99,7 @@ export const services: Service[] = [
     navTitle: 'Root Canal Retreatment',
     category: 'endodontic',
     icon: 'refresh',
-    heroImage: 'detail-wide',
+    heroImage: 'gallery-48',
     heroEyebrow: 'A second chance to save the tooth',
     shortDescription:
       'When a previously treated tooth develops new symptoms, retreatment reopens, disinfects, and reseals the canals to give the tooth another chance to heal.',
@@ -146,7 +146,7 @@ export const services: Service[] = [
     navTitle: 'Apicoectomy / Microsurgery',
     category: 'surgical',
     icon: 'microscope',
-    heroImage: 'operatory-2',
+    heroImage: 'gallery-52',
     heroEyebrow: 'Microsurgery to save a tooth',
     shortDescription:
       'When infection persists at the tip of a root, a precise microsurgical procedure removes the source and seals the root end, preserving the tooth.',
@@ -193,7 +193,7 @@ export const services: Service[] = [
     navTitle: 'Diagnosis & Pain Management',
     category: 'diagnostic',
     icon: 'search',
-    heroImage: 'detail-instruments',
+    heroImage: 'office-room',
     heroEyebrow: 'Find the real source of pain',
     shortDescription:
       'Tooth pain is not always where it seems. We pinpoint the true source with careful testing and precise imaging, then guide you to the right relief.',
@@ -232,7 +232,7 @@ export const services: Service[] = [
     navTitle: 'Cracked Tooth Treatment',
     category: 'endodontic',
     icon: 'crack',
-    heroImage: 'detail-chair',
+    heroImage: 'gallery-50',
     heroEyebrow: 'Catch a crack early',
     shortDescription:
       'Cracked and fractured teeth can be tricky to diagnose and painful to live with. We evaluate the crack precisely and plan treatment that protects what remains.',
@@ -262,7 +262,7 @@ export const services: Service[] = [
       { q: 'Why can’t my dentist see the crack on an X-ray?', a: 'Many cracks run in a direction that does not show up on standard films. Bite testing, magnification, and 3D imaging are often needed to find and assess them.' },
       { q: 'Can every cracked tooth be saved?', a: 'Not always. Shallow cracks are often very treatable, while cracks that extend deep below the gum and bone may not be. We will always give you an honest assessment.' },
     ],
-    related: ['root-canal-therapy', 'diagnosis-pain-management', 'dental-trauma-management'],
+    related: ['root-canal-therapy', 'diagnosis-pain-management', 'botox-for-bruxism'],
     seoTitle: 'Cracked Tooth Treatment in San Francisco | Ocean Endodontics',
     seoDescription:
       'Expert diagnosis and treatment of cracked and fractured teeth in San Francisco with endodontist Dr. Kelly Kimiko Leong. Microscope and 3D imaging to save your tooth. Call (415) 741-3636.',
@@ -276,7 +276,7 @@ export const services: Service[] = [
     navTitle: 'Emergency Endodontics',
     category: 'emergency',
     icon: 'bolt',
-    heroImage: 'operatory-2',
+    heroImage: 'gallery-43',
     heroEyebrow: 'Relief when you need it',
     shortDescription:
       'Severe tooth pain and swelling should not wait. We reserve time each day for urgent visits and aim to see patients in significant pain the same day whenever possible.',
@@ -319,7 +319,7 @@ export const services: Service[] = [
     navTitle: 'Dental Trauma Management',
     category: 'trauma',
     icon: 'shield',
-    heroImage: 'microscope',
+    heroImage: 'welcome-hall',
     heroEyebrow: 'Urgent care for injured teeth',
     shortDescription:
       'A chipped, displaced, or knocked-out tooth needs prompt, expert care. We provide urgent evaluation and evidence-based treatment to protect the tooth and its future.',
@@ -367,7 +367,7 @@ export const services: Service[] = [
     navTitle: 'Nitrous Oxide Sedation',
     category: 'sedation',
     icon: 'leaf',
-    heroImage: 'operatory-1',
+    heroImage: 'operatory-2',
     heroEyebrow: 'Relax during your visit',
     shortDescription:
       'Safe, effective nitrous oxide, or laughing gas, helps ease dental anxiety so your treatment feels calm and stress-free, with effects that wear off quickly.',
@@ -404,7 +404,7 @@ export const services: Service[] = [
     navTitle: 'Oral Conscious Sedation',
     category: 'sedation',
     icon: 'moon',
-    heroImage: 'welcome-hall',
+    heroImage: 'gallery-42',
     heroEyebrow: 'Deeper comfort for anxious visits',
     shortDescription:
       'For appropriate patients, gentle oral sedation offers a deeper level of relaxation during treatment. We review your health history to confirm it is a safe fit.',
@@ -478,12 +478,12 @@ export const services: Service[] = [
     navTitle: 'Botox for Bruxism',
     category: 'endodontic',
     icon: 'wave',
-    heroImage: 'detail-tools',
+    heroImage: 'gallery-40',
     heroEyebrow: 'Relief for a clenching jaw',
     shortDescription:
       'For patients who grind or clench, therapeutic Botox can relax overactive jaw muscles, easing jaw pain and helping protect the teeth, in a quick in-office treatment.',
     longDescription:
-      'Chronic grinding and clenching, known as bruxism, puts enormous force on your teeth and jaw muscles. Over time it can lead to worn or cracked teeth, sore jaw muscles, tension headaches, and disrupted sleep. For appropriate patients, therapeutic Botox offers a targeted way to calm the overactive muscles that drive this cycle.\n\nUsed therapeutically for bruxism, small amounts of Botox are placed into the large chewing muscles, most often the masseters at the angle of the jaw. The medication gently reduces the intensity of these muscles’ contractions, so you clench and grind with less force. The result for many patients is less jaw soreness and fewer tension headaches, and a meaningful reduction in the destructive forces that crack and wear teeth, which protects both natural teeth and dental work.\n\nThe treatment itself is quick and performed right in our office. After identifying the correct muscles, Dr. Leong administers a few small injections, a process that takes only minutes. There is no downtime, and most patients return to their normal activities immediately. The effect develops over the following days and typically lasts a few months, at which point the treatment can be repeated to maintain relief.\n\nIt is important to understand that this is a therapeutic treatment aimed at bruxism and jaw muscle overactivity, not a cosmetic wrinkle service. Botox for bruxism often works best as part of a broader plan, which may include a night guard from your general dentist and, when tooth damage has already occurred, endodontic care such as [cracked tooth treatment](/services/cracked-tooth-treatment). We will review your history and goals to determine whether it is an appropriate option for you.',
+      'Chronic grinding and clenching, known as bruxism, puts enormous force on your teeth and jaw muscles. Over time it can lead to worn or cracked teeth, sore jaw muscles, tension headaches, and disrupted sleep. For appropriate patients, therapeutic Botox offers a targeted way to calm the overactive muscles that drive this cycle.\n\nUsed therapeutically for bruxism, small amounts of Botox are placed into the large chewing muscles that drive clenching and grinding, the masseters at the angle of the jaw and, when indicated, the temporalis muscles at the temples. The medication gently reduces the intensity of these muscles’ contractions, so you clench and grind with less force, without interfering with normal speaking, chewing, or facial expression. The result for many patients is less jaw soreness and fewer tension headaches, and a meaningful reduction in the destructive forces that crack and wear teeth, which protects both natural teeth and dental work.\n\nThe treatment itself is quick and performed right in our office. After identifying the correct muscles, Dr. Leong administers a few small injections, a process that takes only minutes. There is no downtime, and most patients return to their normal activities immediately. Improvement typically begins within about 10 to 14 days, with the full effect at roughly three to four weeks, and results generally last about three months, at which point the treatment can be repeated to maintain relief.\n\nIt is important to understand that this is a therapeutic treatment aimed at bruxism and jaw muscle overactivity, not a cosmetic wrinkle service. Botox for bruxism often works best as part of a broader plan, which may include a night guard from your general dentist and, when tooth damage has already occurred, endodontic care such as [cracked tooth treatment](/services/cracked-tooth-treatment). A night guard and Botox solve different parts of the problem, so the two are often used together. We will review your history and goals to determine whether it is an appropriate option for you.',
     benefits: [
       'Relaxes overactive jaw muscles that grind and clench',
       'Can reduce jaw soreness and tension headaches',
@@ -494,7 +494,7 @@ export const services: Service[] = [
     process: [
       { title: 'Evaluation', body: 'We review your symptoms, grinding history, and goals to confirm therapeutic Botox is appropriate.' },
       { title: 'Targeted injections', body: 'A few small injections are placed in the chewing muscles in a matter of minutes.' },
-      { title: 'Gradual relief', body: 'The effect develops over several days and typically lasts a few months before it can be repeated.' },
+      { title: 'Gradual relief', body: 'Improvement typically begins within 10 to 14 days, peaks at about three to four weeks, and generally lasts around three months before treatment can be repeated.' },
     ],
     idealCandidate:
       'This treatment may help patients with diagnosed or evident bruxism, jaw muscle soreness, or clenching-related tension headaches, particularly alongside a protective night guard. It is a therapeutic, not cosmetic, service, and we confirm suitability first.',
@@ -504,7 +504,7 @@ export const services: Service[] = [
       'Therapeutic Botox for bruxism is typically not covered by dental insurance, and results and duration vary by individual. We review candidacy, costs, and expectations with you before treatment. This is a therapeutic treatment for jaw muscle overactivity, not a cosmetic wrinkle service.',
     faqs: [
       { q: 'Is this a cosmetic treatment?', a: 'No. Here, Botox is used therapeutically to relax the jaw muscles involved in grinding and clenching, with the goal of easing jaw pain and helping protect the teeth.' },
-      { q: 'How long does it last?', a: 'The effect typically develops over several days and lasts a few months. Treatment can be repeated to maintain relief as directed.' },
+      { q: 'How long does it last?', a: 'Improvement typically begins within about 10 to 14 days, reaches its full effect at around three to four weeks, and generally lasts about three months. Treatment can be repeated to maintain relief as directed.' },
     ],
     related: ['cracked-tooth-treatment', 'diagnosis-pain-management', 'root-canal-therapy'],
     seoTitle: 'Botox for Bruxism & Jaw Clenching in San Francisco | Ocean Endodontics',

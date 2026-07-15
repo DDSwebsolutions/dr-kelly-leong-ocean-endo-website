@@ -18,7 +18,7 @@ const { eyebrow, title, image, imageAlt, reverse = false, bullets, tone = 'defau
   <div class="mx-auto max-w-content px-6">
     <div class="grid gap-10 lg:gap-16 lg:grid-cols-2 items-center">
       <div class:list={['relative', reverse ? 'lg:order-2' : '']} data-reveal>
-        <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line">
+        <div class="zoom-media overflow-hidden rounded-3xl shadow-lg ring-1 ring-line">
           <Image src={image} alt={imageAlt} widths={[640, 960, 1280, 1600]} sizes="(max-width: 1024px) 100vw, 36rem" quality={82} class="w-full h-full object-cover aspect-[4/3]" />
         </div>
         <div class="pointer-events-none absolute -z-10 -inset-4 rounded-[2rem] bg-primary-100/40 blur-2xl" aria-hidden="true"></div>

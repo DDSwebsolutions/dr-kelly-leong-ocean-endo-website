@@ -4,8 +4,10 @@ import PageHero from '@components/sections/PageHero.astro';
 import CtaBand from '@components/sections/CtaBand.astro';
 import FAQ from '@components/sections/FAQ.astro';
 import Button from '@components/ui/Button.astro';
+import OfficePeek from '@components/sections/OfficePeek.astro';
 import { site } from '@data/site';
 import { webPageSchema, faqPageSchema } from '@lib/schemas';
+import receptionPhoto from '@assets/images/photos/gallery-47.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -35,6 +37,8 @@ const schema = [
     title="Clear, honest, no surprises"
     lead="Specialist care should be understandable. We verify your benefits, review fees before we begin, and help you find a comfortable way to move forward."
     crumbs={crumbs}
+    image={receptionPhoto}
+    imageAlt="The Ocean Endodontics front desk, where our team helps with insurance and payment"
   >
     <div class="flex flex-wrap gap-3">
       <Button href={site.phone.href}>Ask about your coverage</Button>
@@ -64,5 +68,6 @@ const schema = [
   </section>
 
   <FAQ faqs={faqs} title="Insurance & payment questions" />
+  <OfficePeek keys={['reception-wide', 'gallery-42', 'detail-orchid']} title="Questions welcome, any time you're in" />
   <CtaBand />
 </BaseLayout>

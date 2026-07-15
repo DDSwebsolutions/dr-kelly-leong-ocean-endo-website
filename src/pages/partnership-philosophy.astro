@@ -5,6 +5,7 @@ import CtaBand from '@components/sections/CtaBand.astro';
 import Button from '@components/ui/Button.astro';
 import { site } from '@data/site';
 import { webPageSchema } from '@lib/schemas';
+import operatory2 from '@assets/images/photos/operatory-2.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -21,6 +22,8 @@ const schema = [webPageSchema({ path: '/partnership-philosophy', title: 'Partner
     title="Our partnership philosophy"
     lead="Successful patient care depends on strong collaboration between specialists and restorative providers. We build every referral relationship on clear communication, timely access, and meticulous documentation."
     crumbs={crumbs}
+    image={operatory2}
+    imageAlt="A treatment room with the operating microscope at Ocean Endodontics"
   >
     <div class="flex flex-wrap gap-3">
       <Button href={site.portals.referringDoctor} external>Refer online (portal)</Button>
@@ -74,7 +77,7 @@ const schema = [webPageSchema({ path: '/partnership-philosophy', title: 'Partner
         </ul>
 
         <p>
-          We welcome your referrals and look forward to building lasting professional relationships. To refer a patient, use our <a href={site.portals.referringDoctor}>secure referral portal</a> or contact our office directly at <a href={site.phone.href}>{site.phone.display}</a>.
+          We welcome your referrals and look forward to building lasting professional relationships. Find every option on our <a href="/for-doctors">referring doctors page</a>, or to refer a patient now, use our <a href={site.portals.referringDoctor}>secure referral portal</a> or contact our office directly at <a href={site.phone.href}>{site.phone.display}</a>.
         </p>
       </div>
     </div>

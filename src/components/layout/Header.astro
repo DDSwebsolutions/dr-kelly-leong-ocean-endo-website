@@ -20,7 +20,9 @@ const featuredTone: Record<string, string> = {
 };
 ---
 
-<header class="relative z-40" data-site-header>
+<!-- Sticky wrapper: the utility bar parks just above the viewport on lg+
+     (-top-10 = its exact height), so only the main bar stays pinned. -->
+<header class="sticky top-0 lg:-top-10 z-50" data-site-header>
   <!-- Utility bar (scrolls away; only the main bar sticks) -->
   <div class="hidden lg:block bg-ink text-primary-100 text-sm">
     <div class="mx-auto max-w-wide px-6 flex items-center justify-between h-10">
@@ -46,12 +48,13 @@ const featuredTone: Record<string, string> = {
     </div>
   </div>
 
-  <!-- Main bar -->
-  <div class="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-line/80 transition-shadow duration-300" data-header-bar>
+  <!-- Main bar — liquid glass: translucent + blurred + saturated, with the
+       fill thinning slightly once it floats over scrolled content. -->
+  <div class="glass glass-strong border-b border-line/80 transition-shadow duration-300" data-header-bar>
     <div class="mx-auto max-w-wide px-4 sm:px-6">
-      <div class="flex items-center justify-between gap-4 h-16 lg:h-20">
+      <div class="header-row flex items-center justify-between gap-4 h-[4.5rem] lg:h-24">
         <a href="/" class="shrink-0" aria-label="Ocean Endodontics — home">
-          <Image src={logo} alt="Ocean Endodontics, The Dental Group of Dr. Kelly Kimiko Leong" width={200} densities={[1, 2, 3]} quality={92} loading="eager" class="h-9 lg:h-11 w-auto" />
+          <Image src={logo} alt="Ocean Endodontics, The Dental Group of Dr. Kelly Kimiko Leong" width={280} densities={[1, 2, 3]} quality={92} loading="eager" class="header-logo h-11 lg:h-[3.75rem] w-auto" />
         </a>
 
         <!-- Desktop nav -->
@@ -80,7 +83,7 @@ const featuredTone: Record<string, string> = {
                       >
                         <div
                           class:list={[
-                            'mega-card overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-line/80',
+                            'mega-card overflow-hidden rounded-2xl glass glass-strong glass-edge',
                             'max-w-[calc(100vw-2rem)]',
                             item.columns && item.columns >= 2 ? 'w-[53rem]' : 'w-[35rem]',
                           ]}
@@ -200,15 +203,15 @@ const featuredTone: Record<string, string> = {
 
   <!-- Mobile off-canvas menu -->
   <div id="mobile-menu" class="xl:hidden fixed inset-0 z-50 hidden" data-mobile-menu>
-    <div class="absolute inset-0 bg-ink/40 backdrop-blur-sm" data-menu-backdrop></div>
+    <div class="menu-backdrop absolute inset-0 bg-ink/40 backdrop-blur-sm" data-menu-backdrop></div>
     <div
-      class="absolute right-0 top-0 h-full w-[min(92vw,24rem)] bg-white shadow-lg flex flex-col"
+      class="menu-drawer absolute right-0 top-0 h-full w-[min(92vw,24rem)] rounded-l-3xl glass glass-strong glass-edge flex flex-col"
       role="dialog"
       aria-modal="true"
       aria-label="Site menu"
     >
-      <div class="flex items-center justify-between px-5 h-16 border-b border-line">
-        <Image src={logo} alt="Ocean Endodontics" width={160} densities={[1, 2, 3]} quality={92} class="h-8 w-auto" />
+      <div class="flex items-center justify-between px-5 h-[4.5rem] border-b border-line">
+        <Image src={logo} alt="Ocean Endodontics" width={200} densities={[1, 2, 3]} quality={92} class="h-10 w-auto" />
         <button type="button" class="inline-flex items-center justify-center w-11 h-11 rounded-full ring-1 ring-line text-ink" aria-label="Close menu" data-menu-close>
           <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke-linecap="round"/></svg>
         </button>
@@ -234,7 +237,7 @@ const featuredTone: Record<string, string> = {
                             href={c.href}
                             target={c.external ? '_blank' : undefined}
                             rel={c.external ? 'noopener noreferrer' : undefined}
-                            class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-ink-soft no-underline hover:bg-surface-subtle hover:text-accent-strong"
+                            class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm text-ink-soft no-underline hover:bg-surface-subtle hover:text-accent-strong"
                           >
                             <NavIcon name={c.icon ?? 'tooth'} class="h-4 w-4 shrink-0 text-accent-strong/80" />
                             <span>{c.label}{c.external && <span class="sr-only"> (opens in a new tab)</span>}</span>
@@ -283,9 +286,18 @@ const featuredTone: Record<string, string> = {
     const closeIcon = document.querySelector<SVGElement>('[data-menu-close-icon]');
     const closers = document.querySelectorAll('[data-menu-close], [data-menu-backdrop]');
 
+    let closeTimer: number | undefined;
     const setOpen = (open: boolean) => {
       if (!menu || !toggle) return;
-      menu.classList.toggle('hidden', !open);
+      window.clearTimeout(closeTimer);
+      if (open) {
+        menu.classList.remove('hidden');
+        // next frame so the drawer transition can play
+        requestAnimationFrame(() => requestAnimationFrame(() => menu.classList.add('is-open')));
+      } else {
+        menu.classList.remove('is-open');
+        closeTimer = window.setTimeout(() => menu.classList.add('hidden'), 380);
+      }
       toggle.setAttribute('aria-expanded', String(open));
       openIcon?.classList.toggle('hidden', open);
       closeIcon?.classList.toggle('hidden', !open);
@@ -373,13 +385,27 @@ const featuredTone: Record<string, string> = {
     to { opacity: 1; transform: none; }
   }
 
-  /* Sticky bar depth on scroll */
+  /* Links cascade in behind the card — fast enough to feel instant. */
+  .nav-dd[open] .mega-card li { animation: navPanelIn 0.24s var(--ease-out-soft) both; }
+  .nav-dd[open] .mega-card li:nth-child(n + 1) { animation-delay: 20ms; }
+  .nav-dd[open] .mega-card li:nth-child(n + 3) { animation-delay: 50ms; }
+  .nav-dd[open] .mega-card li:nth-child(n + 5) { animation-delay: 80ms; }
+  .nav-dd[open] .mega-card li:nth-child(n + 7) { animation-delay: 110ms; }
+  .nav-dd[open] .mega-card li:nth-child(n + 9) { animation-delay: 140ms; }
+
+  /* Sticky bar depth on scroll — thin the glass so content shows through. */
   [data-header-bar][data-scrolled] {
-    background: color-mix(in oklab, var(--color-surface) 92%, transparent);
+    --glass-fill: 85%;
     box-shadow: 0 1px 0 rgba(16, 26, 51, 0.04), 0 10px 30px -18px rgba(16, 26, 51, 0.35);
   }
 
+  /* The mega panel is a DOM descendant of the (filtered) header bar, so its
+     own backdrop blur can't reliably sample the page beneath in every engine.
+     Run it nearly opaque — glass hint without unblurred ghosting. */
+  .mega-card { --glass-fill: 96%; }
+
   @media (prefers-reduced-motion: reduce) {
-    .nav-dd[open] > .nav-panel > .mega-card { animation: none; }
+    .nav-dd[open] > .nav-panel > .mega-card,
+    .nav-dd[open] .mega-card li { animation: none; }
   }
 </style>

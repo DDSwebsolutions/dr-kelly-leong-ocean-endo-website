@@ -7,7 +7,7 @@ category: "Patient Guides"
 readingTime: "4 min read"
 ---
 
-An endodontist is a dental specialist who focuses on the inside of the tooth: the pulp, the canals, and the roots. Many patients are referred by their general dentist, but you are always welcome to reach out directly. Here are the signs that specialist care may help.
+An [endodontist](/about) is a dental specialist who focuses on the inside of the tooth: the pulp, the canals, and the roots. Many patients are referred by their general dentist, but you are always welcome to reach out directly. Here are the signs that specialist care may help.
 
 ## 1. A toothache that won't quit
 

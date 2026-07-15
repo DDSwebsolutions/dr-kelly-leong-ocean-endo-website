@@ -22,6 +22,15 @@
 /images/*
   Cache-Control: public, max-age=2592000
 
+# Hero video + posters — heavy, rarely change. If you ever replace the video,
+# rename the file (e.g. hero-2.mp4) so cached visitors pick it up immediately.
+/videos/*
+  Cache-Control: public, max-age=2592000
+
+# Public referral form PDF
+/files/ocean-endo-referral-form.pdf
+  Cache-Control: public, max-age=604800
+
 # Icons / manifest
 /favicon.svg
   Cache-Control: public, max-age=604800

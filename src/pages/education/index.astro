@@ -4,6 +4,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import PageHero from '@components/sections/PageHero.astro';
 import CtaBand from '@components/sections/CtaBand.astro';
 import { webPageSchema } from '@lib/schemas';
+import cableCar from '@assets/images/sf/cable-car.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -23,6 +24,8 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month:
     title="Clear answers about endodontic care"
     lead="Plain-language guides to help you understand tooth pain, root canals, and what to do in an emergency, written by our team."
     crumbs={crumbs}
+    image={cableCar}
+    imageAlt="A San Francisco cable car climbing a sunny street"
   />
 
   <section class="py-16 lg:py-20">
@@ -31,11 +34,18 @@ const fmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month:
         {
           posts.map((post) => (
             <li data-reveal>
-              <a href={`/education/${post.id}`} class="group flex h-full flex-col rounded-2xl bg-white ring-1 ring-line p-6 no-underline transition-all hover:-translate-y-1 hover:shadow-md hover:ring-line-strong">
+              <a href={`/education/${post.id}`} class="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-line p-6 no-underline transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:ring-primary-200">
+                <span class="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-accent via-primary-400 to-accent-decor opacity-0 transition-opacity duration-300 group-hover:opacity-100" aria-hidden="true"></span>
                 <span class="self-start rounded-full bg-surface-tint text-accent-strong px-3 py-1 text-xs font-semibold">{post.data.category}</span>
                 <h2 class="mt-4 text-lg font-semibold text-ink group-hover:text-accent-strong leading-snug">{post.data.title}</h2>
                 <p class="mt-2 text-[0.95rem] text-ink-soft flex-1">{post.data.description}</p>
-                <p class="mt-4 text-xs text-ink-muted">{fmt(post.data.publishDate)}{post.data.readingTime ? ` · ${post.data.readingTime}` : ''}</p>
+                <p class="mt-4 flex items-center justify-between gap-3 text-xs text-ink-muted">
+                  <span>{fmt(post.data.publishDate)}{post.data.readingTime ? ` · ${post.data.readingTime}` : ''}</span>
+                  <span class="inline-flex items-center gap-1 font-semibold text-accent-strong">
+                    Read
+                    <svg class="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </p>
               </a>
             </li>
           ))

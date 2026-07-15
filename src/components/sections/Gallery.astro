@@ -8,7 +8,7 @@ const { images, class: className = '' } = Astro.props;
 <div class:list={['gap-4 [column-fill:_balance] columns-1 sm:columns-2 lg:columns-3', className]}>
   {
     images.map((shot, i) => (
-      <figure class="mb-4 break-inside-avoid overflow-hidden rounded-2xl ring-1 ring-line shadow-xs" data-reveal>
+      <figure class="zoom-media mb-4 break-inside-avoid overflow-hidden rounded-2xl ring-1 ring-line shadow-xs" data-reveal>
         <Image
           src={shot.src}
           alt={shot.alt}

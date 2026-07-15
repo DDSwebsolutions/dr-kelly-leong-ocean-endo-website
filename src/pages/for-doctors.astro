@@ -5,6 +5,7 @@ import CtaBand from '@components/sections/CtaBand.astro';
 import Button from '@components/ui/Button.astro';
 import { site } from '@data/site';
 import { webPageSchema } from '@lib/schemas';
+import detailWide from '@assets/images/photos/detail-wide.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -26,6 +27,8 @@ const schema = [webPageSchema({ path: '/for-doctors', title: 'For Referring Doct
     title="A partner you can count on"
     lead="Ocean Endodontics supports your practice with timely scheduling, clear communication, and complete documentation, so your patients come back to you ready for excellent restorative care."
     crumbs={crumbs}
+    image={detailWide}
+    imageAlt="Dr. Leong working under the operating microscope"
   >
     <div class="flex flex-wrap gap-3">
       <Button href={site.portals.referringDoctor} external>Refer online (portal)</Button>

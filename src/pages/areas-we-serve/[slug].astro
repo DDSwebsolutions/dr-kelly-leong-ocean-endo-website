@@ -77,6 +77,10 @@ const schema = [webPageSchema({ path: `/areas-we-serve/${city.slug}`, title: `En
             <p class="mt-2 text-ink-soft text-[0.95rem]"><span class="font-semibold text-ink">By car:</span> {city.driveNote} {site.parkingNote}</p>
           </div>
         </div>
+
+        <p class="mt-8 text-[0.95rem] text-ink-soft">
+          Not in {city.name}? Explore the <a href="/areas-we-serve">other neighborhoods we serve</a> across San Francisco&rsquo;s west side, or learn more <a href="/about">about our specialty practice</a>.
+        </p>
       </article>
 
       <aside class="lg:sticky lg:top-28 h-max flex flex-col gap-5">

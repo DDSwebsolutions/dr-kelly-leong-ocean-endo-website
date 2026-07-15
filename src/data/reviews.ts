@@ -42,7 +42,7 @@ export type Faq = { q: string; a: string };
 export const generalFaqs: Faq[] = [
   {
     q: 'What is an endodontist?',
-    a: 'An endodontist is a dental specialist who focuses on diagnosing tooth pain and performing root canal therapy and related procedures to save natural teeth. Endodontists complete two or more years of advanced training after dental school and use technology such as operating microscopes and 3D imaging to treat the inside of the tooth with precision.',
+    a: 'An endodontist is a dental specialist who focuses on diagnosing tooth pain and performing root canal therapy and related procedures to save natural teeth. Endodontists complete two or more years of advanced training after dental school and use technology such as operating microscopes and 3D imaging to treat the inside of the tooth with precision. Learn more [about our specialty practice](/about).',
   },
   {
     q: 'What makes Ocean Endodontics different from a general dentist?',
@@ -54,11 +54,11 @@ export const generalFaqs: Faq[] = [
   },
   {
     q: 'Do endodontists only do root canals?',
-    a: 'Root canal therapy is the most common treatment, but endodontists also perform retreatment of previous root canals, microsurgery called apicoectomy, cracked tooth management, and emergency care for dental trauma. This specialty training allows us to handle complex cases and preserve natural teeth whenever possible.',
+    a: 'Root canal therapy is the most common treatment, but endodontists also perform retreatment of previous root canals, microsurgery called apicoectomy, cracked tooth management, and emergency care for dental trauma. This specialty training allows us to handle complex cases and preserve natural teeth whenever possible. Browse our [full list of endodontic services](/services).',
   },
   {
     q: 'How do I know if I should see an endodontist?',
-    a: 'If you have severe or lingering tooth pain, sensitivity to hot or cold that does not go away, swelling, or you have been told you may need a root canal, an endodontist can help. Many patients are referred by their general dentist, but you are welcome to contact us directly.',
+    a: 'If you have severe or lingering tooth pain, sensitivity to hot or cold that does not go away, swelling, or you have been told you may need a root canal, an endodontist can help. Many patients are referred by their general dentist, but you are welcome to contact us directly. Our guide to the [signs you may need an endodontist](/education/signs-you-need-an-endodontist) covers the most common symptoms.',
   },
   {
     q: 'Is there parking?',

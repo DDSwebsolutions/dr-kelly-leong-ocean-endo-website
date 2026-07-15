@@ -1,17 +1,21 @@
 ---
 import { site } from '@data/site';
 import Button from '@components/ui/Button.astro';
+
+// Word-level entrance stagger for the practice name.
+const titleWords = ['Ocean', 'Endodontics'];
 ---
-<section class="relative isolate flex min-h-[86svh] items-end overflow-hidden bg-ink">
-  <!-- Background video (self-hosted, muted loop). Poster paints instantly and
-       is the LCP; the video only plays when motion is allowed. -->
+<section class="relative isolate flex min-h-[92svh] items-end overflow-hidden bg-ink">
+  <!-- The poster (preloaded from <head> via BaseLayout) is the LCP. The 2.4 MB
+       video is preload="none" so it can't compete with first paint; the script
+       below starts it (which triggers the fetch) once the page has loaded. -->
   <video
     class="absolute inset-0 -z-10 h-full w-full object-cover"
     poster={site.video.heroPoster}
     muted
     loop
     playsinline
-    preload="auto"
+    preload="none"
     aria-hidden="true"
     data-hero-video
   >
@@ -20,39 +24,52 @@ import Button from '@components/ui/Button.astro';
 
   <!-- Layered scrim: vertical depth + left legibility gradient + brand tint +
        bottom feather for a seamless hand-off into the page below. -->
-  <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink/92 via-ink/50 to-primary-900/35" aria-hidden="true"></div>
+  <div class="absolute inset-0 -z-10 bg-gradient-to-t from-ink/95 via-ink/50 to-primary-900/35" aria-hidden="true"></div>
   <div class="absolute inset-0 -z-10 bg-gradient-to-r from-ink/70 via-ink/20 to-transparent" aria-hidden="true"></div>
   <div class="absolute inset-0 -z-10 bg-primary-900/15 mix-blend-multiply" aria-hidden="true"></div>
-  <div class="absolute inset-x-0 bottom-0 -z-10 h-28 bg-gradient-to-t from-ink/55 to-transparent" aria-hidden="true"></div>
+  <div class="absolute inset-x-0 bottom-0 -z-10 h-36 bg-gradient-to-t from-ink/60 to-transparent" aria-hidden="true"></div>
 
-  <div class="relative mx-auto w-full max-w-content px-6 pb-16 pt-28 lg:pb-24">
+  <div class="relative mx-auto w-full max-w-content px-6 pb-24 pt-28 sm:pb-28 lg:pb-32">
     <div class="max-w-3xl">
-      <p class="inline-flex items-center gap-2.5 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium tracking-[0.02em] text-white ring-1 ring-white/25 shadow-[0_2px_16px_rgba(16,26,51,0.25)] backdrop-blur-md">
+      <p
+        class="hero-rise inline-flex items-center gap-2.5 rounded-full bg-white/10 px-4 py-1.5 text-sm font-medium tracking-[0.02em] text-white ring-1 ring-white/25 shadow-[0_2px_16px_rgba(16,26,51,0.25)] backdrop-blur-md backdrop-saturate-150"
+        style="--hero-delay: 60ms"
+      >
         <span class="inline-block h-2 w-2 rounded-full bg-white shadow-[0_0_10px_2px_rgba(255,255,255,0.6)]"></span>
         Board-Certified Endodontist · San Francisco
       </p>
 
-      <h1 class="mt-6 text-5xl font-semibold leading-[1.02] tracking-tight text-white sm:text-6xl xl:text-7xl [text-wrap:balance] drop-shadow-sm">
-        Comfort first.<br />Precision always.
+      <h1 class="mt-6 text-[2.9rem] font-semibold leading-[1.02] tracking-tight text-white sm:text-6xl xl:text-7xl drop-shadow-sm">
+        {titleWords.map((w, i) => (
+          <>
+            <span class="hero-rise inline-block" style={`--hero-delay: ${180 + i * 130}ms`}>{w}</span>
+            {i < titleWords.length - 1 && ' '}
+          </>
+        ))}
       </h1>
 
-      <p class="mt-6 max-w-xl text-lg text-white/90 sm:text-xl [text-shadow:0_1px_16px_rgba(16,26,51,0.5)]">
+      <p class="hero-rise mt-4 flex items-center gap-3 text-lg font-medium tracking-[0.01em] text-primary-100 sm:text-2xl" style="--hero-delay: 480ms">
+        <span class="hidden h-px w-10 shrink-0 bg-gradient-to-r from-accent-decor to-transparent sm:inline-block" aria-hidden="true"></span>
+        Comfort first. Precision always.
+      </p>
+
+      <p class="hero-rise mt-5 max-w-xl text-base text-white/90 sm:text-lg [text-shadow:0_1px_16px_rgba(16,26,51,0.5)]" style="--hero-delay: 600ms">
         {site.doctor.name} relieves pain and saves natural teeth with modern, microscope-guided endodontic care, delivered with a genuinely gentle touch.
       </p>
 
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+      <div class="hero-rise mt-8 flex flex-col gap-3 sm:flex-row" style="--hero-delay: 720ms">
         <Button href={site.cta.book.href} size="lg" variant="white">Book an appointment</Button>
         <a
           href={site.phone.href}
           data-btn
-          class="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-7 py-3.5 text-base font-semibold text-white ring-1 ring-white/40 backdrop-blur transition-all hover:bg-white/20 hover:-translate-y-0.5"
+          class="inline-flex items-center justify-center gap-2 rounded-full bg-white/10 px-7 py-3.5 text-base font-semibold text-white ring-1 ring-white/40 backdrop-blur backdrop-saturate-150 transition-all hover:bg-white/20 hover:-translate-y-0.5"
         >
           <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 5 5L14 12l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke-linejoin="round"/></svg>
           {site.phone.display}
         </a>
       </div>
 
-      <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/85">
+      <ul class="hero-rise mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/85" style="--hero-delay: 840ms">
         {['Microscope-guided care', 'Same-day emergencies', 'Free parking lot'].map((f) => (
           <li class="inline-flex items-center gap-2">
             <svg class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m5 12 5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -62,18 +79,46 @@ import Button from '@components/ui/Button.astro';
       </ul>
     </div>
   </div>
+
+  <!-- Scroll cue -->
+  <div class="pointer-events-none absolute bottom-16 left-1/2 hidden -translate-x-1/2 lg:block" aria-hidden="true">
+    <div class="scroll-cue flex h-10 w-6 items-start justify-center rounded-full ring-1 ring-white/40">
+      <span class="mt-2 block h-2 w-1 rounded-full bg-white/80"></span>
+    </div>
+  </div>
+
+  <!-- Ocean-wave hand-off into the page below -->
+  <svg
+    class="pointer-events-none absolute inset-x-0 bottom-[-1px] h-10 w-full text-surface sm:h-14"
+    viewBox="0 0 1440 64"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      fill="currentColor"
+      d="M0 34 C 240 62, 420 8, 720 26 C 1020 44, 1220 14, 1440 34 L 1440 64 L 0 64 Z"
+    />
+  </svg>
 </section>
 
 <script>
   // Respect reduced motion / Save-Data: keep the poster still, don't autoplay.
+  // With preload="none", calling play() is what kicks off the video download —
+  // deferred to window load (or a 2.5s fallback) so first paint wins the race.
   (() => {
     const v = document.querySelector<HTMLVideoElement>('[data-hero-video]');
     if (!v) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const saveData = (navigator as any).connection?.saveData;
     if (reduce || saveData) return;
-    const play = () => v.play().catch(() => {});
-    if (v.readyState >= 2) play();
-    else v.addEventListener('canplay', play, { once: true });
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      v.play().catch(() => {});
+    };
+    if (document.readyState === 'complete') start();
+    else window.addEventListener('load', start, { once: true });
+    window.setTimeout(start, 2500);
   })();
 </script>

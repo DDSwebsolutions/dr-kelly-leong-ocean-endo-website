@@ -12,7 +12,10 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
   compressHTML: true,
-  build: { assets: '_astro', inlineStylesheets: 'auto' },
+  // 'always' inlines the (compressed ~12 KB) stylesheet into each page,
+  // removing the render-blocking CSS request — worth it for first-visit LCP
+  // on a marketing site; hover-prefetch keeps page-to-page nav instant.
+  build: { assets: '_astro', inlineStylesheets: 'always' },
   image: { service: { entrypoint: 'astro/assets/services/sharp' } },
   prefetch: { prefetchAll: false, defaultStrategy: 'hover' },
   integrations: [

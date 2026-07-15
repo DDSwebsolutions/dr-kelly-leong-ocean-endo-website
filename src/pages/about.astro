@@ -8,7 +8,10 @@ import Reviews from '@components/sections/Reviews.astro';
 import CtaBand from '@components/sections/CtaBand.astro';
 import Button from '@components/ui/Button.astro';
 import { webPageSchema } from '@lib/schemas';
+import BlueBand from '@components/sections/BlueBand.astro';
+import OfficePeek from '@components/sections/OfficePeek.astro';
 import welcomeHall from '@assets/images/photos/welcome-hall.jpg';
+import paintedLadies from '@assets/images/sf/painted-ladies.jpg';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -80,6 +83,19 @@ const schema = [webPageSchema({ path: '/about', title: 'About Ocean Endodontics'
       </ul>
     </div>
   </section>
+
+  <BlueBand
+    image={paintedLadies}
+    imageAlt="The Painted Ladies Victorian houses of San Francisco"
+    eyebrow="A San Francisco practice"
+    title="Rooted here, through and through"
+    lead="Dr. Leong is a native San Franciscan caring for the city she grew up in, from a modern office on Ocean Avenue."
+  >
+    <Button href="/meet-dr-kimiko-leong" size="lg" variant="white">Meet Dr. Leong</Button>
+    <Button href="/areas-we-serve" size="lg" variant="navy" class="ring-1 ring-white/25">Areas we serve</Button>
+  </BlueBand>
+
+  <OfficePeek keys={['reception-desk', 'gallery-48', 'office-hall']} />
 
   <Reviews limit={3} />
   <CtaBand />

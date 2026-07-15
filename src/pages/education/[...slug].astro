@@ -59,6 +59,11 @@ const schema = [
   modifiedTime={d.updatedDate?.toISOString()}
   schema={schema}
 >
+  <!-- Reading progress — thin bar pinned above the sticky header. -->
+  <div class="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px]" aria-hidden="true">
+    <div class="h-full w-full origin-left scale-x-0 bg-gradient-to-r from-accent via-primary-400 to-accent-decor" data-read-progress></div>
+  </div>
+
   <section class="bg-surface-subtle border-b border-line">
     <div class="mx-auto max-w-3xl px-6 py-12 lg:py-14">
       <Breadcrumbs crumbs={crumbs} class="mb-5" />
@@ -70,7 +75,7 @@ const schema = [
   </section>
 
   <div class="mx-auto max-w-3xl px-6">
-    <div class="overflow-hidden rounded-3xl ring-1 ring-line shadow-soft -mt-0 mb-10 mt-10">
+    <div class="overflow-hidden rounded-3xl ring-1 ring-line shadow-soft my-10">
       <Image src={hero} alt="" widths={[640, 960]} sizes="(max-width: 768px) 100vw, 48rem" class="w-full h-auto object-cover aspect-[16/9]" />
     </div>
     <article class="prose-content pb-8">
@@ -88,3 +93,21 @@ const schema = [
 
   <CtaBand />
 </BaseLayout>
+
+<script>
+  // Reading progress: informational (tracks scroll position), so it is not
+  // gated by reduced-motion — there is no animation, just a live position.
+  (() => {
+    const bar = document.querySelector<HTMLElement>('[data-read-progress]');
+    if (!bar) return;
+    const update = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      bar.style.transform = `scaleX(${p})`;
+    };
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+</script>

@@ -10,25 +10,82 @@ const {
   tone = 'default',
 } = Astro.props;
 const dark = tone === 'navy';
+
+// Split a stat like "24+" into a countable number and its suffix. Values that
+// read as years (e.g. "2017") stay static — counting a year up looks odd.
+const parse = (v: string) => {
+  const m = v.match(/^(\d+)(.*)$/);
+  if (!m) return { num: null, suffix: v };
+  const n = Number(m[1]);
+  return n >= 1900 ? { num: null, suffix: v } : { num: n, suffix: m[2] };
+};
 ---
-<section class:list={['py-4', dark ? '' : '']}>
+<section class="py-4">
   <div class="mx-auto max-w-content px-6">
     <dl
       class:list={[
-        'grid grid-cols-1 sm:grid-cols-3 gap-px rounded-3xl overflow-hidden ring-1',
+        'grid grid-cols-3 gap-px rounded-3xl overflow-hidden ring-1 shadow-soft',
         dark ? 'bg-line-inverse ring-line-inverse' : 'bg-line ring-line',
       ]}
       data-reveal
+      data-stat-strip
     >
       {
-        stats.map((s) => (
-          <div class:list={['flex flex-col items-center text-center gap-1 px-4 py-8', dark ? 'bg-ink' : 'bg-white']}>
-            <dt class="sr-only">{s.label}</dt>
-            <dd class:list={['text-3xl lg:text-4xl font-bold tracking-tight', dark ? 'text-white' : 'text-ink']}>{s.value}</dd>
-            <p class:list={['text-sm', dark ? 'text-primary-100' : 'text-ink-muted']}>{s.label}</p>
-          </div>
-        ))
+        stats.map((s) => {
+          const { num, suffix } = parse(s.value);
+          return (
+            <div class:list={['flex flex-col-reverse items-center text-center gap-1 px-2 py-6 sm:px-4 sm:py-8', dark ? 'bg-ink' : 'bg-white']}>
+              <dt class:list={['text-xs sm:text-sm text-balance', dark ? 'text-primary-100' : 'text-ink-muted']}>{s.label}</dt>
+              <dd
+                class:list={['text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight tabular-nums', dark ? 'text-white' : 'text-ink']}
+                {...(num !== null ? { 'data-count-to': num, 'data-count-suffix': suffix } : {})}
+              >
+                {s.value}
+              </dd>
+            </div>
+          );
+        })
       }
     </dl>
   </div>
 </section>
+
+<script>
+  // Count-up on first reveal. Skipped entirely when the user prefers less
+  // motion (media query or the site's accessibility toggle).
+  (() => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>('[data-count-to]'));
+    if (!els.length || !('IntersectionObserver' in window)) return;
+    const reduce =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      document.documentElement.dataset.a11yMotion === 'off';
+    if (reduce) return;
+
+    const run = (el: HTMLElement) => {
+      const to = Number(el.dataset.countTo || '0');
+      const suffix = el.dataset.countSuffix || '';
+      const dur = 1100;
+      const t0 = performance.now();
+      const tick = (t: number) => {
+        const p = Math.min((t - t0) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = `${Math.round(to * eased)}${suffix}`;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            run(e.target as HTMLElement);
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    els.forEach((el) => io.observe(el));
+  })();
+</script>

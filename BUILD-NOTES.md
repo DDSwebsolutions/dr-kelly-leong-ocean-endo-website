@@ -1,96 +1,116 @@
-# Build Notes & Launch Checklist — Ocean Endodontics
-
-Built to the DDS Web Solutions dental site standard. This file is the handoff: what shipped, what to verify, and how it maps to your Definition of Done.
 
 ---
 
-## What shipped
+## Refinement pass — July 14, 2026 (pre-launch)
 
-**~50 pages from 24 route files:**
+Visual/content polish round on top of the original build. Full `astro build` (49 pages), `astro check` (0 errors), and a real-browser axe pass (WCAG 2.1 AA: 0 violations on home, service, contact, doctor, booking) were run after these changes.
 
-- Home, About, Meet Dr. Leong, Our Office, Technology, Reviews
-- Services index + **11 service pages** (root canal, retreatment, apicoectomy, diagnosis/pain, cracked tooth, emergency, trauma, nitrous, oral conscious sedation, internal bleaching, Botox for bruxism)
-- Areas We Serve index + **7 unique neighborhood pages** (Ingleside, Lake Merced, Parkmerced, West Portal, St. Francis Wood, Balboa Terrace, Daly City)
-- Contact, Book Appointment (Jotform), New Patient, Insurance & Financing, For Doctors
-- Education Center + 3 articles + RSS feed
-- Privacy Policy, Terms of Use, Accessibility Statement, Your Privacy Choices
-- Thank-you, 404
+**Requested changes**
+- **Home hero now leads with the practice name.** H1 is "Ocean Endodontics" with the tagline "Comfort first. Precision always." beneath it; word-by-word entrance animation (fully gated by reduced-motion), plus a scroll cue and an ocean-wave divider into the stats band.
+- **Logo enlarged** in the header (~36% bigger: 44px mobile / 60px desktop, condensing to 38/48px on scroll), mobile menu, and footer. Source PNG is 1120px wide, so it stays crisp at 3x.
 
-**Design:** Custom, not a template. Ocean navy/azure palette pulled from the real logo mark, Apple-style system/Inter typography with fluid `clamp()` scale, soft motion (all gated by reduced-motion), real practice photography run through the Sharp pipeline.
+**Fixes (found during review)**
+- **Sticky header actually sticks now.** `sticky` sat on an inner div whose parent ended immediately, so the bar scrolled away on every page. The `<header>` itself is now sticky, parking the utility bar just above the viewport on desktop. Header z-index raised 40 → 50 so the mobile drawer covers the bottom action bar (it was rendering underneath).
+- **Skip-link** could ghost-render on some mobile loads; it now also gates on opacity/pointer-events until focused.
+- **StatStrip markup** made valid for `<dl>` semantics (axe "definition-list" violation fixed).
+- **Reduced-motion kill switches** now also zero animation/transition *delays*, so delayed entrances can't leave content invisible for users with motion off.
 
-**Requested features, all in:**
+**Design/animation upgrades (all motion respects prefers-reduced-motion + the a11y toolbar toggle)**
+- Staggered scroll-reveals (grouped elements cascade in), count-up animation on the stats, Ken Burns drift on the SF photo band, hover zoom on gallery/feature photos, animated mobile-menu drawer (slide + fade, rounded edge), service-card hover treatment (gradient hairline, icon fill), richer testimonial cards, numbered treatment steps with connector line, brand-mark watermarks on inner-page heroes and the CTA band, header shrink-on-scroll.
+- Mobile: floating rail now shows only Accessibility + back-to-top on phones (Call/Email/Schedule live in the bottom bar), stats render as a compact 3-across strip, larger tap targets in the drawer.
 
-- Hovering **action bar** (Accessibility, Call, Email, Schedule) on every page — pointer-events constrained to the visible buttons so it never swallows taps.
-- **Accessibility toolbar** baked into that bar: text size, line/letter spacing, high contrast, readable (dyslexia-friendly) font, highlight links, big cursor, reading guide, focus outline, reduce motion. Choices persist per device and apply before first paint (no flash).
-- **Mobile bottom bar** with Call + Schedule, coexisting with the hovering bar.
-- **Leaflet + OpenStreetMap** maps. **No Google Maps. No Google Analytics. No third-party trackers or ad pixels anywhere.**
-- Footer + Terms **disclaimers**: not medical advice, no doctor–patient relationship, **call 911** for emergencies, plus the SMS-consent notice.
-- HIPAA/ADA/CIPA-minded: PHI-zone classifier in `src/lib/privacy-zones.ts` (moot today since nothing tracks, but structural), WCAG 2.1 AA apparatus, and a CSP that only allows what the site actually uses.
-- Full **schema/JSON-LD** (Dentist/MedicalBusiness org, WebSite, Physician, per-page WebPage + BreadcrumbList, MedicalProcedure on services, FAQPage, BlogPosting), **sitemap**, **robots.txt** with AI-crawler allowlist, and **llms.txt + llms-full.txt**.
-- **Redirects:** every legacy WordPress URL 301s to its new home (`public/_redirects`, 66 rules incl. both trailing-slash forms) — services, the 7 area pages, appointment, CE pages, partnership/staff, `/wp-*`, `/feed`, category/tag/author. No broken links, no catch-all shadowing.
+**Content accuracy (verified against the live oceanendosf.com)**
+- Botox for Bruxism now matches the doctor's published specifics: masseter **and temporalis** muscles, onset ~10–14 days, peak ~3–4 weeks, duration ~3 months, "doesn't interfere with speaking/chewing/expression," night guard + Botox positioned as complementary.
+- Doctor bio phrase restored to her wording: "cutting-edge technology with a compassionate touch."
+- Page parity re-confirmed against the old site's nav + redirect map: all 11 services, 7 neighborhood pages, 5 CE courses, doctor/office/technology/reviews, for-doctors set (portal, PDF, partnership, staff resources), patient portal, contact, appointment. The 3 Education Center articles are NEW content authored for this site — have Dr. Leong read them before launch.
 
----
-
-## Build/QA status — read this
-
-The Astro build was validated in my environment as far as the toolchain allowed:
-
-- ✅ **All 47 `.astro` files compile** clean through the Astro compiler (0 errors).
-- ✅ **TypeScript data layer type-checks** (all 11 services + 7 cities satisfy their contracts; `tsc` clean).
-- ✅ Image pipeline confirmed working (Sharp generated the 1200×630 OG image and the 180×180 apple-touch icon).
-
-⚠️ **The full `dist/` build must be run on your Mac.** The build sandbox couldn't execute esbuild's native binary (it segfaults under the sandbox — this is exactly the "build only works on the target machine" case in Part 3 of the standard). Nothing is wrong with the project; the transform engine just can't run there. On your machine:
-
-```bash
-cd dr-kelly-leong-ocean-endo-website
-npm install
-npm run build      # produces dist/
-npm run preview    # eyeball it locally
-```
-
-`node_modules` and any lockfile were intentionally left out — do a fresh `npm install`.
-
-### Definition of Done — where each item stands
-
-| Gate | Status |
-|---|---|
-| `astro build` clean, zero type errors | Templates + data verified here; **run `npm run build` on your machine to produce dist/** |
-| Real-browser axe pass on `dist/`, contrast from tokens | **Run after build** (accent tokens pre-verified: buttons 4.8:1, links 6.1:1 on white) |
-| Lighthouse mobile 95+, LCP <2.0s, CLS 0 | **Run after build** (static, near-zero JS, hero preloaded, images sized — built for this) |
-| Every claim audited vs. real facts | ✅ Done — scope, sedation, specialty, reviews, availability all honest (see below) |
-| Structured data validated (Rich Results) | **Paste a built URL into the Rich Results Test** — schema is built to spec, no `aggregateRating` |
-| Real form submission end-to-end + thank-you | **Verify in Jotform** (see #3 below) |
-| Tracking gating | ✅ N/A — zero tracking ships |
-| Every legacy URL 301s to a live page | ✅ Mapped in `_redirects`; spot-check a few after deploy |
-| Same origin serves home + inner pages | **Confirm at DNS cutover** |
+**Still to verify at launch (unchanged from the list above):** Jotform thank-you redirect test on the live domain, exact map pin, DMD confirmation, PACE-provider status wording on /ce-courses, and a Lighthouse run on the deployed site.
 
 ---
 
-## Verify before launch
+## Refinement pass 2 — July 14, 2026 (performance + polish)
 
-1. **Map pin (minor).** Coordinates in `src/data/site.ts` are block-level accurate (Ocean Ave & Junipero Serra). If you want it exact, grab lat/lng from Google Maps and drop them in. The "Get Directions" button already uses the authoritative Google pin.
+**Measured performance (local, compression-enabled server, simulated throttling):**
+- Home **mobile: 97–99** (was 77) · FCP 1.2s · LCP 2.1–2.5s · CLS 0 · TBT ≤ 90ms
+- Service page **mobile: 100** · LCP 1.7s
+- Home desktop: 87 locally; expect higher on Cloudflare (brotli + HTTP/3 + edge cache)
 
-2. **Doctor's degree.** I used **DMD** (Tufts confers the DMD) and "Diplomate, American Board of Endodontics (2017)." Confirm DMD vs DDS and adjust in `src/data/site.ts` (`doctor.credential`) if needed.
+**What moved the numbers**
+- **Leaflet now lazy-loads.** Its ~150 KB JS + CSS (and OpenStreetMap tile requests) previously loaded eagerly on every map page; they now load only when the map scrolls within 600px of the viewport. Visitors who never reach the map never contact OSM at all. CSS ships inside the lazy chunk via `?inline` (required with inlined stylesheets — the standalone CSS chunk otherwise 404s).
+- **Hero video no longer competes with first paint.** `preload="none"` + playback kicked off at window load; poster converted to WebP (143 KB → 82 KB, JPG kept) and preloaded from `<head>` via a new `preloadImage` prop on BaseLayout.
+- **Stylesheets inline into each page** (`inlineStylesheets: 'always'`) — removes the render-blocking CSS request; ~12 KB compressed per page, hover-prefetch keeps navigation instant.
 
-3. **Jotform (the one thing to test live).** The embed (form `252456352678365`) is wired and its submit/CDN hosts are whitelisted in the CSP (`public/_headers`). Before launch: in the Jotform builder, set the form's **Thank-You redirect to `https://oceanendosf.com/thank-you`**, then submit the form on the deployed site and confirm it posts cleanly and lands on the thank-you page. (If a form ever renders but hangs on submit, the CSP submit host is the first suspect — it's covered here via `*.jotform.com`.)
+**Polish added**
+- Branded **404** (navy band, gradient 404, wave hand-off, popular-page chips) and **thank-you** (3-step "what happens next") pages.
+- **Jotform loading skeleton** on Book Appointment that fades when the form loads (8s failsafe); removed Jotform's scroll-to-top-on-load page jump.
+- **Reading progress bar** on Education articles; education + areas cards get the same hover treatment as service cards; primary buttons get a subtle top-lit gradient; mega-menu links cascade in; accessibility panel rises in; footer links nudge on hover.
+- **Print stylesheet:** header, footer, floating bars, and CTA bands are stripped when patients print an article or service page (inline medical disclaimers remain in the content).
 
-4. **Reviews.** Per your call, we show the real written testimonials with **no numeric star count and no `aggregateRating`** (cleanest legally). If you later want star schema, send me the verified current Google count + average and I'll wire it to match exactly.
+**Checks after this pass:** build clean (49 pages), `astro check` 0 errors, axe 0 violations on the new/changed pages (404, thank-you, booking, education article), Leaflet verified initializing on scroll with zero console errors. Note: the hero video can't play in the audit sandbox (its browser lacks an H.264 decoder) — real browsers are unaffected; playback logic verified as invoked.
 
-5. **Referral PDF.** The old `/wp-content/uploads/2026/04/Updated-Referral.pdf` 301s to `/for-doctors`. If you want the actual PDF available, drop it in `public/files/` and link it from the For Doctors page.
-
-6. **Analytics (intentionally none).** If you ever want measurement, use **Cloudflare Web Analytics** (cookieless, no CIPA exposure) — not Google Analytics. Keeping it off is the safest posture and matches your instruction.
-
-7. **DNS / canonical.** Canonical host is `https://oceanendosf.com` (non-www), matching the current site. Point the domain at the Pages project and set a www → apex redirect if www is registered.
+**Also confirmed this round:** `functions/_middleware.js` password-gates /staff-resources and /files/staff/* on Cloudflare Pages (HTTP Basic Auth; password set in that file — rotate it before sharing the URL beyond the team).
 
 ---
 
-## Content authenticity
+## Final sweep — July 14, 2026 (pre-launch QA)
 
-All copy was written from the live site and the info you provided — nothing invented. Scope statements are honest and defensible: Dr. Leong is presented as a board-certified endodontic **specialist** (accurate), in-office sedation is limited to **nitrous + oral conscious** with an explicit "no IV sedation or general anesthesia" line, emergency availability is "same-day **when possible**" on business days (matching your Mon/Tue/Wed/Fri hours), and Botox is framed as **therapeutic for bruxism**, not cosmetic. No "best/#1/painless/guaranteed" superlatives.
+Full-file audit of everything not previously reviewed: all four legal pages, accessibility statement, reviews, partnership philosophy, CE pages, area pages, robots.txt, llms.txt, site.webmanifest, RSS, Seo.astro, schemas.ts, and public/_headers. Findings:
 
-## Editing later
+- **CSP verified compatible with inlined stylesheets** (`style-src 'unsafe-inline'` was already present) — the performance change in pass 2 is safe in production. All origins used by the site (Jotform, Cloudflare Stream, OSM tiles) remain covered; no CSP edits needed.
+- **Caching gap closed:** `/videos/*` (the 2.4 MB hero loop + posters) and the referral PDF now get long cache lifetimes instead of revalidating on every visit. If the hero video is ever replaced, rename the file so caches roll over.
+- **Schema polish:** organization telephone/fax now emit in E.164 (+14157413636) per schema.org best practice; display formatting on-page is unchanged. JSON-LD validated parsing on all 49 built pages; org node confirms correct hours (Mon/Tue/Wed/Fri only).
+- Legal pages, PACE disclaimer wording, robots/llms/manifest/RSS all reviewed — accurate and consistent; no changes required.
 
-- Practice info (NAP, hours, nav, CTAs, disclaimers): `src/data/site.ts`
-- Services: `src/data/services.ts` · Neighborhoods: `src/data/cities.ts` · Testimonials/FAQs: `src/data/reviews.ts`
-- Colors/fonts/spacing: `src/styles/global.css` (`@theme` block)
-- New article: add a `.md` file in `src/content/education/`
+Remaining items are live-domain-only and already on the checklist above: Jotform thank-you redirect test, Rich Results test on a deployed URL, real-device look at the hero video, exact map pin, DMD + PACE confirmation by Dr. Leong, and her review of the 3 new Education articles.
+
+---
+
+## Liquid glass pass — July 14, 2026
+
+Apple-style liquid glass applied to the floating navigation/control layer only (content surfaces stay solid, per Apple's own use of the material): sticky header (glass thins from 90% to 85% fill once it floats over scrolled content), mega-menu card, mobile drawer, bottom action bar, floating rail buttons, and the accessibility panel. Recipe: translucent fill + 20px blur + 1.8x saturation boost + specular top edge (`.glass`, `.glass-strong`, `.glass-edge` in global.css). The hero badge and phone button gained the saturation boost.
+
+Guardrails: solid-fill fallbacks for browsers without backdrop-filter, for `prefers-reduced-transparency: reduce`, and for the site's own High Contrast toggle. The mega-menu card runs at 96% fill because it is a DOM descendant of the filtered header bar, where nested backdrop blur is not reliable cross-engine — documented in Header.astro. Deliberately NOT implemented: SVG refraction/lensing shaders (inconsistent in Safari/Firefox, GPU-heavy, and they degrade text legibility on a medical site).
+
+Verified: build clean, axe 0 violations on home, drawer/panel/header/menu screenshots reviewed over worst-case dark backgrounds.
+
+---
+
+## Service-page imagery pass — July 14, 2026
+
+Per Pete's direction: instrument close-ups are gone from patient-facing decorative slots, and the oversized full-width photo banner on service pages was replaced with a smaller, captioned figure inside the article column (5:3, article width, hover zoom).
+
+- New assignments (all calm, all distinct): root canal → bright operatory; retreatment → operatory with garden view; apicoectomy → operatory with neighborhood view; diagnosis → the cone beam imaging suite (relevant to the 3D-imaging story); cracked tooth → airy operatory; emergency → front desk on arrival; trauma → the welcome board; nitrous → operatory with views; oral sedation → waiting-area seating; internal bleaching → microscope-with-orchid (kept); Botox → reception lounge.
+- The one instrument-tray shot in the Our Office tour gallery was swapped for the bright hallway.
+- imageMap.ts now carries honest per-photo alt text (written from the actual images) plus a documented rule: instrument close-ups (detail-chair, detail-instruments, detail-tools, detail-wide) are not to be used on patient-facing service pages. They remain available for clinical/professional contexts.
+
+Build clean; figures verified on root canal, diagnosis, and Botox pages.
+
+---
+
+## Internal linking pass — July 14, 2026
+
+Measured the full in-content link graph of the built site (nav/footer/aside boilerplate excluded, since search engines weight body links more heavily). Service pages were already strong (root canal: 33 contextual inbound links). Fixed the starved pages — in-content inbound links before → after:
+
+- /services hub 0 → 13 · /about 0 → 15 · /areas-we-serve 1 → 19 · each neighborhood page 1 → ~6 · /financial 1 → 12 · /new-patient 1 → 12 · /reviews 1 → 11 · /education 4 → 10 · signs article 1 → 17 · partnership-philosophy 1 → 2+
+
+How: three general FAQ answers now carry contextual links (about, services hub, signs article) and those FAQs render on ~13 pages; every service page gained an insurance/new-patient sentence, a "Related reading" Education Center callout where a guide genuinely fits, and a neighborhoods line that ROTATES three of the seven area pages per service so links distribute instead of repeating; the Reviews teaser links to the full reviews page; area pages cross-link the areas index and About; the doctor bio links CE courses and About; CE index links partnership philosophy; articles link About and Contact. Cracked-tooth related-services now includes Botox for bruxism (grinding cracks teeth).
+
+Also verified: education articles have auto-generated heading IDs (deep-linkable anchors), service pages have a full anchor TOC, and no standalone "click here/learn more" anchor text exists anywhere. FAQ links are stripped from FAQPage JSON-LD automatically, so schema stays clean. Legal pages are intentionally footer-only.
+
+---
+
+## Contact redesign + imagery-everywhere pass — July 14, 2026
+
+**Contact page rebuilt.** The three cramped cards (which clipped the email address) are replaced by full-width "Get in touch" rows — icon chip, label, value, helper line, chevron — so no value can ever clip; email is sized to fit one line on phones. Address card gains a proper Get Directions button, the map+emergency column is sticky, and an office photo strip sits above the FAQ. Verified at 390px and 1440px; axe clean.
+
+**Office photography spread site-wide** via a new OfficePeek component (three-photo strip + "Tour the office" link) and PageHero images on previously text-only heroes: Financial (front office), New Patients (welcome board + "The space you'll walk into" strip), For Doctors (Dr. Leong at the microscope — appropriate for the professional audience), Partnership (operatory), Reviews (reception lounge), plus strips on About and Contact.
+
+**San Francisco scenery** now appears beyond the home page: Painted Ladies band on About ("Rooted here, through and through"), Golden Gate band on the Services index ("Specialist care, minutes from home"), Lombard Street band on Reviews ("San Franciscans trust us with their smiles"), cable car on the Education Center hero. All duotone-navy, consistent with the home fog band; all gain the slow Ken Burns drift (motion-gated). Deliberately NOT used on individual neighborhood pages — Coit Tower and cable cars aren't west-side landmarks and the doctor would rightly flag geographically misleading imagery.
+
+imageMap gained gallery-46/47 with honest alt text.
+
+---
+
+## Caption removal — July 14, 2026
+
+Visible captions removed from the service-page office photos (they were reading the alt text aloud, e.g. "The operating microscope beside an orchid in the window light — inside our Ocean Avenue office"). Descriptive text now lives only in the alt attribute where it belongs for screen readers. Decorative photos site-wide carry no visible captions; the only figcaption remaining is the testimonial attribution block in Reviews, which is intentional.
